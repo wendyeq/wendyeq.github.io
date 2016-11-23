@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>Go与GAE开发环境配置 | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Go源代码安装Go源代码使用mercurial管理的所以先要安装mercurial, 常用的开源库一般都放在github.com，最好把git也安装上。1sudo apt-get install mercurial git
+安装好版本管理工具之后就clone Go源码，然后运行all.bash安装。
+123hg clone -u release https://code.google.com/p/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go与GAE开发环境配置">
+<meta property="og:url" content="http://wendyeq.me/2012/12/15/go-and-gae-env/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="Go源代码安装Go源代码使用mercurial管理的所以先要安装mercurial, 常用的开源库一般都放在github.com，最好把git也安装上。1sudo apt-get install mercurial git
+安装好版本管理工具之后就clone Go源码，然后运行all.bash安装。
+123hg clone -u release https://code.google.com/p/">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.087Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go与GAE开发环境配置">
+<meta name="twitter:description" content="Go源代码安装Go源代码使用mercurial管理的所以先要安装mercurial, 常用的开源库一般都放在github.com，最好把git也安装上。1sudo apt-get install mercurial git
+安装好版本管理工具之后就clone Go源码，然后运行all.bash安装。
+123hg clone -u release https://code.google.com/p/">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-go-and-gae-env" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Go与GAE开发环境配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Go源代码安装"><a href="#Go源代码安装" class="headerlink" title="Go源代码安装"></a>Go源代码安装</h2><p>Go源代码使用mercurial管理的所以先要安装mercurial, 常用的开源库一般都放在github.com，最好把git也安装上。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install mercurial git</div></pre></td></tr></table></figure></p>
+<p>安装好版本管理工具之后就clone Go源码，然后运行all.bash安装。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hg clone -<span class="keyword">u</span> release http<span class="variable">s:</span>//code.google.<span class="keyword">com</span>/<span class="keyword">p</span>/<span class="keyword">go</span></div><div class="line"><span class="keyword">cd</span> <span class="keyword">go</span>/src</div><div class="line">./<span class="keyword">all</span>.bash</div></pre></td></tr></table></figure>
+<p>运行完all.bash之后要设置相关的环境变量，在.profile （mint下面）或者.bash_profile （其他linux）里面加入如下代码。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> GOOS=linux</div><div class="line"><span class="built_in">export</span> GOARCH=386 <span class="comment"># 32位是386, 64位是amd64</span></div><div class="line"><span class="built_in">export</span> GOROOT=<span class="variable">$HOME</span>/go <span class="comment"># 我的go目录是放在home的下面 </span></div><div class="line"><span class="built_in">export</span> GOBIN=<span class="variable">$GOROOT</span>/bin</div><div class="line"><span class="built_in">export</span> GOPATH=<span class="variable">$HOME</span>/Workspaces/iweb <span class="comment"># 指向工作目录而不是go安装目录 </span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOBIN</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>想加入的变量马上在当前的Terminal中生效可以运行<code>source .profile</code>,注意这只会在当前的命令行中生效。<br>编写Hello World！ 程序hello.go，运行<code>go run hello.go</code>验证是否正确输出结果。</p>
+<p>到此Go环境就安装好了。</p>
+<h2 id="GAE-for-Go安装"><a href="#GAE-for-Go安装" class="headerlink" title="GAE for Go安装"></a>GAE for Go安装</h2><p>到<a href="https://developers.google.com/appengine/downloads" target="_blank" rel="external">https://developers.google.com/appengine/downloads</a> 去下载Google App Engine SDK for go。 我下载的版本是go_appengine_sdk_linux_386-1.7.4.zip，使用<code>unzip go_appengine_sdk_linux_386-1.7.4.zip</code>解压。</p>
+<p>配置相关的环境变量：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> GAEGO=<span class="variable">$HOME</span>/google_appengine</div><div class="line"><span class="built_in">export</span> GOPATH=<span class="variable">$HOME</span>/Workspaces/iweb:<span class="variable">$GAEGO</span>/goroot <span class="comment">#把GAE的环境变量放在这里是为了方便使用gocode对GAE的库进行代码提示。</span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOBIN</span>:<span class="variable">$GAEGO</span> <span class="comment">#把GAEGO放到这里是为了方便使用appcfg.py和dev-server.py工具</span></div></pre></td></tr></table></figure></p>
+<p>GAE也配置好了。</p>
+<h2 id="开发工具Sublime-Text配置"><a href="#开发工具Sublime-Text配置" class="headerlink" title="开发工具Sublime Text配置"></a>开发工具Sublime Text配置</h2><p>具体的开发工具选择与配置，可以参考<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/1.4.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/1.4.md</a></p>
+<p>Sublime Text2+GoSublime+gocode+MarGo组合使用能实现代码自动提示，保存时自动格式化代码，语法高亮，不过Sublime Text2在linux下不支持中文输入。</p>
+<ol>
+<li><p>安装gocode（需要先安装git）,无论是使用vim或者emace等编辑器，一般都是gocode作为代码自动提示的工具的。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">go</span> <span class="built_in">get</span> -<span class="keyword">u</span> github.<span class="keyword">com</span>/nsf/gocode</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Margo</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">go</span> <span class="built_in">get</span> -<span class="keyword">u</span> github.<span class="keyword">com</span>/DisposaBoy/MarGo</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Sublime Text2,可以去<a href="http://www.sublimetext.com/" target="_blank" rel="external">http://www.sublimetext.com/</a>下载最新版本解压，然后运行sublime_text,也可以使用apt-get安装。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo<span class="built_in"> add-apt-repository </span>ppa:webupd8team/sublime-text-2   </div><div class="line">sudo apt-get update  </div><div class="line">sudo apt-get install sublime-text</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Package Control,打开sublime-text,然后按Ctrl+`快捷键打开命令行，执行如下代码：</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib2,<span class="built_in">os</span>; pf=<span class="string">'Package Control.sublime-package'</span>; ipp=sublime.installed_packages_path(); <span class="built_in">os</span>.makedirs(ipp) <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">os</span>.path.exists(ipp) <span class="keyword">else</span> None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(<span class="built_in">os</span>.path.join(ipp,pf),<span class="string">'wb'</span>).write(urllib2.urlopen(<span class="string">'http://sublime.wbond.net/'</span>+pf.replace(<span class="string">' '</span>,<span class="string">'%20'</span>)).read()); <span class="built_in">print</span> <span class="string">'Please restart Sublime Text to finish installation'</span></div></pre></td></tr></table></figure>
+<p> 重启sublime-text就可以看到菜单中的Preferences-&gt; Package Control。</p>
+</li>
+<li><p>安装GoSublime,点击Package Control菜单或者按Ctril+Shift+p快捷键打开Package Control,输入pcip,按Enter键。输入GoSublime,按确定就开始安装了。同理应用于SidebarEnhancements和Go Build。安装完Go Build之后，在Tools-&gt; Build System中选择Automatic即可。按Ctrl+b可以直接编译运行，在最下面的Gsshell中输入<code>go build hello.go</code>或者<code>go run hello.go</code>测试编译运行。</p>
+</li>
+</ol>
+<p><em>要对GAE的api进行代码提示GOPATH要如下设置：</em><br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export GOPATH=<span class="variable">$HOME</span><span class="regexp">/Workspaces/i</span>web:<span class="variable">$GAEGO</span><span class="regexp">/goroot</span></div></pre></td></tr></table></figure></p>
+<p>把个人的项目空间放在前面，GAE的goroot放在后面。因为使用go get安装第三方库的时候是把代码放到第一个GOPATH中，即$HOME/Workspaces/iweb，而不是放在go的安装目录或GAE的安装目录。</p>
+<p>到目前为止Go的开发环境就配置好了。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2012/12/15/go-and-gae-env/" class="archive-article-date">
+  	<time datetime="2012-12-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2012-12-15</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GAE/">GAE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Go/">Go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sublime-Text/">Sublime-Text</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2012/12/18/go/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Go语法笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/12/31/summary-of-2011/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2011年总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="go-and-gae-env" data-title="Go与GAE开发环境配置" data-url="http://wendyeq.me/2012/12/15/go-and-gae-env/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

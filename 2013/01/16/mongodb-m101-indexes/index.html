@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>MongoDB-M101-Indexes | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MongoDB的索引是采用B-tree的结构。MongoDB默认对每个集合的”_id”都建立了唯一的正序索引，而且是不能删除的。
+什么情况下适合使用索引
+对经常查询的字段需要构建索引
+只需获取集合的一小部分记录时（小于集合记录的一半），可以使用索引
+大部分应用都适合使用索引，经常要写入的应用就要先用性能工具分析是否应该使用索引
+
+构建索引简单索引构建单一的索引,代码中的“1”表示的是正序，“-1”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-M101-Indexes">
+<meta property="og:url" content="http://wendyeq.me/2013/01/16/mongodb-m101-indexes/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="MongoDB的索引是采用B-tree的结构。MongoDB默认对每个集合的”_id”都建立了唯一的正序索引，而且是不能删除的。
+什么情况下适合使用索引
+对经常查询的字段需要构建索引
+只需获取集合的一小部分记录时（小于集合记录的一半），可以使用索引
+大部分应用都适合使用索引，经常要写入的应用就要先用性能工具分析是否应该使用索引
+
+构建索引简单索引构建单一的索引,代码中的“1”表示的是正序，“-1”">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.161Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB-M101-Indexes">
+<meta name="twitter:description" content="MongoDB的索引是采用B-tree的结构。MongoDB默认对每个集合的”_id”都建立了唯一的正序索引，而且是不能删除的。
+什么情况下适合使用索引
+对经常查询的字段需要构建索引
+只需获取集合的一小部分记录时（小于集合记录的一半），可以使用索引
+大部分应用都适合使用索引，经常要写入的应用就要先用性能工具分析是否应该使用索引
+
+构建索引简单索引构建单一的索引,代码中的“1”表示的是正序，“-1”">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-mongodb-m101-indexes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB-M101-Indexes
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MongoDB的索引是采用B-tree的结构。MongoDB默认对每个集合的”_id”都建立了唯一的正序索引，而且是不能删除的。</p>
+<h4 id="什么情况下适合使用索引"><a href="#什么情况下适合使用索引" class="headerlink" title="什么情况下适合使用索引"></a>什么情况下适合使用索引</h4><ul>
+<li>对经常查询的字段需要构建索引</li>
+<li>只需获取集合的一小部分记录时（小于集合记录的一半），可以使用索引</li>
+<li>大部分应用都适合使用索引，经常要写入的应用就要先用性能工具分析是否应该使用索引</li>
+</ul>
+<h4 id="构建索引"><a href="#构建索引" class="headerlink" title="构建索引"></a>构建索引</h4><h5 id="简单索引"><a href="#简单索引" class="headerlink" title="简单索引"></a>简单索引</h5><p>构建单一的索引,代码中的“1”表示的是正序，“-1”表示的是倒序。</p>
+<pre><code>db.posts.ensureIndex({&apos;permalink&apos;: 1})
+db.posts.ensureIndex({&apos;postTime&apos;: -1})
+</code></pre><a id="more"></a>
+<h5 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h5><p>构建联合索引</p>
+<pre><code>db.posts.ensureIndex({&apos;postTime&apos;: -1, &apos;permalink&apos;: 1，&apos;title&apos;: 1})
+</code></pre><p>构建联合索引的字段的先后顺序关系到查询的时候能否利用到联合索引,有就是说查询的时候要用到联合索引的一个字段过滤，那么那个字段之前的所有字段要在过滤条件中。</p>
+<pre><code>//利用到了联合索引
+db.posts.find({&apos;postTime&apos;: date})
+db.posts.find({&apos;postTime&apos;: date, &apos;permalink&apos;: permalink})
+db.posts.find({&apos;postTime&apos;: date, &apos;permalink&apos;: permalink, &apos;title&apos;: title})
+//利用不到联合索引
+db.posts.find({&apos;permalink&apos;: permalink})
+db.posts.find({&apos;title&apos;: title})
+db.posts.find({&apos;postTime&apos;: date, &apos;title&apos;: title})
+db.posts.find({&apos;permalink&apos;: permalink, &apos;title&apos;: title})
+</code></pre><h5 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h5><p>构建唯一索引</p>
+<pre><code>db.posts.ensureIndex({&apos;permalink&apos;: 1}, {unique:true})
+</code></pre><h5 id="删除重复记录索引"><a href="#删除重复记录索引" class="headerlink" title="删除重复记录索引"></a>删除重复记录索引</h5><p>构建删除重复记录索引,dropDups要与unique一起使用，dropDups为true会删除posts中permalink重复了的记录，删除了就不能恢复了，要谨慎使用。</p>
+<pre><code>db.posts.ensureIndex({&apos;permalink&apos;: 1}, {unique:true, dropDups:true})
+</code></pre><h5 id="Sparse-Indexes"><a href="#Sparse-Indexes" class="headerlink" title="Sparse Indexes"></a>Sparse Indexes</h5><p>sparse用于有多条post记录，但是有些记录没有a字段，需要加上<code>sparse: true</code>才能对a生成索引，而没有a字段的记录中的索引值是null，对a进行查询或者排序的时候没有a字段的记录是不参与的。</p>
+<pre><code>db.posts.ensureIndex({&apos;a&apos;:1},{sparse: true})
+db.posts.find({a:null}) //No documents, because the query uses the index and there are no documents with title:null in the index.
+</code></pre><h5 id="MultiKey-Indexes"><a href="#MultiKey-Indexes" class="headerlink" title="MultiKey Indexes"></a>MultiKey Indexes</h5><p>在blog中一般的tags都是数组来的，对数组进行索引就是multiKey index，它会对数组中的每个值都构建索引。假如tags:[“mongodb”,”NoSQL”,”数据库”,”index”]。</p>
+<pre><code>db.posts.ensureIndex({tags: 1})
+//构建出来的索引如下
+｛tags: &quot;mongodb&quot;｝
+｛tags: &quot;NoSQL&quot;｝
+｛tags: &quot;数据库&quot;｝
+｛tags: &quot;index&quot;｝
+</code></pre><p>也可以对comments中的date构建索引</p>
+<pre><code>db.posts.ensureIndex({&apos;comments.date&apos;: 1})
+</code></pre><p>Compound Multikey Indexes May Only Include One Array Field。也就是构建<code>db.foo.ensureIndex({a:1, b: 1})</code>的索引，是不能插入包括多个数组的记录的，如<code>db.foo.insert({a: [1, 2], b: [1, 2]})</code>，但可以插入<code>db.foo.insert({a: [1, 2], b: 1})</code>或<code>db.foo.insert({a: 1, b: [1, 2]})</code>。</p>
+<h5 id="Geospatial-Indexes"><a href="#Geospatial-Indexes" class="headerlink" title="Geospatial Indexes"></a>Geospatial Indexes</h5><p><a href="http://docs.mongodb.org/manual/applications/geospatial-indexes/" target="_blank" rel="external">Geospatial indexes</a>地理位置索引,对地理位置的索引原理的解析可以参考<a href="http://blog.nosqlfan.com/html/1811.html" target="_blank" rel="external">图解 MongoDB 地理位置索引的实现原理</a>。假设stores中有<code>&#39;location&#39;:[x, y]</code>，对location构建索引,查询中可以使用<a href="http://docs.mongodb.org/manual/reference/operator/near/#_S_near" target="_blank" rel="external">$near</a>。</p>
+<pre><code>db.stores.ensureIndex({&apos;location&apos;: &apos;2d&apos;})
+db.stores.find({location: {$near: [x, y]}}).limit(10)
+db.runCommand({geoNear: &apos;stores&apos;, near: [50, 50], spherical: true, maxDistance: 1})
+</code></pre><h5 id="Foreground-and-Backgound"><a href="#Foreground-and-Backgound" class="headerlink" title="Foreground and Backgound"></a>Foreground and Backgound</h5><p>构建索引的时候默认是foreground的，也可以使用background，如<code>db.posts.ensureIndex({&#39;permalink&#39;: 1}, {background:true})</code>。foreground与background的区别是foreground的构建速度快，会进行写锁定；background的构建速度慢，不会进行锁定。</p>
+<p>重建posts的所有索引可以使用<code>db.posts.reIndex()</code>。</p>
+<p>索引是有限制的，每个集合不能构建超过64个索引，而且索引的key的长度不能超过1024 bytes。</p>
+<h3 id="查询索引"><a href="#查询索引" class="headerlink" title="查询索引"></a>查询索引</h3><p>查询数据库的所有索引</p>
+<pre><code>db.system.indexes.find()
+</code></pre><p>查询单个集合的所有索引</p>
+<pre><code>db.posts.getIndexes()
+</code></pre><p>获取索引的大小</p>
+<pre><code>db.posts.totalIndexSize()
+</code></pre><p>使用hint指定查询当中使用的索引,也可以使用<a href="http://docs.mongodb.org/manual/reference/operator/natural/" target="_blank" rel="external">$natural</a>指明按自然顺序查询不使用索引。</p>
+<pre><code>db.posts.find({&apos;postTime&apos;: date, &apos;permalink&apos;: permalink}).hint( {&apos;permalink&apos;: 1})
+db.posts.find({&apos;postTime&apos;: date, &apos;permalink&apos;: permalink}).hint( {$natural: 1})
+</code></pre><p>可以使用explain对查询计划进行性能分析</p>
+<pre><code>db.posts.find({&apos;postTime&apos;: date, &apos;permalink&apos;: permalink}).explain()
+</code></pre><h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3><p>“_id”的索引是删除不了的，删除除了”_id”之外的索引</p>
+<pre><code>db.posts.dropIndexes() 
+</code></pre><p>删除指定的索引</p>
+<pre><code>db.posts.dropIndex({&apos;postTime&apos;: -1, &apos;permalink&apos;: 1，&apos;title&apos;: 1})
+</code></pre>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/01/16/mongodb-m101-indexes/" class="archive-article-date">
+  	<time datetime="2013-01-15T16:09:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-01-16</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2013/01/27/mongodb-m101-aggregation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MongoDB-M101-Aggregation
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/01/10/mongodb-m101-crud/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MongoDB-M101-CRUD</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mongodb-m101-indexes" data-title="MongoDB-M101-Indexes" data-url="http://wendyeq.me/2013/01/16/mongodb-m101-indexes/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

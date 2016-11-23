@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>MongoDB-M101-CRUD | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在10gen中参与了M101课程，下面的内容是根据M101课程做的笔记。
+在Mongo shell中是可以使用javascript语法的。12345678910111213141516171819202122232425262728MongoDB shell version: 2.2.2connecting to: test&amp;gt; for (i = 0; i &amp;lt; 3; i++)Sun De">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-M101-CRUD">
+<meta property="og:url" content="http://wendyeq.me/2013/01/10/mongodb-m101-crud/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="在10gen中参与了M101课程，下面的内容是根据M101课程做的笔记。
+在Mongo shell中是可以使用javascript语法的。12345678910111213141516171819202122232425262728MongoDB shell version: 2.2.2connecting to: test&amp;gt; for (i = 0; i &amp;lt; 3; i++)Sun De">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB-M101-CRUD">
+<meta name="twitter:description" content="在10gen中参与了M101课程，下面的内容是根据M101课程做的笔记。
+在Mongo shell中是可以使用javascript语法的。12345678910111213141516171819202122232425262728MongoDB shell version: 2.2.2connecting to: test&amp;gt; for (i = 0; i &amp;lt; 3; i++)Sun De">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-mongodb-m101-crud" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB-M101-CRUD
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="https://education.10gen.com" target="_blank" rel="external">10gen</a>中参与了M101课程，下面的内容是根据M101课程做的笔记。</p>
+<p>在Mongo shell中是可以使用javascript语法的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">MongoDB shell version: 2.2.2</div><div class="line">connecting to: <span class="built_in">test</span></div><div class="line">&gt; <span class="keyword">for</span> (i = 0; i &lt; 3; i++)</div><div class="line">Sun Dec 30 16:45:58 SyntaxError: syntax error (shell):1</div><div class="line">&gt; <span class="keyword">for</span> (i = 0; i &lt; 3; i++) <span class="built_in">print</span>(<span class="string">"hello ! "</span>+i)</div><div class="line">hello ! 0</div><div class="line">hello ! 1</div><div class="line">hello ! 2</div><div class="line">&gt; x = 1</div><div class="line">1</div><div class="line">&gt; z = &#123;x:2&#125;</div><div class="line">&#123; <span class="string">"x"</span> : 2 &#125;</div><div class="line">&gt; z.x</div><div class="line">2</div><div class="line">&gt; z[<span class="string">"x"</span>]</div><div class="line">2</div><div class="line">&gt; y = <span class="string">"x"</span></div><div class="line">x</div><div class="line">&gt; z[y]</div><div class="line">2</div><div class="line">&gt; NumberInt(1)</div><div class="line">NumberInt(1)</div><div class="line">&gt; NumberLong(1)+NumberInt(2)</div><div class="line">3</div><div class="line">&gt; NumberInt(1)+NumberLong(2)</div><div class="line">3</div><div class="line">&gt; new Date()</div><div class="line">ISODate(<span class="string">"2012-12-30T08:44:04.636Z"</span>)</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>MongoDB的新增方法有两个，分别是insert()和save(),insert()和save()的区别是当插入的文档存在”_id”的时候，如果”_id”重复了insert会报错，而save不会，save会更新”_id”对应的文档的内容为新内容。不论是insert或者save，当文档中”_id”不存在的时候，系统会自动生成一个唯一的ObjectId。MongoDB存储的单个BSON文档最大是16M，超过了16M可以使用GridFS存储。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.find()</div><div class="line">&gt; doc = &#123;name:<span class="string">"smit"</span>&#125;</div><div class="line">&#123; <span class="string">"name"</span> : <span class="string">"smit"</span> &#125;</div><div class="line">&gt; db.people.insert(doc)</div><div class="line">&gt; db.people.insert(doc)</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e975348c1ceeb499c26b50"</span>), <span class="string">"name"</span> : <span class="string">"smit"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e975378c1ceeb499c26b51"</span>), <span class="string">"name"</span> : <span class="string">"smit"</span> &#125;</div><div class="line">&gt; doc = &#123;_id : <span class="string">"1"</span>,name:<span class="string">"smit"</span>&#125;</div><div class="line">&#123; <span class="string">"_id"</span> : <span class="string">"1"</span>, <span class="string">"name"</span> : <span class="string">"smit"</span> &#125;</div><div class="line">&gt; db.people.insert(doc)</div><div class="line">&gt; db.people.insert(doc)</div><div class="line">E11000 duplicate key error index: test.people.<span class="variable">$_id_</span>  dup key: &#123; : <span class="string">"1"</span> &#125;</div><div class="line">&gt; doc = &#123;_id : <span class="string">"1"</span>,name:<span class="string">"smitt"</span>&#125;</div><div class="line">&#123; <span class="string">"_id"</span> : <span class="string">"1"</span>, <span class="string">"name"</span> : <span class="string">"smitt"</span> &#125;</div><div class="line">&gt; db.people.insert(doc)</div><div class="line">E11000 duplicate key error index: test.people.<span class="variable">$_id_</span>  dup key: &#123; : <span class="string">"1"</span> &#125;</div><div class="line">&gt; db.people.save(doc)</div><div class="line">&gt; db.people.insert(doc)</div><div class="line">E11000 duplicate key error index: test.people.<span class="variable">$_id_</span>  dup key: &#123; : <span class="string">"1"</span> &#125;</div><div class="line">&gt; db.people.save(doc)</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e975348c1ceeb499c26b50"</span>), <span class="string">"name"</span> : <span class="string">"smit"</span> &#125;	</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e975378c1ceeb499c26b51"</span>), <span class="string">"name"</span> : <span class="string">"smit"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : <span class="string">"1"</span>, <span class="string">"name"</span> : <span class="string">"smitt"</span> &#125;</div></pre></td></tr></table></figure>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p>只查找一个文档用的是findOne,普通的查找用的是find。<br>先使用for循环在scores中插入300条记录,然后分别用findOne和find把他们查出来。使用<code>db.scores.find().pretty()</code>打印出来的数据是比较美观的,pretty起到的是美化的作用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&gt; db.scores.find().count()</div><div class="line">0</div><div class="line">&gt; <span class="keyword">for</span>(i=0; i&lt;100;i++)&#123;names=[<span class="string">"exam"</span>, <span class="string">"essay"</span>,<span class="string">"quiz"</span>]; <span class="keyword">for</span>(j=0;j&lt;3;j++)&#123;db.scores.insert(&#123;<span class="string">"student"</span>:i, <span class="string">"type"</span>:names[j], score:Math.round(Math.random()*100) &#125;);&#125;&#125;</div><div class="line"></div><div class="line">&gt; db.scores.find().count()</div><div class="line">300</div><div class="line">&gt; db.scores.<span class="function"><span class="title">findOne</span></span>()</div><div class="line">&#123;</div><div class="line">	<span class="string">"_id"</span> : ObjectId(<span class="string">"50e979508c1ceeb499c26c23"</span>),</div><div class="line">	<span class="string">"student"</span> : 69,</div><div class="line">	<span class="string">"type"</span> : <span class="string">"quiz"</span>,</div><div class="line">	<span class="string">"score"</span> : 98</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>查出score大于95小于等于98的所有人：<code>db.scores.find({score:{$gt:95, $lte : 98}})</code>。</p>
+<p>查出name中第一个字母大于B、小于F的文档：<code>db.people.find({name : {$gt : &quot;B&quot;, $lt :&quot;F&quot;} })</code></p>
+<p>查出表people中存在profession字段的文档：<code>db.people.find({ profession : {$exists : true} })</code></p>
+<p>查出表people的name中包含n的文档：<code>db.people.find({name:{$regex : &quot;n&quot;}})</code></p>
+<p>查出表people的name中n结尾的文档：<code>db.people.find({name:{$regex : &quot;n$&quot;}})</code></p>
+<p>查出表people的name中n开头的文档：<code>db.people.find({name:{$regex : &quot;^n&quot;}})</code></p>
+<p>查出表people的name是q结尾或者age字段存在的文档：<code>db.people.find( { $or : [ { name : { $regex : &quot;q$&quot;} }, { age : { $exists : true } } ] } )</code></p>
+<p>查出scores中score小于50或者大于90的文档：<code>db.scores.find({ $or : [{&quot;score&quot; : {$lt: 50 }}, {&quot;score&quot; : {$gt : 90}}] })</code>，如果使用<code>db.scores.find( { score : { $lt : 50 }, score : { $gt : 90 } } );</code>只会查出score大于90的文档。</p>
+<h5 id="查找文档中的数组"><a href="#查找文档中的数组" class="headerlink" title="查找文档中的数组"></a>查找文档中的数组</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&gt; db.accounts.insert( &#123; name : <span class="string">"George"</span>, favorites : [<span class="string">"ice cream"</span>, <span class="string">"pretzels"</span>] &#125; );</div><div class="line">&gt; db.accounts.insert( &#123; name : <span class="string">"Howard"</span>, favorites : [<span class="string">"pretzels"</span>, <span class="string">"beer"</span>] &#125; );</div><div class="line">&gt; db.accounts.find().<span class="function"><span class="title">pretty</span></span>()</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a66b4ce557aaed3099a8"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"George"</span>,</div><div class="line"><span class="string">"favorites"</span> : [</div><div class="line"><span class="string">"ice cream"</span>,</div><div class="line"><span class="string">"pretzels"</span></div><div class="line">]</div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Howard"</span>,</div><div class="line"><span class="string">"favorites"</span> : [</div><div class="line"><span class="string">"pretzels"</span>,</div><div class="line"><span class="string">"beer"</span></div><div class="line">]</div><div class="line">&#125;</div><div class="line">&gt; db.accounts.find(&#123;favorites: <span class="string">"beer"</span>&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>), <span class="string">"name"</span> : <span class="string">"Howard"</span>, <span class="string">"favorites"</span> : [ <span class="string">"pretzels"</span>, <span class="string">"beer"</span> ] &#125;</div><div class="line">&gt; db.accounts.find(&#123;favorites: <span class="string">"pretzels"</span>&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a66b4ce557aaed3099a8"</span>), <span class="string">"name"</span> : <span class="string">"George"</span>, <span class="string">"favorites"</span> : [ <span class="string">"ice cream"</span>, <span class="string">"pretzels"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>), <span class="string">"name"</span> : <span class="string">"Howard"</span>, <span class="string">"favorites"</span> : [ <span class="string">"pretzels"</span>, <span class="string">"beer"</span> ] &#125;</div></pre></td></tr></table></figure>
+<h5 id="in-all"><a href="#in-all" class="headerlink" title="$in $all"></a><code>$in $all</code></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">	db.accounts.insert( &#123; name : <span class="string">"Irving"</span>, favorites : [<span class="string">"beer"</span>, <span class="string">"pretzels"</span>, <span class="string">"cheese"</span>] &#125; );</div><div class="line">db.accounts.insert( &#123; name : <span class="string">"John"</span>, favorites : [<span class="string">"beer"</span>, <span class="string">"cheese"</span>] &#125; ); </div><div class="line">&gt; db.accounts.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a66b4ce557aaed3099a8"</span>), <span class="string">"name"</span> : <span class="string">"George"</span>, <span class="string">"favorites"</span> : [ <span class="string">"ice cream"</span>, <span class="string">"pretzels"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>), <span class="string">"name"</span> : <span class="string">"Howard"</span>, <span class="string">"favorites"</span> : [ <span class="string">"pretzels"</span>, <span class="string">"beer"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7ce6c355fd8e2e6e82f80"</span>), <span class="string">"name"</span> : <span class="string">"Irving"</span>, <span class="string">"favorites"</span> : [ <span class="string">"beer"</span>, <span class="string">"pretzels"</span>, <span class="string">"cheese"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7ce76355fd8e2e6e82f81"</span>), <span class="string">"name"</span> : <span class="string">"John"</span>, <span class="string">"favorites"</span> : [ <span class="string">"beer"</span>, <span class="string">"cheese"</span> ] &#125;</div><div class="line">&gt; db.accounts.find(&#123;favorites : &#123;<span class="variable">$all</span> : [<span class="string">"pretzels"</span>, <span class="string">"beer"</span>]&#125; &#125;);</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>), <span class="string">"name"</span> : <span class="string">"Howard"</span>, <span class="string">"favorites"</span> : [ <span class="string">"pretzels"</span>, <span class="string">"beer"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7ce6c355fd8e2e6e82f80"</span>), <span class="string">"name"</span> : <span class="string">"Irving"</span>, <span class="string">"favorites"</span> : [ <span class="string">"beer"</span>, <span class="string">"pretzels"</span>, <span class="string">"cheese"</span> ] &#125;</div><div class="line">&gt; db.accounts.find(&#123; name : &#123;<span class="variable">$in</span> : [<span class="string">"Howard"</span>, <span class="string">"John"</span>]&#125;&#125; &#125;);</div><div class="line">Sat Jan 5 14:59:03 SyntaxError: missing ) after argument list (shell):1</div><div class="line">&gt; db.accounts.find(&#123; name : &#123;<span class="variable">$in</span> : [<span class="string">"Howard"</span>, <span class="string">"John"</span>]&#125; &#125;);</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>), <span class="string">"name"</span> : <span class="string">"Howard"</span>, <span class="string">"favorites"</span> : [ <span class="string">"pretzels"</span>, <span class="string">"beer"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7ce76355fd8e2e6e82f81"</span>), <span class="string">"name"</span> : <span class="string">"John"</span>, <span class="string">"favorites"</span> : [ <span class="string">"beer"</span>, <span class="string">"cheese"</span> ] &#125;</div><div class="line">&gt; db.accounts.find(&#123; favorites : &#123;<span class="variable">$in</span> : [<span class="string">"ice cream"</span>, <span class="string">"beer"</span>]&#125; &#125;);</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a66b4ce557aaed3099a8"</span>), <span class="string">"name"</span> : <span class="string">"George"</span>, <span class="string">"favorites"</span> : [ <span class="string">"ice cream"</span>, <span class="string">"pretzels"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7a68e4ce557aaed3099a9"</span>), <span class="string">"name"</span> : <span class="string">"Howard"</span>, <span class="string">"favorites"</span> : [ <span class="string">"pretzels"</span>, <span class="string">"beer"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7ce6c355fd8e2e6e82f80"</span>), <span class="string">"name"</span> : <span class="string">"Irving"</span>, <span class="string">"favorites"</span> : [ <span class="string">"beer"</span>, <span class="string">"pretzels"</span>, <span class="string">"cheese"</span> ] &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7ce76355fd8e2e6e82f81"</span>), <span class="string">"name"</span> : <span class="string">"John"</span>, <span class="string">"favorites"</span> : [ <span class="string">"beer"</span>, <span class="string">"cheese"</span> ] &#125;</div></pre></td></tr></table></figure>
+<h5 id="dot-notation"><a href="#dot-notation" class="headerlink" title="dot notation"></a>dot notation</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt; db.users.insert(&#123;name : <span class="string">"richard"</span>, email : &#123;work : <span class="string">"richard@10gen.com"</span>, personal : <span class="string">"kreuter@example.com"</span>&#125; &#125;)</div><div class="line">&gt; db.users.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7e24e355fd8e2e6e82f82"</span>), <span class="string">"name"</span> : <span class="string">"richard"</span>, <span class="string">"email"</span> : &#123; <span class="string">"work"</span> : <span class="string">"richard@10gen.com"</span>, <span class="string">"personal"</span> : <span class="string">"kreuter@example.com"</span> &#125; &#125;</div><div class="line">&gt; db.users.find(&#123;email : &#123;work : <span class="string">"richard@10gen.com"</span>, personal : <span class="string">"kreuter@example.com"</span>&#125;&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7e24e355fd8e2e6e82f82"</span>), <span class="string">"name"</span> : <span class="string">"richard"</span>, <span class="string">"email"</span> : &#123; <span class="string">"work"</span> : <span class="string">"richard@10gen.com"</span>, <span class="string">"personal"</span> : <span class="string">"kreuter@example.com"</span> &#125; &#125;</div><div class="line">&gt; db.users.find(&#123;email : &#123;personal : <span class="string">"kreuter@example.com"</span>, work : <span class="string">"richard@10gen.com"</span>&#125;&#125;)</div><div class="line">&gt; </div><div class="line">&gt; db.users.find(&#123;email : &#123;personal : <span class="string">"kreuter@example.com"</span>&#125;&#125;)</div><div class="line">&gt; db.users.find(&#123;<span class="string">"email.personal"</span> : <span class="string">"kreuter@example.com"</span>&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e7e24e355fd8e2e6e82f82"</span>), <span class="string">"name"</span> : <span class="string">"richard"</span>, <span class="string">"email"</span> : &#123; <span class="string">"work"</span> : <span class="string">"richard@10gen.com"</span>, <span class="string">"personal"</span> : <span class="string">"kreuter@example.com"</span> &#125; &#125;</div></pre></td></tr></table></figure>
+<h5 id="Cursors"><a href="#Cursors" class="headerlink" title="Cursors"></a>Cursors</h5><p>可以使用<code>var cur = db.people.find();</code>cursor，<code>cur.hasNext()</code>检查是否还有文档，<code>cur.next()</code>获取文档然后cur指向下一个文档。<code>cur.sort({ name : -1}).limit(3).skip(2);</code>根据name到排序，限制只取3条记录，跳过前面2条记录。无论sort、limit、skip的先后顺序是怎样如<code>cur.skip(2).limit(3).sort({ name : -1});</code>，mongodb执行的时候都是先sort，然后skip，最后才是limit</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line">&gt; cur = db.people.find(); null;</div><div class="line">null</div><div class="line">&gt; cur.hasNext()</div><div class="line"><span class="literal">true</span></div><div class="line">&gt; cur.<span class="function"><span class="title">next</span></span>()</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Wendyeq"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&gt; <span class="keyword">while</span> (cur.hasNext()) printjson(cur.next());</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"wen"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Fred"</span>,</div><div class="line"><span class="string">"age"</span> : 30</div><div class="line">&#125;</div><div class="line">&gt; cur = db.people.find(); null;</div><div class="line">null</div><div class="line">&gt; cur.limit(2); null;</div><div class="line">null</div><div class="line">&gt; <span class="keyword">while</span> (cur.hasNext()) printjson(cur.next());</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Wendyeq"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"wen"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&gt; cur = db.people.find(); null;</div><div class="line">null</div><div class="line">&gt; cur.sort(&#123; name : -1&#125;); null;</div><div class="line">null</div><div class="line">&gt; <span class="keyword">while</span> (cur.hasNext()) printjson(cur.next());</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"wen"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Wendyeq"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Fred"</span>,</div><div class="line"><span class="string">"age"</span> : 30</div><div class="line">&#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"name"</span> : 42 &#125;</div><div class="line">&gt; cur = db.people.find(); null;</div><div class="line">null</div><div class="line">&gt; cur.sort(&#123; name : -1&#125;).limit(3); null;</div><div class="line">null</div><div class="line">&gt; <span class="keyword">while</span> (cur.hasNext()) printjson(cur.next());</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"wen"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Wendyeq"</span>,</div><div class="line"><span class="string">"age"</span> : 24,</div><div class="line"><span class="string">"profession"</span> : <span class="string">"hacker"</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Fred"</span>,</div><div class="line"><span class="string">"age"</span> : 30</div><div class="line">&#125;</div><div class="line">&gt; cur = db.people.find(); null;</div><div class="line">null</div><div class="line">&gt; cur.sort(&#123; name : -1&#125;).limit(3).skip(2); null;</div><div class="line">null</div><div class="line">&gt; <span class="keyword">while</span> (cur.hasNext()) printjson(cur.next());</div><div class="line">&#123;</div><div class="line"><span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>),</div><div class="line"><span class="string">"name"</span> : <span class="string">"Fred"</span>,</div><div class="line"><span class="string">"age"</span> : 30</div><div class="line">&#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"name"</span> : 42 &#125;</div><div class="line">&gt;</div><div class="line">&gt; db.people.count()</div><div class="line">4</div></pre></td></tr></table></figure>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><p>普通的更新操作一般只会保留”_id”不变，其他的字段替换为新值或者删除也就是完全替换成新的文档。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"name"</span> : <span class="string">"Wendyeq"</span>, <span class="string">"age"</span> : 24, <span class="string">"profession"</span> : <span class="string">"hacker"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"name"</span> : <span class="string">"wen"</span>, <span class="string">"age"</span> : 24, <span class="string">"profession"</span> : <span class="string">"hacker"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 30 &#125;</div><div class="line">&gt; db.people.update(&#123;name : <span class="string">"wen"</span>&#125;,&#123; name : <span class="string">"Thompson"</span>, salary : 50000&#125;);</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"name"</span> : <span class="string">"Wendyeq"</span>, <span class="string">"age"</span> : 24, <span class="string">"profession"</span> : <span class="string">"hacker"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"name"</span> : <span class="string">"Thompson"</span>, <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 30 &#125;</div></pre></td></tr></table></figure>
+<p>可以使用$set来替换指定的字段的值，使用$inc对数字自增。<code>db.people.update({name:&quot;Fred&quot;}, {$inc : {age : 2}})</code>表示age加2。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"name"</span> : <span class="string">"Wendyeq"</span>, <span class="string">"age"</span> : 24, <span class="string">"profession"</span> : <span class="string">"hacker"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"name"</span> : <span class="string">"Thompson"</span>, <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 30 &#125;</div><div class="line">&gt; db.people.update(&#123;name:<span class="string">"Fred"</span>&#125;, &#123;<span class="variable">$set</span> : &#123;age : 35&#125;&#125;)</div><div class="line">&gt; db.people.find(&#123;name:<span class="string">"Fred"</span>&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 35 &#125;</div><div class="line">&gt; db.people.update(&#123;name:<span class="string">"Fred"</span>&#125;, &#123;<span class="variable">$inc</span> : &#123;age : 1&#125;&#125;)</div><div class="line">&gt; db.people.find(&#123;name:<span class="string">"Fred"</span>&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 36 &#125;</div><div class="line">&gt; db.people.update(&#123;name:42&#125;, &#123;<span class="variable">$set</span> : &#123;age : 35&#125;&#125;)</div><div class="line">&gt; db.people.find(&#123;name:42&#125;)</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div></pre></td></tr></table></figure>
+<p>在更新中使用$unset删除不需要的字段,$unset后面的1或者-1结果都一样，不知道有什么影响。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"name"</span> : <span class="string">"Wendyeq"</span>, <span class="string">"age"</span> : 24, <span class="string">"profession"</span> : <span class="string">"hacker"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"name"</span> : <span class="string">"Thompson"</span>, <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 36 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div><div class="line">&gt; db.people.update(&#123;name : <span class="string">"Wendyeq"</span>&#125;, &#123; <span class="variable">$unset</span> : &#123; profession : 1&#125;&#125;);</div><div class="line">&gt; db.people.find(&#123;name:<span class="string">"Wendyeq"</span>&#125;);</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&gt; db.people.update(&#123;salary : 50000&#125;, &#123; <span class="variable">$unset</span> : &#123; name : -1&#125;&#125;);</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 36 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div></pre></td></tr></table></figure>
+<p>对文档中的数组属性可以使用$push，在数组最后添加一个元素。使用$pop删除一个元素，<code>db.arrays.update( {_id : 0}, { $pop : { a : 1 } } );</code>表示删除最后一个元素，<code>db.arrays.update( {_id : 0}, { $pop : { a : -1 } } );</code>表示删除第一个元素。$pushAll批量添加数组元素。$pull根据值删除数组元素。$pullAllg根据值批量删除数组元素。$addToSet添加数组中不存在的值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&gt; db.arrays.insert(&#123; _id : 0, a : [1, 2, 3, 4] &#125;);</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 1, 2, 3, 4 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$set</span> : &#123; <span class="string">"a.2"</span> : 5 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 1, 2, 5, 4 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$push</span> : &#123; a : 6 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 1, 2, 5, 4, 6 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pop</span> : &#123; a : 1 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 1, 2, 5, 4 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pop</span> : &#123; a : -1 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 2, 5, 4 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pushAll</span> : &#123; a : [ 7, 8, 9] &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 2, 5, 4, 7, 8, 9 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pull</span> : &#123; a : 5 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 2, 4, 7, 8, 9 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pullAll</span> : &#123; a : [2, 4, 8] &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 7, 9 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$addToSet</span> : &#123; a : 5 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 7, 9, 5 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$addToSet</span> : &#123; a : 5 &#125; &#125; );</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$addToSet</span> : &#123; a : 5 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 7, 9, 5 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pushAll</span> : &#123; a : [ 7, 8, 9] &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 7, 9, 5, 7, 8, 9 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pop</span> : &#123; a : -2 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 9, 5, 7, 8, 9 ] &#125;</div><div class="line">&gt; db.arrays.update( &#123;_id : 0&#125;, &#123; <span class="variable">$pull</span> : &#123; a : 9 &#125; &#125; );</div><div class="line">&gt; db.arrays.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : 0, <span class="string">"a"</span> : [ 5, 7, 8 ] &#125;</div></pre></td></tr></table></figure>
+<p>upsert means update or insert if not present.<br>upsert为true表示如果没有符合条件的文档就新建一个文档，如果有符合条件的稳定就更新。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 36 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div><div class="line">&gt; db.people.update( &#123; name : <span class="string">"George"</span>&#125;, &#123;<span class="variable">$set</span> : &#123;age : 40&#125;&#125; )</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 36 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div><div class="line">&gt; db.people.update( &#123; name : <span class="string">"George"</span>&#125;, &#123;<span class="variable">$set</span> : &#123;age : 40&#125;&#125;, &#123;upsert : <span class="literal">true</span>&#125; )</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"name"</span> : <span class="string">"Fred"</span>, <span class="string">"age"</span> : 36 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e8fb790b336d073077842b"</span>), <span class="string">"age"</span> : 40, <span class="string">"name"</span> : <span class="string">"George"</span> &#125;</div><div class="line">&gt; db.people.update( &#123; age : &#123;<span class="variable">$gt</span> : 35&#125; &#125;, &#123;<span class="variable">$set</span> : &#123;name : <span class="string">"William"</span>&#125;&#125;, &#123;upsert : <span class="literal">true</span>&#125; )</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e8fb790b336d073077842b"</span>), <span class="string">"age"</span> : 40, <span class="string">"name"</span> : <span class="string">"George"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"age"</span> : 36, <span class="string">"name"</span> : <span class="string">"William"</span> &#125;</div></pre></td></tr></table></figure>
+<p>multi为true的话可以批量添加字段。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42 &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e8fb790b336d073077842b"</span>), <span class="string">"age"</span> : 40, <span class="string">"name"</span> : <span class="string">"George"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"age"</span> : 36, <span class="string">"name"</span> : <span class="string">"William"</span> &#125;</div><div class="line">&gt; db.people.update( &#123;&#125;, &#123;<span class="variable">$set</span> : &#123;title : <span class="string">"Dr"</span> &#125; &#125;, &#123;multi : <span class="literal">true</span>&#125;);</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e8fb790b336d073077842b"</span>), <span class="string">"age"</span> : 40, <span class="string">"name"</span> : <span class="string">"George"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"age"</span> : 36, <span class="string">"name"</span> : <span class="string">"William"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div></pre></td></tr></table></figure>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>remove可以删除集合中的所有记录，drop删除集合结构，drop之后可以用show collections验证。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e00064405fe32e05c6e6c0"</span>), <span class="string">"age"</span> : 24, <span class="string">"name"</span> : <span class="string">"Wendyeq"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e8fb790b336d073077842b"</span>), <span class="string">"age"</span> : 40, <span class="string">"name"</span> : <span class="string">"George"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"age"</span> : 36, <span class="string">"name"</span> : <span class="string">"William"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&gt; db.people.remove(&#123;name : <span class="string">"Wendyeq"</span>&#125;)</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e8fb790b336d073077842b"</span>), <span class="string">"age"</span> : 40, <span class="string">"name"</span> : <span class="string">"George"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e82ff4803d1a0d947eb66e"</span>), <span class="string">"age"</span> : 36, <span class="string">"name"</span> : <span class="string">"William"</span>, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&gt; db.people.remove(&#123;name : &#123;<span class="variable">$gt</span> : <span class="string">"G"</span>&#125;&#125;)</div><div class="line">&gt; db.people.<span class="function"><span class="title">find</span></span>()</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e001de405fe32e05c6e6c1"</span>), <span class="string">"salary"</span> : 50000, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&#123; <span class="string">"_id"</span> : ObjectId(<span class="string">"50e10b8ff5448477652e2365"</span>), <span class="string">"age"</span> : 35, <span class="string">"name"</span> : 42, <span class="string">"title"</span> : <span class="string">"Dr"</span> &#125;</div><div class="line">&gt; db.people.remove()</div><div class="line">&gt; db.people.find()</div><div class="line">&gt; db.people.drop()</div><div class="line"><span class="literal">true</span></div></pre></td></tr></table></figure>
+<h3 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h3><p>可以使用getLastError来获取最后出错的日志。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&gt; db.people.insert(&#123;_id : <span class="string">"Smith"</span>, age : 30&#125;)</div><div class="line">&gt; db.people.insert(&#123;_id : <span class="string">"Smith"</span>, age : 30&#125;)</div><div class="line">E11000 duplicate key error index: test.people.<span class="variable">$_id_</span> dup key: &#123; : <span class="string">"Smith"</span> &#125;</div><div class="line">&gt; db.runCommand(&#123;getLastError : 1&#125;)</div><div class="line">&#123;</div><div class="line"><span class="string">"err"</span> : <span class="string">"E11000 duplicate key error index: test.people.<span class="variable">$_id_</span> dup key: &#123; : \"Smith\" &#125;"</span>,</div><div class="line"><span class="string">"code"</span> : 11000,</div><div class="line"><span class="string">"n"</span> : 0,</div><div class="line"><span class="string">"connectionId"</span> : 1,</div><div class="line"><span class="string">"ok"</span> : 1</div><div class="line">&#125;</div><div class="line">&gt; db.people.insert(&#123;_id : <span class="string">"Jones"</span>, age : 30&#125;)</div><div class="line">&gt; db.runCommand(&#123;getLastError : 1&#125;)</div><div class="line">&#123; <span class="string">"n"</span> : 0, <span class="string">"connectionId"</span> : 1, <span class="string">"err"</span> : null, <span class="string">"ok"</span> : 1 &#125;</div><div class="line">&gt; db.people.update(&#123;&#125;, &#123;<span class="variable">$set</span>: &#123;title:<span class="string">"Dr"</span>&#125;&#125;, &#123;multi : <span class="literal">true</span>&#125;);</div><div class="line">&gt; db.runCommand(&#123;getLastError : 1&#125;)</div><div class="line">&#123;</div><div class="line"><span class="string">"updatedExisting"</span> : <span class="literal">true</span>,</div><div class="line"><span class="string">"n"</span> : 2,</div><div class="line"><span class="string">"connectionId"</span> : 1,</div><div class="line"><span class="string">"err"</span> : null,</div><div class="line"><span class="string">"ok"</span> : 1</div><div class="line">&#125;</div><div class="line">&gt; db.people.update(&#123;name : <span class="string">"Thompson"</span>&#125;, &#123;<span class="variable">$set</span>: &#123;title:<span class="string">"Dr"</span>&#125;&#125;, &#123;upsert : <span class="literal">true</span>&#125;);</div><div class="line">&gt; db.runCommand(&#123;getLastError : 1&#125;)</div><div class="line">&#123;</div><div class="line"><span class="string">"updatedExisting"</span> : <span class="literal">false</span>,</div><div class="line"><span class="string">"upserted"</span> : ObjectId(<span class="string">"50e90f390b336d073077842c"</span>),</div><div class="line"><span class="string">"n"</span> : 1,</div><div class="line"><span class="string">"connectionId"</span> : 1,</div><div class="line"><span class="string">"err"</span> : null,</div><div class="line"><span class="string">"ok"</span> : 1</div><div class="line">&#125;</div><div class="line">&gt; db.people.remove()</div><div class="line">&gt; db.runCommand(&#123;getLastError : 1&#125;)</div><div class="line">&#123; <span class="string">"n"</span> : 3, <span class="string">"connectionId"</span> : 1, <span class="string">"err"</span> : null, <span class="string">"ok"</span> : 1 &#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/01/10/mongodb-m101-crud/" class="archive-article-date">
+  	<time datetime="2013-01-09T18:09:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-01-10</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2013/01/16/mongodb-m101-indexes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MongoDB-M101-Indexes
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/01/01/install-mongodb/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mongodb安装</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mongodb-m101-crud" data-title="MongoDB-M101-CRUD" data-url="http://wendyeq.me/2013/01/10/mongodb-m101-crud/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

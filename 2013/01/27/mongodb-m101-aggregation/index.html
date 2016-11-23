@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>MongoDB-M101-Aggregation | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在MongoDB-M101-CRUD 中介绍了MongoDB的查询方式都是比较简单的不能用来做复杂的查询和运算。MongoDB提供类似SQL这样查询数据集合的工具——aggregation框架。aggregation框架的工作原理类似pipeline,也就是把当前流程的输出当作下一个流程的输入,这个过程不断进行下去，最后得到最终结果。Binary, Symbol, MinKey, MaxKey,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-M101-Aggregation">
+<meta property="og:url" content="http://wendyeq.me/2013/01/27/mongodb-m101-aggregation/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="在MongoDB-M101-CRUD 中介绍了MongoDB的查询方式都是比较简单的不能用来做复杂的查询和运算。MongoDB提供类似SQL这样查询数据集合的工具——aggregation框架。aggregation框架的工作原理类似pipeline,也就是把当前流程的输出当作下一个流程的输入,这个过程不断进行下去，最后得到最终结果。Binary, Symbol, MinKey, MaxKey,">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.169Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB-M101-Aggregation">
+<meta name="twitter:description" content="在MongoDB-M101-CRUD 中介绍了MongoDB的查询方式都是比较简单的不能用来做复杂的查询和运算。MongoDB提供类似SQL这样查询数据集合的工具——aggregation框架。aggregation框架的工作原理类似pipeline,也就是把当前流程的输出当作下一个流程的输入,这个过程不断进行下去，最后得到最终结果。Binary, Symbol, MinKey, MaxKey,">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-mongodb-m101-aggregation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB-M101-Aggregation
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="http://www.wendyeq.me/blog/2013/01/10/MongoDB-M101-CRUD" target="_blank" rel="external">MongoDB-M101-CRUD</a> 中介绍了MongoDB的查询方式都是比较简单的不能用来做复杂的查询和运算。MongoDB提供类似SQL这样查询数据集合的工具——aggregation框架。aggregation框架的工作原理类似pipeline,也就是把当前流程的输出当作下一个流程的输入,这个过程不断进行下去，最后得到最终结果。Binary, Symbol, MinKey, MaxKey, DBRef, Code, and CodeWScope这些类型是不能使用pipeline的。SQL与Aggregation框架的<a href="http://docs.mongodb.org/manual/reference/sql-aggregation-comparison/" target="_blank" rel="external">对照表</a>如下：</p>
+<table>
+<thead>
+<tr>
+<th>SQL Terms, Functions, and Concepts</th>
+<th style="text-align:center">MongoDB Aggregation Operators</th>
+<th style="text-align:right">Input:Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>where</td>
+<td style="text-align:center">$match</td>
+<td style="text-align:right">N : 1</td>
+</tr>
+<tr>
+<td>group by</td>
+<td style="text-align:center">$group</td>
+<td style="text-align:right">N : 1</td>
+</tr>
+<tr>
+<td>having</td>
+<td style="text-align:center">$match</td>
+<td style="text-align:right">N : 1</td>
+</tr>
+<tr>
+<td>select</td>
+<td style="text-align:center">$project</td>
+<td style="text-align:right">1 : 1</td>
+</tr>
+<tr>
+<td>order by</td>
+<td style="text-align:center">$sort</td>
+<td style="text-align:right">1 : 1</td>
+</tr>
+<tr>
+<td>limit</td>
+<td style="text-align:center">$limit</td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td>sum()</td>
+<td style="text-align:center">$sum</td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td>count()</td>
+<td style="text-align:center">$sum</td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td>join</td>
+<td style="text-align:center">No direct corresponding operator; however, the $unwind operator allows for somewhat similar functionality, but with fields embedded within the document.</td>
+<td style="text-align:right">No</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>使用MongoDB提供的<a href="http://media.mongodb.org/zips.json" target="_blank" rel="external">zips.json</a>和<a href="https://education.10gen.com/static/content-10gen-devs/handouts/hw4-3.c996ab74b105.tar" target="_blank" rel="external">posts.json</a>数据来进行测试。zips的数据结构如下：</p>
+<pre><code>&gt; db.zips.findOne()
+{
+    &quot;city&quot; : &quot;ACMAR&quot;,
+    &quot;loc&quot; : [
+        -86.51557,
+        33.584132
+    ],
+    &quot;pop&quot; : 6055,
+    &quot;state&quot; : &quot;AL&quot;,
+    &quot;_id&quot; : &quot;35004&quot;
+}
+</code></pre><h4 id="match"><a href="#match" class="headerlink" title="$match"></a>$match</h4><p>$match主要是用于过滤,语法与find()中使用过滤类似。<br>可以是单个条件做过滤，比如只显示city是ACMAR的记录</p>
+<pre><code>db.zips.aggregate([{$match: {city: &quot;ACMAR&quot;}}])
+</code></pre><p>也可以是多个条件做过滤，比如显示state是AL且pop大于40000的记录</p>
+<pre><code>db.zips.aggregate([{$match:{state: &quot;AL&quot;, pop: {$gt: 40000}}}])
+</code></pre><p>aggregation框架查出来的结果包括两部分，一部分是结果”result”数组,一部分是校验查询是否成功”ok”。</p>
+<pre><code>&gt; db.zips.aggregate([{$match: {city: &quot;ACMAR&quot;}}])
+{
+    &quot;result&quot; : [
+        {
+            &quot;city&quot; : &quot;ACMAR&quot;,
+            &quot;loc&quot; : [
+                -86.51557,
+                33.584132
+            ],
+            &quot;pop&quot; : 6055,
+            &quot;state&quot; : &quot;AL&quot;,
+            &quot;_id&quot; : &quot;35004&quot;
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+</code></pre><h4 id="group"><a href="#group" class="headerlink" title="$group"></a>$group</h4><p>$group主要是用于分组统计的。$group的第一个字段一定要是”_id”,如果不是的话就会直接报错。<br>实现<code>select count(*) as count from zips</code>的方式如下</p>
+<pre><code>&gt; db.zips.aggregate([{$group:{&quot;_id&quot;: null,count: {&quot;$sum&quot;: 1}}}])
+{ &quot;result&quot; : [ { &quot;_id&quot; : null, &quot;count&quot; : 29467 } ], &quot;ok&quot; : 1 }
+&gt; db.zips.find().count()
+29467
+</code></pre><p>实现<code>select count(pop) as count from zips group by state</code>的方式如下，需要统计的字段需要”$pop”这样的写法，前面是美元符号，然后用双引号括住。</p>
+<pre><code>db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}}])
+</code></pre><p>实现<code>select count(pop) as from zips where state = &quot;AL&quot; group by state</code></p>
+<p>  和<code>select count(pop) as from zips where group by state having state = &quot;AL&quot;</code>可以用$group和$match组合使用。</p>
+<p>这条SQL语句最组要的区别是先过滤还是先分组的问题，先过滤再分组的话就先执行$match部分，然后用$match输入的结果进行$group，也就是pipeline；反之就是先$group再$match。由于$group是在内存中计算的，所以比较好的实现是先过滤出需要的数据，再对过滤出来的数据进行分组。<br>由于aggregate处理数据的方式是pipeline，所以$group执行完之后输出的结果只包括“_id”和“count”字段，也就是后面跟着要运行的$match得到的输入数据也是只有“_id”和“count”字段，因此如果$match中使用”state”或者”$state”都不会得到正确的数据，具体可以看下面的代码实现。</p>
+<pre><code>&gt; db.zips.aggregate([{$match:{state:&quot;AL&quot;}}, {$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}}])
+{ &quot;result&quot; : [ { &quot;_id&quot; : &quot;AL&quot;, &quot;count&quot; : 4040587 } ], &quot;ok&quot; : 1 }
+&gt; db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}},{$match:{&quot;_id&quot;:&quot;AL&quot;}}])
+{ &quot;result&quot; : [ { &quot;_id&quot; : &quot;AL&quot;, &quot;count&quot; : 4040587 } ], &quot;ok&quot; : 1 }
+&gt; db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}},{$match:{&quot;state&quot;:&quot;AL&quot;}}])
+{ &quot;result&quot; : [ ], &quot;ok&quot; : 1 }
+&gt; db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}},{$match:{&quot;$state&quot;:&quot;AL&quot;}}])
+{ &quot;result&quot; : [ ], &quot;ok&quot; : 1 }
+</code></pre><h5 id="addToSet"><a href="#addToSet" class="headerlink" title="$addToSet"></a>$addToSet</h5><p>$addToSet是如果一个值在数组中不存在，就把这个值添加到数组。用于获取不存在相同元素的数组。</p>
+<pre><code>&gt; db.posts.aggregate([{$group:{&quot;_id&quot;: null,titles:{$addToSet:&quot;$title&quot;}}}])
+{
+    &quot;result&quot; : [
+        {
+            &quot;_id&quot; : null,
+            &quot;titles&quot; : [
+                &quot;Declaration of Independence&quot;,
+                &quot;Gettysburg Address&quot;,
+                &quot;Bill of Rights&quot;,
+                &quot;US Constitution&quot;
+            ]
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+</code></pre><h5 id="push"><a href="#push" class="headerlink" title="$push"></a>$push</h5><p>$push与$addToSet很相似，但是$push不会判断值是否在数组中存在，所有值无论是否重复都会添加到数组中。</p>
+<pre><code>db.posts.aggregate([{$group:{&quot;_id&quot;: null,titles:{$push:&quot;$title&quot;}}}])
+</code></pre><h5 id="sum-avg"><a href="#sum-avg" class="headerlink" title="$sum $avg"></a><code>$sum $avg</code></h5><p>$sum是用于汇总，$avg是用于求平均数的。</p>
+<pre><code>db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}}])
+db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$avg&quot;: &quot;$pop&quot;}}}])
+</code></pre><h5 id="max-min"><a href="#max-min" class="headerlink" title="$max $min"></a><code>$max $min</code></h5><p>$max是求最大值，$min是求最小值。</p>
+<pre><code>db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;, maxpop:{$max:&quot;$pop&quot;}}}])
+db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;, minpop:{$min:&quot;$pop&quot;}}}])
+</code></pre><h5 id="first-last"><a href="#first-last" class="headerlink" title="$first $last"></a><code>$first $last</code></h5><p>$first是取第一条记录，$last是取最后一条记录。<br>下面的实例是先根据state和city分组，计算出population，然后根据state和population排序，最后根据state分组，获取每个组里面populatin第一或者最后的一个city。</p>
+<pre><code>db.zips.aggregate([{$group: {_id: {state:&quot;$state&quot;, city:&quot;$city&quot;},population: {$sum:&quot;$pop&quot;}}}, {$sort:{&quot;_id.state&quot;:1,&quot;population&quot;:-1}}, {$group: {_id:&quot;$_id.state&quot;, city:{$first:&quot;$_id.city&quot;}}}])
+db.zips.aggregate([{$group: {_id: {state:&quot;$state&quot;, city:&quot;$city&quot;},population: {$sum:&quot;$pop&quot;}}}, {$sort:{&quot;_id.state&quot;:1,&quot;population&quot;:-1}}, {$group: {_id:&quot;$_id.state&quot;, city:{$last:&quot;$_id.city&quot;}}}])
+</code></pre><h4 id="sort"><a href="#sort" class="headerlink" title="$sort"></a>$sort</h4><p>$sort主要是对结果集进行排序。<br>实现<code>select count(pop) as count from zips group by state order by count</code>的方式如下</p>
+<pre><code>db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}},{$sort: {count:1}}])
+</code></pre><p>$sort、$skip、$limit同时用在aggregate中执行的顺序是那个写在前面就先执行那个，与find执行的时候是先sort，然后skip，最后才是limit这样的顺序完全不同。</p>
+<pre><code>&gt; db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}},{$sort: {count:1}}, {$skip:50}])
+{ &quot;result&quot; : [ { &quot;_id&quot; : &quot;CA&quot;, &quot;count&quot; : 29760021 } ], &quot;ok&quot; : 1 }
+&gt; db.zips.aggregate([{$group:{&quot;_id&quot;: &quot;$state&quot;,count: {&quot;$sum&quot;: &quot;$pop&quot;}}},{$skip:50},{$sort: {count:1}}])
+{ &quot;result&quot; : [ { &quot;_id&quot; : &quot;ME&quot;, &quot;count&quot; : 1227928 } ], &quot;ok&quot; : 1 }
+</code></pre><h4 id="skip"><a href="#skip" class="headerlink" title="$skip"></a>$skip</h4><p>$skip简单来说就是抛弃前面的N个结果，常用在分页中。</p>
+<pre><code>&gt; db.zips.aggregate([{$skip:29465}])
+{
+    &quot;result&quot; : [
+        {
+            &quot;city&quot; : &quot;SMOOT&quot;,
+            &quot;loc&quot; : [
+                -110.922351,
+                42.619238
+            ],
+            &quot;pop&quot; : 414,
+            &quot;state&quot; : &quot;WY&quot;,
+            &quot;_id&quot; : &quot;83126&quot;
+        },
+        {
+            &quot;city&quot; : &quot;THAYNE&quot;,
+            &quot;loc&quot; : [
+                -111.011354,
+                42.933026
+            ],
+            &quot;pop&quot; : 505,
+            &quot;state&quot; : &quot;WY&quot;,
+            &quot;_id&quot; : &quot;83127&quot;
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+</code></pre><h4 id="limit"><a href="#limit" class="headerlink" title="$limit"></a>$limit</h4><p>$limit是用来限制输出的结果数的。</p>
+<pre><code>&gt; db.zips.aggregate([{$limit:1}])
+{
+    &quot;result&quot; : [
+        {
+            &quot;city&quot; : &quot;ACMAR&quot;,
+            &quot;loc&quot; : [
+                -86.51557,
+                33.584132
+            ],
+            &quot;pop&quot; : 6055,
+            &quot;state&quot; : &quot;AL&quot;,
+            &quot;_id&quot; : &quot;35004&quot;
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+</code></pre><h4 id="project"><a href="#project" class="headerlink" title="$project"></a>$project</h4><p>$project 的作用是选择、构建需要的结果输出，包括重命名、添加字段、删除字段，这都不会修改数据库原有的内容的。<br>$project默认的输出字段是包括”_id”,可以用0、1控制是否显示。</p>
+<pre><code>&gt; db.zips.aggregate([{$project: {city:1}}, {$limit:1}])
+{ &quot;result&quot; : [ { &quot;city&quot; : &quot;ACMAR&quot;, &quot;_id&quot; : &quot;35004&quot; } ], &quot;ok&quot; : 1 }
+&gt; db.zips.aggregate([{$project: {_id:0,city:1}}, {$limit:1}])
+{ &quot;result&quot; : [ { &quot;city&quot; : &quot;ACMAR&quot; } ], &quot;ok&quot; : 1 }
+</code></pre><p>重命名</p>
+<pre><code>&gt; db.zips.aggregate([{$project: {_id:0,城市:&quot;$city&quot;}}, {$limit:1}])
+{ &quot;result&quot; : [ { &quot;城市&quot; : &quot;ACMAR&quot; } ], &quot;ok&quot; : 1 }
+</code></pre><p>添加字段 </p>
+<pre><code>&gt; db.zips.aggregate([{$project: {_id:1,where:{city:&quot;$city&quot;,state:&quot;$state&quot;}}}, {$limit:1}])
+{
+    &quot;result&quot; : [
+        {
+            &quot;_id&quot; : &quot;35004&quot;,
+            &quot;where&quot; : {
+                &quot;city&quot; : &quot;ACMAR&quot;,
+                &quot;state&quot; : &quot;AL&quot;
+            }
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+</code></pre><h4 id="unwind"><a href="#unwind" class="headerlink" title="$unwind"></a>$unwind</h4><p>$unwind是用来处理数组类型字段的。假如一条记录里面的数组字段有10个值，可以使用$unwind把这条记录拆成10条。</p>
+<pre><code>&gt; db.posts.aggregate({$project:{tags:1}},{$limit:1})
+{
+    &quot;result&quot; : [
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : [
+                &quot;trade&quot;,
+                &quot;fowl&quot;,
+                &quot;forecast&quot;,
+                &quot;pest&quot;,
+                &quot;professor&quot;,
+                &quot;willow&quot;,
+                &quot;rise&quot;,
+                &quot;brace&quot;,
+                &quot;ink&quot;,
+                &quot;road&quot;
+            ]
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+&gt; db.posts.aggregate({$project:{tags:1}},{$limit:1},{$unwind:&quot;$tags&quot;})
+{
+    &quot;result&quot; : [
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;trade&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;fowl&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;forecast&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;pest&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;professor&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;willow&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;rise&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;brace&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;ink&quot;
+        },
+        {
+            &quot;_id&quot; : ObjectId(&quot;50ab0f8bbcf1bfe2536dc3f8&quot;),
+            &quot;tags&quot; : &quot;road&quot;
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+&gt; 
+</code></pre><p>在blog系统中要实现统计博文的tag出现的次数可以使用$unwind实现。下面的例子只取出现次数最多的3个tag。</p>
+<pre><code>&gt; db.posts.aggregate({$project:{tags:1}},{$unwind:&quot;$tags&quot;},{$group: {_id:&quot;$tags&quot;,count:{$sum:1}}},{$sort:{count:-1}},{$limit:3})
+{
+    &quot;result&quot; : [
+        {
+            &quot;_id&quot; : &quot;sphynx&quot;,
+            &quot;count&quot; : 13
+        },
+        {
+            &quot;_id&quot; : &quot;lunchroom&quot;,
+            &quot;count&quot; : 12
+        },
+        {
+            &quot;_id&quot; : &quot;puppy&quot;,
+            &quot;count&quot; : 11
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+</code></pre><p>对于统计tag出现的次数也可以使用MapReduce，下面是我用Go语言写的示例。连接MongoDB用的是<a href="http://labix.org/mgo" target="_blank" rel="external">mgo</a>。Aggregate可以在一定程度上实现需要MapReduce的任务。</p>
+<pre><code>type Result struct {
+    Key   string &quot;_id&quot;
+    Value int
+}
+
+func GetTags() (result []Result) {
+    job := &amp;mgo.MapReduce{
+        Map: &quot;function() { &quot; +
+            &quot;    this.Tags.forEach( &quot; +
+            &quot;        function(z){emit(z,1);})}&quot;,
+        Reduce: &quot;function(key, values) { &quot; +
+            &quot;    var total=0; &quot; +
+            &quot;    for(var i=0;i&lt;values.length;i++){ &quot; +
+            &quot;        total += values[i];} &quot; +
+            &quot;    return total;}&quot;,
+    }
+    conn, err := mgo.Dial(HOST)
+    defer conn.Close()
+    db := conn.DB(DATABASE)
+    articles := db.C(&quot;articles&quot;)
+    _, err = articles.Find(nil).MapReduce(job, &amp;result)
+    if err != nil {
+        panic(err)
+    }
+
+    return result
+}
+</code></pre>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/01/27/mongodb-m101-aggregation/" class="archive-article-date">
+  	<time datetime="2013-01-26T17:09:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-01-27</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2013/03/10/mongodb-replica-set/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MongoDB-Replica－Set
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/01/16/mongodb-m101-indexes/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MongoDB-M101-Indexes</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mongodb-m101-aggregation" data-title="MongoDB-M101-Aggregation" data-url="http://wendyeq.me/2013/01/27/mongodb-m101-aggregation/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

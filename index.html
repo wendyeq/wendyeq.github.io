@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Wendyeq Blog">
+<meta property="og:url" content="http://wendyeq.me/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wendyeq Blog">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        
+  
+    <article id="post-docker-introduction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/22/docker-introduction/">Docker 入门简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Docker优点"><a href="#Docker优点" class="headerlink" title="Docker优点"></a>Docker优点</h2><p>在<a href="/2016/11/17/docker-registry-v2/">Docker 安装与Registry V2私有仓库搭建</a> 中已经简单提过Docker。<br>Docker 的优点很多：</p>
+<ol>
+<li>高效利用系统资源</li>
+<li>更快的启动速度</li>
+<li>一致的运行环境</li>
+<li>持续交付和部署</li>
+<li>方便的迁移</li>
+<li>轻松的维护和扩展</li>
+<li>采用我喜欢的Go语言进行开发</li>
+</ol>
+<h2 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h2><p>Docker 3大基础概念：镜像、容器、仓库。</p>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/11/22/docker-introduction/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/22/docker-introduction/" class="archive-article-date">
+  	<time datetime="2016-11-22T13:12:30.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-22</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-nexus-oss-3-in-docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/20/nexus-oss-3-in-docker/">Docker 搭建Nexus OSS3私服</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Nexus-简介"><a href="#Nexus-简介" class="headerlink" title="Nexus 简介"></a>Nexus 简介</h2><p>Nexus 是个仓库管理器，目前主要分2大版本：2.X 和 3.X。2.X 主要支持的格式是Maven、P2、OBR、Yum。3.X主要支持的是Docker、NuGet、npm、Bower、Pypi、Ruby Gems，当然也支持构建工具Maven 和Gradle。Nexus 3只支持Oracle jdk8，不支持其它版本的JDK，比如OpenJDK。更多内容可以查看<a href="https://www.sonatype.com/download-oss-sonatype" target="_blank" rel="external">Nexus下载页面</a>。</p>
+<h2 id="Nexus-安装"><a href="#Nexus-安装" class="headerlink" title="Nexus 安装"></a>Nexus 安装</h2><p>本次安装的Nexus OSS的版本是3.1.0。<br>Nexus3 Docker安装脚本地址是<a href="https://github.com/sonatype/docker-nexus3" target="_blank" rel="external">docker-nexus3</a>。其实安装起来比里面的描述要简单一些。先把镜像拉取下来，然后直接run 就可以了。但是因为当时操作的时候，拉取镜像的机器与实际安装的机器不是同一台，所以要把镜像推送的registry 仓库，然后再运行。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div><div class="line">docker tag sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div><div class="line">docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div></pre></td></tr></table></figure></p>
+<p>创建存储文件目录，并修改目录拥有者，容器里面运行的uid 是 200.<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">mkdir</span> /<span class="class"><span class="keyword">data</span>/nexus &amp;&amp; chown -<span class="type">R</span> 200 /<span class="keyword">data</span>/nexus</span></div><div class="line"><span class="title">docker</span> run -d -p <span class="number">8081</span>:<span class="number">8081</span> -v /<span class="class"><span class="keyword">data</span>/nexus:/nexus-<span class="keyword">data</span> <span class="comment">--name nexus 172.18.2.40:5000/sonatype/nexus3:3.1.0</span></span></div></pre></td></tr></table></figure></p>
+<p>就是这么简单就安装好了，如果不能访问的话看看是不是iptable 没有开放8081端口。<br>通过<code>docker logs nexus</code> 可以查看启动日志。</p>
+<h2 id="Nexus-使用"><a href="#Nexus-使用" class="headerlink" title="Nexus 使用"></a>Nexus 使用</h2><p>安装好之后默认的用户名／密码是admin／admin123，需要自己修改密码。<br>默认的maven-central 使用的是<a href="https://repo1.maven.org/maven2/" target="_blank" rel="external">https://repo1.maven.org/maven2/</a> 地址，速度上没有UK 的快，所以修改为<a href="http://uk.maven.org/maven2/" target="_blank" rel="external">http://uk.maven.org/maven2/</a>。<br><img src="/2016/11/20/nexus-oss-3-in-docker/repository.png" alt="Repository" title="Repository"></p>
+<p>因为Gradle和Maven都有在用，Gradle是可以直接使用Maven的仓库的，所以下面以Gradle举例。修改build.gradle文件里面的repositories。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="section">repositories</span> &#123;</div><div class="line">    <span class="section">maven</span> &#123;</div><div class="line">        <span class="attribute">url</span> <span class="string">'http://172.18.2.40:8081/repository/maven-public/'</span></div><div class="line">    &#125;</div><div class="line">    jcenter()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其实国内还是有阿里云的Nexus这种比较快的仓库<a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/</a>，但是一些私包不能上传到上面，只能自己搭建一个私服。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/20/nexus-oss-3-in-docker/" class="archive-article-date">
+  	<time datetime="2016-11-20T10:43:19.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-20</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nexus/">nexus</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-docker-registry-v2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/17/docker-registry-v2/">Docker 安装与Registry V2私有仓库搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Docker 是一个开源的容器引擎，可以让开发者把应用以及依赖打包到一个可移植的容器中。Docker 采用Go语言编写，当时学习Go语言的时候已经知道这个神器，但是一直没有合适的场景正式使用，现在机会来啦。</p>
+<p>Registry 是Docker 镜像的仓库，使用Registry 能搭建私有的Docker仓库，方便分发自定义镜像。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>本文的内容在以下版本中测试通过，不同的版本可能存在不同的地方，以下内容仅供参考。<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">[root@CentOS72-<span class="number">40</span> /]<span class="comment"># cat /etc/centos-release</span></div><div class="line">CentOS Linux release <span class="number">7.2</span>.<span class="number">1511</span> (Core)</div><div class="line"></div><div class="line">[root@CentOS72-<span class="number">40</span> /]<span class="comment"># docker version</span></div><div class="line">Client:</div><div class="line"> <span class="keyword">Version</span>:      <span class="number">1.12</span>.<span class="number">3</span></div><div class="line"> API <span class="keyword">version</span>:  <span class="number">1.24</span></div><div class="line"> Go <span class="keyword">version</span>:   go1.<span class="number">6.3</span></div><div class="line"> Git commit:   <span class="number">6</span>b644ec</div><div class="line"> Built:</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> <span class="keyword">Version</span>:      <span class="number">1.12</span>.<span class="number">3</span></div><div class="line"> API <span class="keyword">version</span>:  <span class="number">1.24</span></div><div class="line"> Go <span class="keyword">version</span>:   go1.<span class="number">6.3</span></div><div class="line"> Git commit:   <span class="number">6</span>b644ec</div><div class="line"> Built:</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line"></div><div class="line">[root@CentOS72-<span class="number">40</span> /]<span class="comment"># docker images registry</span></div><div class="line"> REPOSITORY          <span class="keyword">TAG</span>                 <span class="title">IMAGE</span> ID            CREATED             SIZE</div><div class="line"> registry            <span class="number">2.5</span>.<span class="number">1</span>               c9bd19d022f6        <span class="number">4</span> weeks ago         <span class="number">33.27</span> MB</div></pre></td></tr></table></figure></p>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/11/17/docker-registry-v2/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/17/docker-registry-v2/" class="archive-article-date">
+  	<time datetime="2016-11-17T12:00:17.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-17</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/registry/">registry</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-zero-to-one" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/09/zero-to-one/">《从0到1》读书笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近花了几天时间把《从0到1》看完了一遍，里面有几个问题令人印象深刻。书中描述的很多内容其实都在职场中遇到，但是自己没有总结出来。《从0到1》把很多商业经验，特别是初闯企业的商业经验都终结出来，每一个有志于创业的人都应读一读。</p>
+<p>几个值得深思的问题：</p>
+<p>1、在什么重要问题上你与其他人有不同看法？</p>
+<p>2、工程问题：你的技术具有突破性，而不紧急是稍有改进码？</p>
+<p>3、时机问题：现在开创事业，时机合适吗？</p>
+<p>4、垄断问题：开创之初，是在一个小市场抢占大份额吗？</p>
+<p>5、人员问题：你有合适的团队吗？</p>
+<p>6、销售问题：除了创造产品，你有没有办法销售产品？</p>
+<p>7、持久问题：未来10年或20年，你能保住自己的市场地位吗？</p>
+<p>8、秘密问题：你有没有找到一个其他人没有发现的独特机会？</p>
+<p>《从0到1》读书笔记思维导图（逆时针阅读）：</p>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/08/09/zero-to-one/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/08/09/zero-to-one/" class="archive-article-date">
+  	<time datetime="2016-08-09T14:41:27.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-08-09</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-writing-xcode-plugin-in-swift" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/26/writing-xcode-plugin-in-swift/">用Swift开发Xcode插件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近发现Xcode上有个好玩的插件<a href="https://github.com/poboke/Miku">Miku</a>，敲代码时Miku会唱歌和跳舞，停止敲代码时Miku的动作就会慢下来，它是<a href="https://github.com/sunqibuhuake/atom-miku">atom-miku</a>的盗版。</p>
+<p>Miku插件是使用Objective-C开发，可惜不怎么懂objc，就寻思着用Swift翻译一遍，学习一下怎样用Swift开发Xcode的插件。</p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Xcode的插件大部分都是通过<a href="https://github.com/alcatraz/Alcatraz">Alcatraz</a>管理的，在Xcode的Window菜单中打开Package Manager就是Alcatraz，在打开的插件管理界面中选择templates页签，然后在搜索框中输入xcode plugin就能找到Xcode Plugin Template插件。Xcode Plugin Template是已经写好可运行的Xcode插件模板，在github上也可下载安装<a href="https://github.com/kattrali/Xcode-Plugin-Template">Xcode Plugin Template</a>。</p>
+<img src="/2016/01/26/writing-xcode-plugin-in-swift/alcatraz.png" alt="Alcatraz" title="Alcatraz">
+<p>Xcode的插件会安装到<code>~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/</code>目录下，文件名后缀是.xcplugin，卸载时直接到这个目录中把对应的.xcplugin删除即可。</p>
+<p>安装完后重启Xcode，新建项目时在OSX上就可以选择新建Xcode Plugin的工程，记得项目语言选择Swift。</p>
+<img src="/2016/01/26/writing-xcode-plugin-in-swift/xcode-template.png" alt="Xcode Template" title="Xcode Template">
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/01/26/writing-xcode-plugin-in-swift/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/01/26/writing-xcode-plugin-in-swift/" class="archive-article-date">
+  	<time datetime="2016-01-25T16:24:01.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-01-26</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift/">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode/">Xcode</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-git-basics" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/07/git-basics/">Git简单用法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="htt://git-scm.com">Git</a>是个分布式版本控制系统。Git不是万能的，他仅仅是个工具，用的好不好与使用的人有很大的关系，他需要使用Git的人对Git管理的内容有很清晰的理解，特别是处理冲突的时候。</p>
+<p>目前使用图形客户端<a href="https://www.sourcetreeapp.com/">SourceTree</a> + 终端的方式使用Git，对于Git最喜欢的就是她轻量级的分支。</p>
+<p>Git托管平台除了著名的<a href="https://github.com/">Github</a>之外还有开源自行搭建<a href="https://about.gitlab.com">Gitlab</a>,国内的<a href="http://git.oschina.net">OSChine</a>、<a href="https://coding.net/git">Coding</a>、<a href="https://gitcafe.com/git">GitCafe</a>等。用Git + VPS搭建私有无界面的服务器也是可以的。</p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">git init // 初始化仓库</div><div class="line">git <span class="built_in">clone</span> [url] // 通过<span class="built_in">clone</span>已有项目初始化仓库</div><div class="line">git remote add origin [url] // 添加远程跟踪仓库</div><div class="line">git status // 查看仓库状态</div><div class="line">git add [filename] // 添加跟踪文件</div><div class="line">git commit -m <span class="string">'message'</span> // 写提交信息并提交到本地仓库</div><div class="line">git commit --amend // 修改最后一次提交信息</div><div class="line">git push origin master // 推送代码到origin仓库的master分支</div><div class="line">git pull origin master // 从origin仓库的master拉起代码到本地</div></pre></td></tr></table></figure>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/2016/01/07/git-basics/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/01/07/git-basics/" class="archive-article-date">
+  	<time datetime="2016-01-07T14:25:37.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-01-07</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-17Sudoku-in-the-app-store" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/01/17Sudoku-in-the-app-store/">一起数独的开发营销历程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一起数独是我开发的第一款IOS App，也是2014年时立下的一个计划。自9月上架以来已经在App Store上销售3个多月了，一共发布了4个版本，“畅销”17个国家和地区，累计在App Store上被查看1375次（有不少还是我自己点击查看的），卖出80份，销售额44.65 USD，收入30.38 USD（每年99 USD的membership都没赚回来）。以下主要讲讲这个App开发营销的整个过程，这是App Store的链接: <a href="https://itunes.apple.com/cn/app/apple-store/id1036241597?pt=117858878&amp;ct=me&amp;mt=8" title="一起数独－有难度的数独游戏" target="_blank" rel="external">https://itunes.apple.com/cn/app/apple-store/id1036241597</a> 。</p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>几年前不是没有看到IOS开发崛起的机会，但是由于个人不喜欢Objective-C这门语言(也不喜欢Javascript，Javascript也跟IOS开发无关，纯粹是个人不喜欢这门语言而已)，所以一直没有开始做IOS的开发。直到2014年6月WWDC Swift横空出世，而且这个时候也凑齐Apple三件套，习惯了App Store的付费购买模式，就一直在想开发个应用试试。</p>
+<p>首先这个应用不能太复杂而且对美工要求不能太高，因为只打算一个人做，太复杂的话开发周期会很长，日常还要出差、上班会忙不过来。美工要求太高的话，对我这种不会Photoshop的人来说直接歇菜。应用的销售模式都想好了采用一次付费购买的方式，不打算做免费应用然后加广告的模式，己所不欲勿施于人。一开始是准备做个工具类的应用，但是经过对付费排行榜的观察，发现工具类的应用很难畅销。后来也考虑和好几个方向，都没有想好要做什么。最后还是决定做个数独游戏。</p>
+<p>早在高中的时候已经开始玩数独，那时候的题目都是书本上的。后来买了Motorola Defy安装的第一个游戏<a href="http://andoku.com/" target="_blank" rel="external">andoku</a>数独，玩到了晚上3点多。换了iPhone 5S之后也试过很多款数独游戏，但是都没有一款合心意的，不是就是难度太低，就是操作不方便，不能单手操作，或者是价格太贵了，比如我IOS上最喜欢的的康思数独(建议数独爱好者都用一下，它的题目真的不错)，虽然下载免费，但是如果把所有题目都内购了的话要1千多元。然后就萌生了开发一款有难度且能单手操作的数独游戏，平常主要玩手机都是在坐公车和搭电梯所以必须要方便单手操作，今年坐公车也认识了个美女。</p>
+<h1 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h1><p>确定了要做什么样的应用之后就着手设计界面原型，为了方便单手操作就就参考andoku设计为九宫格的样式，这样的话在适配到4S的时候就很丑了，不过我本来就没打算适配4S的，理由就是我做的是付费应用，在这个时候花钱买应用的人早就换iPhone 6以上了，而且很多数独游戏就是为了兼容4S或者预留位置放广告导致了操作的体验不好。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/screen-demo.png" alt="界面原型" title="界面原型"></p>
+<p>从7月19日开始到12月5日的2.5.0版本，开发过程中提交了55次，发布了4个版本。第三方库使用CocoaPods管理，刚开始也只用到了Google Analytics，Swift版本由1.2升级到2.0。</p>
+<p>整个开发过程中也走不少弯路，比如题目原本打算是根据算法生成的，算法也写好了（在调试算法的过程中发现Swift的Playground实在是太好用了），但是根据算法生成的题目参差不齐，没有竞争力。</p>
+<p>已证明标准数独最少需要17个提示数，所以找了个接近5万道只有17个提示数的题库。虽然提示数的多少与难度必然的关系，但是提示数越少给人的压力越大，用hodoku对数独难度进行评分，题目的难度在306到8080之间。所有题目都只有17个提示数这也是这个数独游戏的最大亮点，在游戏命名中也直接叫17 Sudoku中文谐音就是一起数独。</p>
+<p>开发过程中最有趣的部分算是图标了，每发布一个版本都换一次图标，第一版的时候还不知道可以<a href="http://appicontemplate.com/" target="_blank" rel="external">appicontemplate</a>生成，直接用Sketch切的图，连圆角矩形都没做。</p>
+<img src="/2016/01/01/17Sudoku-in-the-app-store/icon1.0.0.png" alt="icon 1.0.0" title="icon 1.0.0"> <img src="/2016/01/01/17Sudoku-in-the-app-store/icon1.1.0.png" alt="icon 1.1.0" title="icon 1.1.0"> <img src="/2016/01/01/17Sudoku-in-the-app-store/icon2.0.0.png" alt="icon 2.0.0" title="icon 2.0.0"> <img src="/2016/01/01/17Sudoku-in-the-app-store/icon2.5.0.png" alt="icon 2.5.0" title="icon 2.5.0">
+<p>图标在App Store上的显示效果，同时也是目前为止我看到的最好的排名。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/icon-in-app-store.png" alt="icon in app store" title="icon in app store"></p>
+<h1 id="上架"><a href="#上架" class="headerlink" title="上架"></a>上架</h1><p>从7月19日开始开发，到了9月3日觉得第一版可以发布了，再不发布的话就会被拖延症坏了整个项目。由于8月份大部分时间都在外出差，用于开发的时间不多，实际上7月底的时候就开发的差不多了。</p>
+<p>游戏一开始瞄准的就是国际市场，做完主要的开发之后就做了i18n，支持简体中文、繁体中文、英语，本来还想做个日文版的，结果Google翻译出来感觉有点奇怪就放弃了。IOS开发做i18n挺方便的，多语言都是key－value对，当然每次更新加新内容之后再做多语言还是麻烦，不过已经比其他的方便很多了。</p>
+<p>上架发布的时候有几个地方要注意</p>
+<ul>
+<li>主要语言，如果有多语言的话主要语言还是选择英语比较好，主要语言指的是在没有做本地化的时候显示的是什么语言，英语相对中文还是更国际化的。</li>
+<li>类别，上架的时候可以选择两个类别，要注意选择与自己游戏相关且竞争强度不大的类别，竞争强度大不大主要看类别排行榜上的应用质量。</li>
+<li>视频预览，视频预览对大小和帧度要求比较高，一般要求真机录制，也就是每个分辨率都要有一台真机。没有视频预览的话关系也不大，反正一般我购买应用也不看视频预览的。</li>
+<li>关键词，留在营销部分讲。</li>
+</ul>
+<p>App Store的应用发布很折腾人效率非常低，审核的等待时间一般都是一周，审核过程只需几个小时。<br>1.0.0版本9月3日提交的结果到9月11日才审核通过，12日才开始销售。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/audit1.0.0.png" alt="audit1.0.0.png" title=""></p>
+<p>1.1.0版本9月13日提交的结果到9月29日才审核通过，中间由于视频预览中留有鼠标的痕迹被拒，删除视频预览再提交要等一周之后才审核，🐢速。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/audit1.1.0.png" alt="audit1.1.0.png" title=""></p>
+<p>2.0.0版本10月16日提交的结果到10月21日才审核通过，中间由于在标题中做ASO优化做的太明显导致被拒，删除不必要的标题再提交，然后申请了加急审核，还是要等一周之后才审核，也就是发布一个版本可能会是两周之后才能审核通过。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/audit2.0.0.png" alt="audit2.0.0.png" title=""></p>
+<p>2.5.0版本12月5日提交的结果到12月12日审核通过。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/audit2.5.0.png" alt="audit2.5.0.png" title=""></p>
+<h1 id="营销"><a href="#营销" class="headerlink" title="营销"></a>营销</h1><p>当一个应用开发完毕之后，你以为完成了一个项目周期中的80%，实际上只是完成了20%，好戏才刚刚开始。</p>
+<h2 id="第一次上架"><a href="#第一次上架" class="headerlink" title="第一次上架"></a>第一次上架</h2><p>App Store上有几百万个应用，如何让人发现你的应用是个大难题。游戏应用第一次上架的时候，按游戏的小类别浏览是可以看到每个新上架的应用的，其他类别的到没有这个功能。所以第一次上架很重要，如果在图标、描述上能吸引人下载就是最好的，可以利用这个时候冲榜，然后强者恒强。</p>
+<h2 id="排行榜"><a href="#排行榜" class="headerlink" title="排行榜"></a>排行榜</h2><p>选择合适的分类和付费应用比较容易上榜，免费应用的榜单很难上，还好一开始就没打算免费，付费应用小分类榜单的前20名，每天只需几个下载就可以上。</p>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>大部分人发现应用除了排行榜之外，通过App Store的搜索功能也是一个很重要的途径。如何设置关键词很重要，标题是App Store做索引的重要来源，可以设置主标题＋副标题的形式，比如我的应用“一起数独－有难度的数据游戏”。每个应用在每种语言下可以设置100个字符的关键词，关键词尽量不要重复，App Store会自动分词的。一般可以参考竞品的关键词来设置自己的关键词，可以通过一些工具来了解设置什么样的关键词比较合适，比如<a href="http://aso100.com/index.php/app/optimization" target="_blank" rel="external">ASO100</a>、<a href="http://www.asou.com/" target="_blank" rel="external">ASOU</a>，ASO100用来查看关键词和竞品对比，ASOU查看应用搜索优化指数。</p>
+<p>在ASO100中可以看到关键词，经过4个版本的优化发现覆盖的关键词已经不少了，但是排名靠前的非常少。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/aso100-key-word.png" alt="aso100-key-word.png" title=""></p>
+<p>在ASOU查看应用搜索优化指数很低<br><img src="/2016/01/01/17Sudoku-in-the-app-store/asou.png" alt="asou.png" title=""></p>
+<h2 id="价格"><a href="#价格" class="headerlink" title="价格"></a>价格</h2><p>数独这种小众游戏的市场不大，在百度数独吧中也只有区区3万5千多人关注而已，比咖啡吧都少的多。既然东西都做了，不奢望能赚钱，也想把membership的费用赚回来。中国区的消费基本集中在1、3、6这三个价格中，小众市场普通质量的应用怎么定价就麻烦了，定低了收不回成本，定高了卖不出去。没上架之前定的价格策略是逐步涨价，希望像股票一样越涨越多人买，价格高了，卖出一个等于之前的好几个。经常购买应用的人都知道，当你不久前花了18块钱，买了个应用，过几天他降到1块钱那是怎样的不爽。己所不欲勿施于人，那么价格就不能波动太大，所以就定了3元，一个早餐都不到的价格，往下有降价空间，往上又有涨价空间。</p>
+<p>经过几次价格的调整发现，降到1元对销量的影响不大，倒是涨到6元对销量影响很大，卖不出去。在榜单中一天没有销量的话对排名影响很大，排名下降得很厉害。</p>
+<p>在ASO100中看到排名图表，App Store最近2次对索引的调整对我的应用排名非常之大。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/aso100.png" alt="aso100.png" title=""></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>比如在贴吧中发软文，发过一两篇，效果不大。发兑换码到一些评测网站或者写一些软文投稿之类，由于应用质量一般，没什么特点就没搞。</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>通过一起数独这个游戏项目终于把IOS开发的流程搞清楚，还有很多感触只可意会不能言传。<br>现在终于明白以前看小说时那些大神求月票是一种什么心情，就跟你每天去榜单上看看自己的应用有没有上榜，有没有人下载一样。最大的遗憾是App Store上没有人评论！</p>
+<p>12月之后销售开始好转，有点强者恒强的味道，最后掉下来是因为那几天涨价了。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/sale.png" alt="sale.png" title=""></p>
+<p>虽然有时会上一下分类榜，但是查看次数实际太少了，5.8%的购买转化率还是比较满意的。<br><img src="/2016/01/01/17Sudoku-in-the-app-store/analytics.png" alt="analytics.png" title=""></p>
+<p>有兴趣的话可以点击看看，App Store的链接: <a href="https://itunes.apple.com/cn/app/apple-store/id1036241597?pt=117858878&amp;ct=me&amp;mt=8" title="一起数独－有难度的数独游戏" target="_blank" rel="external">https://itunes.apple.com/cn/app/apple-store/id1036241597</a> </p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/01/01/17Sudoku-in-the-app-store/" class="archive-article-date">
+  	<time datetime="2015-12-31T16:00:01.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-01-01</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/App-Store/">App Store</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOS/">IOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sudoku/">Sudoku</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift/">Swift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/一起数独/">一起数独</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-kpw-detail" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/07/01/kpw-detail/">KindlePaperWhite使用心得</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h3><ul>
+<li><p>OS：Linux</p>
+</li>
+<li><p>屏幕尺寸：6寸</p>
+</li>
+<li><p>触摸屏：电容屏，2点触控</p>
+</li>
+<li><p>分辨率：1024x768像素，212ppi</p>
+</li>
+<li><p>CPU型号：飞思卡尔 i. MX50 Rev.1.1</p>
+</li>
+<li><p>CPU主频：800MHz </p>
+</li>
+<li><p>存储容量：2GB存储空间（包括大约1.25 GB的用户存储空间），5GB的云存储</p>
+</li>
+<li><p>前置灯：4颗LED</p>
+</li>
+<li><p>电池：3.7V 1420mAh </p>
+</li>
+<li><p>尺寸大小：169毫米x 117毫米x 9.1毫米</p>
+</li>
+<li><p>重量：213克</p>
+</li>
+</ul>
+<p>kindle paperwhite 的规格参数在看惯了双核、四核平板的今天，一点都不起眼。最吸引眼球的就是212ppi的显示屏，不但在正常自然光下看书很舒服，而且在晚上没有灯光的地方通过4颗LED的发光看起来一点都不刺眼。</p>
+<h3 id="系统软件"><a href="#系统软件" class="headerlink" title="系统软件"></a>系统软件</h3><p>我买的是日版kindle paperwhite，多语言直接支持中文，但是需要先升级到5.3.5版本的系统才能在亚马逊中国Kindle商店购买图书。升级的方法很简单，点击右上角的三条横线，再点击设置，再一次点击右上角的三条横线，第二个菜单选项就是更新您的Kindle了。点击就会自动下载更新。</p>
+<h3 id="Kindle的优缺点"><a href="#Kindle的优缺点" class="headerlink" title="Kindle的优缺点"></a>Kindle的优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>1、可以查看热点标注，也就是可以显示其他kindle用户标注的重点段落。一般我看到别人标注的段落都是认真多看几遍的，毕竟群众的力量是无穷的。使用热点标注这个功能的前提是这本书是在Kindle商店里面有的。</p>
+<p>2、Send To Kindle。可以将网页内容一键发送到Kindle。Amazon官方软件不支持中国版的kindle，可以使用chrome的插件<a href="https://chrome.google.com/webstore/detail/send-to-kindle-by-klipme/ipkfnchcgalnafehpglfbommidgmalan" target="_blank" rel="external">Send to Kindle (by Klip.me)</a>替代。</p>
+<p>3、推送与同步。Kindle支持通过发送邮件附件的方式把书发送到Kindle图书馆的个人文档中，个人文档的存储大小是5G。个人文档支持的格式包括：Microsoft Word, HTML, RTF, JPEG, GIF, PNG, BMP, TXT和PDF。除PDF之外，其他格式会自动转换为Kindle格式。英文版的PDF也可以显式的转化为Kindle格式，只需在邮件主题中加入“convert”，不支持中文PDF的转换。转换为Kindle格式的个人文档会自动同步个人文档的最新阅读位置、书签、笔记和标注，使所有设备都能看到同步的记录，这就是为什么要把书发送到Kindle的原因。</p>
+<p>4、电子墨水屏的显示效果跟书本一样，看起来真的很舒服。</p>
+<p>5、使用时间长，当然是在关闭WIFI的情况下，开着WIFI还是比较耗电的。</p>
+<p>6、不用关机，一直开着，没电就拿USB充电器充电。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>1、不支持EPUB，收藏了很多EPUB的书籍，kindle paperwhite居然不支持，真郁闷。虽然这个问题可以通过把EPUB转换为MOBI或者安装多看系统解决，但是原生系统支持不是更好吗，也不是很难解决的问题，出个新固件就可以了。Amazon不是靠卖硬件赚钱的，是靠卖书赚钱的，EPUB的免费书太多了。</p>
+<p>2、PDF的阅读效果一般，虽然已经超出了我的估计。但真的很一般，6寸的东西能对他有什么期望呢。</p>
+<p>3、同步推送漫，特别是需要转换的PDF，最长的居然是2天之后才推送完成。</p>
+<p>4、如果没有设置“一键下单”购书会很麻烦，而且不能多本书合并付款，每本书都会产生一张订单。当你第一次使用购买了一堆书的时候，一大堆订单发到你的邮箱去，很恐怖。</p>
+<h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><p>1、截屏，只需要同时点击左上角和右下角，或者右上角和左上角（斜对角），图片就会保存到kindle硬盘中，用USB线和电脑连接，就可以取得。 </p>
+<p>2、添加书签，在阅读中可以通过点击右上角的页面以快速添加或删除书签。在阅读界面查看笔记和标注的菜单中可以管理书签和标注。感觉书签和标注放一起比较混乱还是分开比较好。</p>
+<p>3、阅读进度，点击阅读节目的左下角切换阅读进度的显示信息。</p>
+<p>4、主页面导航，点击主页面的页码，然后可以选择跳到其他页码或则字母表。（书籍多的时候比较好用）</p>
+<p>5、收藏夹，Kindle不会根据你在kindle硬盘中通过文件夹有序的存放好的文档顺序显示文档，也就是kindle把所有的文档都放在同一个文件夹doucument里。收藏夹是一种排序选项，而不是文件夹。可以将一个文档添加到多个收藏夹中。删除收藏夹后，收藏夹里面的文档不会删除，而是自动回到主页上。</p>
+<p>6、amazon的<a href="http://www.amazon.cn/gp/help/customer/display.html?ie=UTF8&amp;nodeId=200843370" target="_blank" rel="external">kindle帮助</a></p>
+<h3 id="Kindle-Paperwhite-真的值得拥有，谁用谁知道！"><a href="#Kindle-Paperwhite-真的值得拥有，谁用谁知道！" class="headerlink" title="Kindle Paperwhite 真的值得拥有，谁用谁知道！"></a>Kindle Paperwhite 真的值得拥有，谁用谁知道！</h3>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/07/01/kpw-detail/" class="archive-article-date">
+  	<time datetime="2013-06-30T17:00:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-07-01</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kindle/">kindle</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-kpw-from-jp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/06/10/kpw-from-jp/">日本亚马逊购买KindlePaperWhite</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>事实上我已经有一台盛大的Bambook电子书了，但是盛大的内容不够丰富，大部分都是网络小说，看PDF也不方便。听到Kindle要入华的消息就开始留意起Kindle了，网上对kindle的评论都很正面，amazon.cn书城上的资源也很多。刚开始有传言是4月26日国行上市的，但是被耍了，直到6月7日才上市，这时我日本Amazon淘回来的Kindle PaperWhite都已经玩了几天了。</p>
+<p>随着2013年日元大幅度的贬值，去日本海淘成为了不少人的选择。日本海淘的优点：快递速度快，日元贬值人民币的购买力增强。</p>
+<p>购买过程：</p>
+<ol>
+<li><p>注册转运公司，我用的是<a href="http://www.jshoppers.com/gb/forward/" target="_blank" rel="external">jshoppers</a>语言可以选择中文，支持支付宝支付转运费。</p>
+</li>
+<li><p>注册<a href="http://www.amazon.co.jp" target="_blank" rel="external">日本亚马逊</a>，如果是中国亚马逊、美国亚马逊都是用同一个邮箱注册的话，最好就用不同的密码进行区分。不会日语没有关系，进入首页在Amazon搜索框的上面有个In English的链接，可以国际化为英语界面。</p>
+</li>
+<li><p>下单<a href="http://www.amazon.co.jp/gp/product/B007OZO03M/" target="_blank" rel="external">Kindle</a>，购购物过程与其他国家的亚马逊没有什么不同。也是可以选择Amazon Prime服务试用1个月，但是要记得关闭了自动续期。最好是周日到周四下单购买，据说jsphoppers周六日是不收快递的。</p>
+</li>
+<li><p>等收快递，jsphoppers是发EMS的，从日本到中国速度很快。6月1日发货，6月4日就收到了，而且广州海关也没有收税。</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>整个过程是5月27日晚上下单，6月4日早上收到。Kindle PaperWhite的价格是7980日元，按当天的汇率折合人民币是485元左右。转运费是1145日元，约70元人民币。Kindle PaperWhite的到手价是560左右。如果运气太好，需要为伟大的税收事业做贡献的话，盛惠80元。也就是最高的成本是640元。国行的价格是849元，这个定价也不会太离谱，毕竟国行的是无广告版本，在美国无广告版本也要139美元。如果不是日元贬值的太厉害的话，在日本也买不到便宜的Kindle PaperWhite。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/06/10/kpw-from-jp/" class="archive-article-date">
+  	<time datetime="2013-06-09T18:09:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-06-10</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kindle/">kindle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/海淘/">海淘</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-first-haitao" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/05/26/first-haitao/">第一次海淘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>很早之前就有海淘的想法的，但是一直都没有机会实践。一来是没有什么特别需要海淘，二来一些东西海淘也不见得比在国内购买要便宜。从去年年底开始喜欢上<a href="http://www.movado.cn/" target="_blank" rel="external">Movado</a>的手表，特别喜欢只有时针和分针的手表，一直都想拥有一块这样的手表。查询了一下国内Movado的价格都在4000元以上（<a href="http://www.wbiao.cn/movado/index-o1-b1.html" target="_blank" rel="external">万表网报价</a>），后来发现海淘的价格很便宜。</p>
+<p>在海淘手表当中有两个网站比较出名，分别是<a href="http://www.ashford.com/" target="_blank" rel="external">Ashford</a>和<a href="http://www.jomashop.com/" target="_blank" rel="external">Jomashop</a>，Ashford甚至还有中文站点。本来海淘的第一单是发生在Ashford的，那天Ashford的一款Movado手表打折打得很厉害，但是招商银行的信用卡死活都付不了款，后来折扣码也过期了,就没有购买。</p>
+<p>在一次无意中发现了<a href="http://www.worldofwatches.com/" target="_blank" rel="external">Worldofwatches</a>中的<a href="http://www.worldofwatches.com/detail.asp?bo_products_variance_id=98303&amp;iq=1" target="_blank" rel="external">和谐0606057</a>打折也很厉害，只需$222就能买到了，国内要4500左右（<a href="http://www.movado.cn/harmony-0606057.html" target="_blank" rel="external">Movado官网对和谐0606057的介绍</a>)。只有用国内四分之一的价格就可以买到一个Movado的手表了，就算从国外运回来运费也只需要100多块人民币。</p>
+<p><img src="http://www.movado.cn/media/catalog/product/cache/12/image/327x544/9df78eab33525d08d6e5fb8d27136e95/0/6/0606057w_459x715_2.jpg" alt=""></p>
+<p>从World Of Watches里购买了，购买的步骤如下：</p>
+<ol>
+<li><p>找返利网站，返利网站通常会有商品价格的几个百分点的返利。常用的返利网站有<a href="http://www.55haitao.com/?fromuid=66336" target="_blank" rel="external">55海淘</a>、<a href="http://www.mrrebates.com?refid=707528" target="_blank" rel="external">Mr.Rebates</a>、<a href="http://www.ebates.com/rf.do?referrerid=b9sY7CG45Yq6VBUuUdruTg%3D%3D" target="_blank" rel="external">Ebates</a>。</p>
+</li>
+<li><p>通过返利网站查询，确定那家返利网站的返利更给力。对于World Of Watches这家店来说在55海淘的返利7%，在Mr.Rebates的返利是6%，在Ebates的返利是5%。使用worldofwatches，在55海淘是搜索不到的，只能使用world of watches，模糊搜索做的真烂。先登录55海淘然后<a href="http://www.55haitao.com/store/World-of-Watches.html" target="_blank" rel="external">点击直达</a>。</p>
+</li>
+<li><p>注册转运，我用的转运公司是<a href="http://www.ctmex.com/reg.asp?sp=wendyeq" target="_blank" rel="external">赤兔马速递</a>。使用他的原因很简单，第一是不用上传身份证，第二是部分渠道包税，第三是所有转运公司都没有用过，第四点击别人的推荐注册送了10个积分（相当于10元）可以第一次转运就使用。</p>
+</li>
+<li><p>在World Of Watches的购买很简单，找到想要购买的商品，点击Add To Cart就会跳到结算的地方，在World Of Watches购物是不用注册的，但是需要提供EMail。World Of Watches支持信用卡、Paypal、Google Checkout和Amazon付款。我用的是信用卡的方式支付，当时把Shipping Address 和Billing Address 都填了转运地址。</p>
+</li>
+<li><p>我是4月23日下订单的，4月26日就送到了转运公司免税州俄勒冈（OR）的仓库，但是赤兔马免税州俄勒冈（OR）只签收，不入库，都会统一中转到加州（CA）才会入库，时间为3个工作日左右，转仓费每磅1美金。在World Of Watches发货之后会提供快递公司的运单号，先拿着运单号到转运公司填写到货预报，货入仓了就可以根据到货预报生成订单，然后选择转运的渠道，我用的是E渠道。</p>
+</li>
+<li><p>等着收货。5月2日转运公司发货，5月12日收到包裹。可以使用<a href="http://www.haitaotong.com/" target="_blank" rel="external">海淘通</a>查询快递信息。比较郁闷的是在国内使用的是能达快递，送快递送的比较慢。12号那天刚好要出差，只能叫人代收。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>手表总算是无惊无险无税的到手了，整过过程历时20天。这次只能算是试水的海淘很成功，看来以后海淘的机会有很多。我心仪的那款手表还没有打折呢，快点打折吧。</p>
+<h2 id="注册链接"><a href="#注册链接" class="headerlink" title="注册链接"></a>注册链接</h2><p>通过我的链接注册，不仅我可以得到奖励，注册方也可以得到奖励，可以说是双赢。</p>
+<p><a href="http://www.55haitao.com/?fromuid=66336" target="_blank" rel="external">55海淘</a></p>
+<p><a href="http://www.mrrebates.com?refid=707528" target="_blank" rel="external">Mr.Rebates</a></p>
+<p><a href="http://www.ebates.com/rf.do?referrerid=b9sY7CG45Yq6VBUuUdruTg%3D%3D" target="_blank" rel="external">Ebates</a></p>
+<p><a href="http://www.ctmex.com/reg.asp?sp=wendyeq" target="_blank" rel="external">赤兔马速递</a></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/05/26/first-haitao/" class="archive-article-date">
+  	<time datetime="2013-05-25T18:09:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-05-26</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/手表/">手表</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/海淘/">海淘</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
+  
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: true,
+		isPost: false,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

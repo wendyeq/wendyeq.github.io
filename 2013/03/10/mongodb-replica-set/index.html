@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>MongoDB-Replica－Set | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MongoDB的Replication是一种确保冗余、备份和自动故障转移的机制。测试环境中一般做3个复制，1个是主要的，另外两个是二级的。
+构建复制数据集构建包括3个复制的数据集，数据集的名称是rs0。先建立存储3个复制的目录
+sudo mkdir -p /data/db/rs0-0 /data/db/rs0-1 /data/db/rs0-2
+然后分别在3个不同的命令行窗口输入，以下命令启动mon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-Replica－Set">
+<meta property="og:url" content="http://wendyeq.me/2013/03/10/mongodb-replica-set/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="MongoDB的Replication是一种确保冗余、备份和自动故障转移的机制。测试环境中一般做3个复制，1个是主要的，另外两个是二级的。
+构建复制数据集构建包括3个复制的数据集，数据集的名称是rs0。先建立存储3个复制的目录
+sudo mkdir -p /data/db/rs0-0 /data/db/rs0-1 /data/db/rs0-2
+然后分别在3个不同的命令行窗口输入，以下命令启动mon">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB-Replica－Set">
+<meta name="twitter:description" content="MongoDB的Replication是一种确保冗余、备份和自动故障转移的机制。测试环境中一般做3个复制，1个是主要的，另外两个是二级的。
+构建复制数据集构建包括3个复制的数据集，数据集的名称是rs0。先建立存储3个复制的目录
+sudo mkdir -p /data/db/rs0-0 /data/db/rs0-1 /data/db/rs0-2
+然后分别在3个不同的命令行窗口输入，以下命令启动mon">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-mongodb-replica-set" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MongoDB-Replica－Set
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MongoDB的Replication是一种确保冗余、备份和自动故障转移的机制。测试环境中一般做3个复制，1个是主要的，另外两个是二级的。</p>
+<h4 id="构建复制数据集"><a href="#构建复制数据集" class="headerlink" title="构建复制数据集"></a>构建复制数据集</h4><p>构建包括3个复制的数据集，数据集的名称是rs0。<br>先建立存储3个复制的目录</p>
+<pre><code>sudo mkdir -p /data/db/rs0-0 /data/db/rs0-1 /data/db/rs0-2
+</code></pre><p>然后分别在3个不同的命令行窗口输入，以下命令启动mongod</p>
+<pre><code>sudo /opt/mongodb/bin/mongod --port 27001 --dbpath /data/db/rs0-0 --replSet rs0
+sudo /opt/mongodb/bin/mongod --port 27002 --dbpath /data/db/rs0-1 --replSet rs0
+sudo /opt/mongodb/bin/mongod --port 27003 --dbpath /data/db/rs0-2 --replSet rs0
+</code></pre><a id="more"></a>
+<p>连接到其中的一个mongod,设置配置信息（使用rs.initiate()）</p>
+<pre><code>wendyeq@wendyeq-mint /data/db $ /opt/mongodb/bin/mongo --port 27001
+MongoDB shell version: 2.2.3
+connecting to: 127.0.0.1:27001/test
+&gt; rsconf={_id:&quot;rs0&quot;,members:[{_id:0,host:&quot;localhost:27001&quot;},{_id:1,host:&quot;localhost:27002&quot;},{_id:2,host:&quot;localhost:27003&quot;}]}
+{
+    &quot;_id&quot; : &quot;rs0&quot;,
+    &quot;members&quot; : [
+        {
+            &quot;_id&quot; : 0,
+            &quot;host&quot; : &quot;localhost:27001&quot;
+        },
+        {
+            &quot;_id&quot; : 1,
+            &quot;host&quot; : &quot;localhost:27002&quot;
+        },
+        {
+            &quot;_id&quot; : 2,
+            &quot;host&quot; : &quot;localhost:27003&quot;
+        }
+    ]
+}
+&gt; rs.initiate(rsconf)
+{
+    &quot;info&quot; : &quot;Config now saved locally.  Should come online in about a minute.&quot;,
+    &quot;ok&quot; : 1
+}
+&gt; 
+</code></pre><p>使用rs.status()查看状态，用db.isMaster()验证是否是主要数据集。</p>
+<pre><code>&gt; rs.status()
+{
+    &quot;set&quot; : &quot;rs0&quot;,
+    &quot;date&quot; : ISODate(&quot;2013-03-10T12:51:04Z&quot;),
+    &quot;myState&quot; : 1,
+    &quot;members&quot; : [
+        {
+            &quot;_id&quot; : 0,
+            &quot;name&quot; : &quot;localhost:27001&quot;,
+            &quot;health&quot; : 1,
+            &quot;state&quot; : 1,
+            &quot;stateStr&quot; : &quot;PRIMARY&quot;,
+            &quot;uptime&quot; : 385,
+            &quot;optime&quot; : Timestamp(1362919747000, 1),
+            &quot;optimeDate&quot; : ISODate(&quot;2013-03-10T12:49:07Z&quot;),
+            &quot;self&quot; : true
+        },
+        {
+            &quot;_id&quot; : 1,
+            &quot;name&quot; : &quot;localhost:27002&quot;,
+            &quot;health&quot; : 1,
+            &quot;state&quot; : 2,
+            &quot;stateStr&quot; : &quot;SECONDARY&quot;,
+            &quot;uptime&quot; : 114,
+            &quot;optime&quot; : Timestamp(1362919747000, 1),
+            &quot;optimeDate&quot; : ISODate(&quot;2013-03-10T12:49:07Z&quot;),
+            &quot;lastHeartbeat&quot; : ISODate(&quot;2013-03-10T12:51:04Z&quot;),
+            &quot;pingMs&quot; : 1
+        },
+        {
+            &quot;_id&quot; : 2,
+            &quot;name&quot; : &quot;localhost:27003&quot;,
+            &quot;health&quot; : 1,
+            &quot;state&quot; : 2,
+            &quot;stateStr&quot; : &quot;SECONDARY&quot;,
+            &quot;uptime&quot; : 114,
+            &quot;optime&quot; : Timestamp(1362919747000, 1),
+            &quot;optimeDate&quot; : ISODate(&quot;2013-03-10T12:49:07Z&quot;),
+            &quot;lastHeartbeat&quot; : ISODate(&quot;2013-03-10T12:51:04Z&quot;),
+            &quot;pingMs&quot; : 1
+        }
+    ],
+    &quot;ok&quot; : 1
+}
+rs0:PRIMARY&gt; db.isMaster()
+{
+    &quot;setName&quot; : &quot;rs0&quot;,
+    &quot;ismaster&quot; : true,
+    &quot;secondary&quot; : false,
+    &quot;hosts&quot; : [
+        &quot;localhost:27001&quot;,
+        &quot;localhost:27003&quot;,
+        &quot;localhost:27002&quot;
+    ],
+    &quot;primary&quot; : &quot;localhost:27001&quot;,
+    &quot;me&quot; : &quot;localhost:27001&quot;,
+    &quot;maxBsonObjectSize&quot; : 16777216,
+    &quot;localTime&quot; : ISODate(&quot;2013-03-10T12:51:30.816Z&quot;),
+    &quot;ok&quot; : 1
+}
+</code></pre><p>可以在PRIMARY是通过rs.stepDown()来切换PRIMARY，执行此命令后会在剩余的常规节点选一个来充当PRIMARY。</p>
+<pre><code>rs0:PRIMARY&gt; rs.stepDown()
+Sun Mar 10 21:01:15 DBClientCursor::init call() failed
+Sun Mar 10 21:01:15 query failed : admin.$cmd { replSetStepDown: 60.0 } to: 127.0.0.1:27001
+Sun Mar 10 21:01:15 Error: error doing query: failed src/mongo/shell/collection.js:155
+Sun Mar 10 21:01:15 trying reconnect to 127.0.0.1:27001
+Sun Mar 10 21:01:15 reconnect 127.0.0.1:27001 ok
+rs0:SECONDARY&gt; db.isMaster()
+{
+    &quot;setName&quot; : &quot;rs0&quot;,
+    &quot;ismaster&quot; : false,
+    &quot;secondary&quot; : true,
+    &quot;hosts&quot; : [
+        &quot;localhost:27001&quot;,
+        &quot;localhost:27003&quot;,
+        &quot;localhost:27002&quot;
+    ],
+    &quot;primary&quot; : &quot;localhost:27003&quot;,
+    &quot;me&quot; : &quot;localhost:27001&quot;,
+    &quot;maxBsonObjectSize&quot; : 16777216,
+    &quot;localTime&quot; : ISODate(&quot;2013-03-10T13:01:30.647Z&quot;),
+    &quot;ok&quot; : 1
+}
+</code></pre><p>到现在最简单的复制数据集就建立完成了。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2013/03/10/mongodb-replica-set/" class="archive-article-date">
+  	<time datetime="2013-03-09T18:09:42.000Z" itemprop="datePublished"><i class="icon-clock"></i>2013-03-10</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2013/05/26/first-haitao/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          第一次海淘
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/01/27/mongodb-m101-aggregation/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MongoDB-M101-Aggregation</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mongodb-replica-set" data-title="MongoDB-Replica－Set" data-url="http://wendyeq.me/2013/03/10/mongodb-replica-set/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

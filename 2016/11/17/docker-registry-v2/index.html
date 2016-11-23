@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>Docker 安装与Registry V2私有仓库搭建 | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Docker 是一个开源的容器引擎，可以让开发者把应用以及依赖打包到一个可移植的容器中。Docker 采用Go语言编写，当时学习Go语言的时候已经知道这个神器，但是一直没有合适的场景正式使用，现在机会来啦。
+Registry 是Docker 镜像的仓库，使用Registry 能搭建私有的Docker仓库，方便分发自定义镜像。
+环境本文的内容在以下版本中测试通过，不同的版本可能存在不同的地方，以下内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 安装与Registry V2私有仓库搭建">
+<meta property="og:url" content="http://wendyeq.me/2016/11/17/docker-registry-v2/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="Docker 是一个开源的容器引擎，可以让开发者把应用以及依赖打包到一个可移植的容器中。Docker 采用Go语言编写，当时学习Go语言的时候已经知道这个神器，但是一直没有合适的场景正式使用，现在机会来啦。
+Registry 是Docker 镜像的仓库，使用Registry 能搭建私有的Docker仓库，方便分发自定义镜像。
+环境本文的内容在以下版本中测试通过，不同的版本可能存在不同的地方，以下内">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.273Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker 安装与Registry V2私有仓库搭建">
+<meta name="twitter:description" content="Docker 是一个开源的容器引擎，可以让开发者把应用以及依赖打包到一个可移植的容器中。Docker 采用Go语言编写，当时学习Go语言的时候已经知道这个神器，但是一直没有合适的场景正式使用，现在机会来啦。
+Registry 是Docker 镜像的仓库，使用Registry 能搭建私有的Docker仓库，方便分发自定义镜像。
+环境本文的内容在以下版本中测试通过，不同的版本可能存在不同的地方，以下内">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-docker-registry-v2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker 安装与Registry V2私有仓库搭建
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Docker 是一个开源的容器引擎，可以让开发者把应用以及依赖打包到一个可移植的容器中。Docker 采用Go语言编写，当时学习Go语言的时候已经知道这个神器，但是一直没有合适的场景正式使用，现在机会来啦。</p>
+<p>Registry 是Docker 镜像的仓库，使用Registry 能搭建私有的Docker仓库，方便分发自定义镜像。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>本文的内容在以下版本中测试通过，不同的版本可能存在不同的地方，以下内容仅供参考。<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">[root@CentOS72-<span class="number">40</span> /]<span class="comment"># cat /etc/centos-release</span></div><div class="line">CentOS Linux release <span class="number">7.2</span>.<span class="number">1511</span> (Core)</div><div class="line"></div><div class="line">[root@CentOS72-<span class="number">40</span> /]<span class="comment"># docker version</span></div><div class="line">Client:</div><div class="line"> <span class="keyword">Version</span>:      <span class="number">1.12</span>.<span class="number">3</span></div><div class="line"> API <span class="keyword">version</span>:  <span class="number">1.24</span></div><div class="line"> Go <span class="keyword">version</span>:   go1.<span class="number">6.3</span></div><div class="line"> Git commit:   <span class="number">6</span>b644ec</div><div class="line"> Built:</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line"></div><div class="line">Server:</div><div class="line"> <span class="keyword">Version</span>:      <span class="number">1.12</span>.<span class="number">3</span></div><div class="line"> API <span class="keyword">version</span>:  <span class="number">1.24</span></div><div class="line"> Go <span class="keyword">version</span>:   go1.<span class="number">6.3</span></div><div class="line"> Git commit:   <span class="number">6</span>b644ec</div><div class="line"> Built:</div><div class="line"> OS/Arch:      linux/amd64</div><div class="line"></div><div class="line">[root@CentOS72-<span class="number">40</span> /]<span class="comment"># docker images registry</span></div><div class="line"> REPOSITORY          <span class="keyword">TAG</span>                 <span class="title">IMAGE</span> ID            CREATED             SIZE</div><div class="line"> registry            <span class="number">2.5</span>.<span class="number">1</span>               c9bd19d022f6        <span class="number">4</span> weeks ago         <span class="number">33.27</span> MB</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="Docker-安装"><a href="#Docker-安装" class="headerlink" title="Docker 安装"></a>Docker 安装</h2><p>安装Docker 需要内核是3.10 以上64位的Linux 系统。查看Linux 内核版本，CentOS7.2是没问题的。（现在Mac 和 Windows 都可以安装Docker）<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-attr">[root@CentOS72-40 ~]</span># <span class="selector-tag">uname</span> <span class="selector-tag">-r</span></div><div class="line">3<span class="selector-class">.10</span><span class="selector-class">.0-327</span><span class="selector-class">.36</span><span class="selector-class">.3</span><span class="selector-class">.el7</span><span class="selector-class">.x86_64</span></div></pre></td></tr></table></figure></p>
+<p>CentOS 7 之后的默认防火墙是firewall，习惯使用iptables 做防火墙，所以还是修改为iptables 做防火墙。<br>停止firewall ，然后禁止firewall 开机启动。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># systemctl stop firewalld</span></div><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># systemctl disable firewalld</span></div></pre></td></tr></table></figure></p>
+<p>检查iptables 的状态，若没有安装iptables 服务则需要安装iptables-services。<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@CentOS72-40 ~]<span class="comment"># systemctl status iptables</span></div><div class="line">· iptables.service</div><div class="line">   Loaded:<span class="built_in"> not-found </span>(Reason: No such file<span class="built_in"> or </span>directory)</div><div class="line">   Active: inactive (dead)</div><div class="line"></div><div class="line">[root@CentOS72-40 ~]<span class="comment"># yum install iptables-services</span></div></pre></td></tr></table></figure></p>
+<p>编辑iptables 防火墙文件，开放22和5000端口（5000端口供Registry对外提供服务）。<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[root@CentOS72-<span class="number">40</span> ~]<span class="comment"># vim /etc/sysconfig/iptables</span></div><div class="line"></div><div class="line"><span class="comment"># sample configuration for iptables service</span></div><div class="line"><span class="comment"># you can edit this manually or use system-config-firewall</span></div><div class="line"><span class="comment"># please do not ask us to add additional ports/services to this default configuration</span></div><div class="line">*filter</div><div class="line">:INPUT ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</div><div class="line">:FORWARD ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</div><div class="line">:OUTPUT ACCEPT [<span class="number">0</span>:<span class="number">0</span>]</div><div class="line">-A INPUT -m <span class="keyword">state</span> --state RELATED,ESTABLISHED -j ACCEPT</div><div class="line">-A INPUT -p icmp -j ACCEPT</div><div class="line">-A INPUT -i lo -j ACCEPT</div><div class="line">-A INPUT -p tcp -m <span class="keyword">state</span> --state NEW -m tcp --dport <span class="number">22</span> -j ACCEPT</div><div class="line">-A INPUT -p tcp -m <span class="keyword">state</span> --state NEW -m tcp --dport <span class="number">5000</span> -j ACCEPT</div><div class="line"></div><div class="line">-A INPUT -j REJECT --reject-with icmp-host-prohibited</div><div class="line">-A FORWARD -j REJECT --reject-with icmp-host-prohibited</div><div class="line">COMMIT</div></pre></td></tr></table></figure></p>
+<p>设置iptables 防火墙开机启动，启动防火墙使更改的配置生效。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># systemctl enable iptables</span></div><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># systemctl start iptables</span></div></pre></td></tr></table></figure></p>
+<p>创建Docker 的yum 的仓库。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@CentOS72</span>-<span class="number">40</span> ~]<span class="comment"># tee /etc/yum.repos.d/docker.repo &lt;&lt;-'EOF'</span></div><div class="line">[dockerrepo]</div><div class="line">name=Docker Repository</div><div class="line">baseurl=<span class="symbol">https:</span>/<span class="regexp">/yum.dockerproject.org/repo</span><span class="regexp">/main/centos</span><span class="regexp">/7/</span></div><div class="line">enabled=<span class="number">1</span></div><div class="line">gpgcheck=<span class="number">1</span></div><div class="line">gpgkey=<span class="symbol">https:</span>/<span class="regexp">/yum.dockerproject.org/gpg</span></div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>安装docker-engine 会自动安装依赖 docker-engine-selinux。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># yum install docker-engine</span></div></pre></td></tr></table></figure></p>
+<p>设置开机启动docker，然后启动docker。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># systemctl enable docker</span></div><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> ~]<span class="meta"># systemctl start docker</span></div></pre></td></tr></table></figure></p>
+<p>安装完docker之后将会发现创建docker0网卡。<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@CentOS72-40 /]<span class="comment"># ifconfig</span></div><div class="line">docker0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500</div><div class="line">        inet 172.17.0.1  netmask 255.255.0.0  broadcast 0.0.0.0</div><div class="line">        ether 02:42:2b:79:c2:73  txqueuelen<span class="number"> 0 </span> (Ethernet)</div><div class="line">        RX packets<span class="number"> 0 </span> bytes<span class="number"> 0 </span>(0.0 B)</div><div class="line">        RX errors<span class="number"> 0 </span> dropped<span class="number"> 0 </span> overruns<span class="number"> 0 </span> frame 0</div><div class="line">        TX packets<span class="number"> 0 </span> bytes<span class="number"> 0 </span>(0.0 B)</div><div class="line">        TX errors<span class="number"> 0 </span> dropped<span class="number"> 0 </span>overruns<span class="number"> 0 </span> carrier<span class="number"> 0 </span> collisions 0</div></pre></td></tr></table></figure></p>
+<h2 id="配置Registry"><a href="#配置Registry" class="headerlink" title="配置Registry"></a>配置Registry</h2><p>拉取2.5.1版本的Registry 镜像。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@CentOS72</span><span class="number">-40</span> /]<span class="meta"># docker pull registry:2.5.1</span></div></pre></td></tr></table></figure></p>
+<p>启动Registry镜像。根据Registry的文档把/tmp/registry-dev 目录映射出来是有问题的，真正的数据不是存储再这个目录。不知道是不新版的存在这个目录，反正2.5.1版的Registry 数据不是保存在这里，进入容器发现真正存储镜像的时在/var/lib/registry 目录，所以把这个目录映射出来。（跟着官方文档居然也走不通，郁闷，会不会是官方故意挖个坑让大家踩的呢）<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root<span class="meta">@CentOS</span>72<span class="number">-40</span> <span class="regexp">/]# docker run -d -p 5000:5000 -v /</span>data<span class="regexp">/registry:/</span>var<span class="regexp">/lib/</span>registry --name registry <span class="string">registry:</span><span class="number">2.5</span><span class="number">.1</span></div></pre></td></tr></table></figure></p>
+<p> 打开<a href="http://172.18.2.40:5000/v2/_catalog" target="_blank" rel="external">http://172.18.2.40:5000/v2/_catalog</a> 验证是否安装成功。</p>
+<p> 若是启用iptables的时候没有放开5000端口，在registry 运行的时候再放开。之后停了registry 重新打开registry 就会有下面的错误。不仅仅是Registry这个容器存在这个问题，所有容器的在运行中，主机的iptables 被修改过，停了容器再启动都会有这个问题。目前没有找到好的解决版本，但是重新启动docker 服务 <code>systemclt restart docker</code> 可以临时解决这个问题。<br> <figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Error </span>response from daemon: driver failed programming external connectivity on endpoint registry (4b748e54bb59d8bfe1f1bd961c6f0fcfbd8ec94c75c5d4880134bd2a453b0d51): iptables failed: iptables --wait -t nat -A DOCKER -p tcp -d 0/0 --dport 5000 -j DNAT --to-destination 172.17.0.2:5000 ! -i docker0: iptables: No chain/target/match by that name.</div><div class="line"> (exit status 1)</div></pre></td></tr></table></figure></p>
+<h2 id="使用Registry"><a href="#使用Registry" class="headerlink" title="使用Registry"></a>使用Registry</h2><p>对已经存在的镜像<code>wendyeq/tomcat8</code> 打上带Registry地址的tag，版本号位1.0。然后推送到Registry，发现推送不了，原因是Registry V2采用https协议。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@M-CentOS72-<span class="number">36</span> ~]# docker tag wendyeq/tomcat8 <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></div><div class="line">[root@M-CentOS72-<span class="number">36</span> ~]# docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></div><div class="line">The <span class="keyword">push</span> refers to a repository [<span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8]</div><div class="line">Get https://<span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/v1/_ping: http: server gave HTTP response to HTTPS client</div></pre></td></tr></table></figure></p>
+<p>解决这个问题的最简单方式是修改docker的启动脚本，添加<code>-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock --insecure-registry 172.18.2.40:5000</code> 内容。<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@M-CentOS72-<span class="number">36</span> ~]# vim /usr/lib/systemd/system/docker.service</div><div class="line"></div><div class="line">[Service]</div><div class="line"><span class="keyword">Type</span>=<span class="keyword">notify</span></div><div class="line"># the <span class="keyword">default</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">to</span> use systemd <span class="keyword">for</span> cgroups because the <span class="keyword">delegate</span> issues still</div><div class="line"># exists <span class="keyword">and</span> systemd currently does <span class="keyword">not</span> support the cgroup feature <span class="keyword">set</span> required</div><div class="line"># <span class="keyword">for</span> containers run <span class="keyword">by</span> docker</div><div class="line">ExecStart=/usr/bin/dockerd -H tcp:<span class="comment">//127.0.0.1:2375 -H unix:///var/run/docker.sock --insecure-registry 172.18.2.40:5000</span></div></pre></td></tr></table></figure></p>
+<p>修改完之后就可以推送到Registry 的私有仓库啦。<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root<span class="symbol">@M</span>-CentOS72<span class="number">-36</span> ~]<span class="meta"># systemctl start docker</span></div><div class="line">Warning: docker.service changed on disk. <span class="built_in">Run</span> <span class="string">'systemctl daemon-reload'</span> <span class="keyword">to</span> reload units.</div><div class="line">[root<span class="symbol">@M</span>-CentOS72<span class="number">-36</span> ~]<span class="meta"># systemctl daemon-reload</span></div><div class="line">[root<span class="symbol">@M</span>-CentOS72<span class="number">-36</span> ~]<span class="meta"># systemctl start docker</span></div><div class="line">[root<span class="symbol">@M</span>-CentOS72<span class="number">-36</span> ~]<span class="meta"># docker push 172.18.2.40:5000/wendyeq/tomcat8</span></div><div class="line">The push refers <span class="keyword">to</span> a repository [<span class="number">172.18</span><span class="number">.2</span><span class="number">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8]</div></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Docker 和 Registry 的安装都比较简单，但是Registry查找镜像好麻烦，特别是查看版本号，要好好研究一下Registry 的文档才行。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/17/docker-registry-v2/" class="archive-article-date">
+  	<time datetime="2016-11-17T12:00:17.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-17</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/registry/">registry</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/11/20/nexus-oss-3-in-docker/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Docker 搭建Nexus OSS3私服
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/09/zero-to-one/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">《从0到1》读书笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="docker-registry-v2" data-title="Docker 安装与Registry V2私有仓库搭建" data-url="http://wendyeq.me/2016/11/17/docker-registry-v2/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

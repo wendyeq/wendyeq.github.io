@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://wendyeq.me">
+  <title>Docker 搭建Nexus OSS3私服 | Wendyeq Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Nexus 简介Nexus 是个仓库管理器，目前主要分2大版本：2.X 和 3.X。2.X 主要支持的格式是Maven、P2、OBR、Yum。3.X主要支持的是Docker、NuGet、npm、Bower、Pypi、Ruby Gems，当然也支持构建工具Maven 和Gradle。Nexus 3只支持Oracle jdk8，不支持其它版本的JDK，比如OpenJDK。更多内容可以查看Nexus下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 搭建Nexus OSS3私服">
+<meta property="og:url" content="http://wendyeq.me/2016/11/20/nexus-oss-3-in-docker/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="Nexus 简介Nexus 是个仓库管理器，目前主要分2大版本：2.X 和 3.X。2.X 主要支持的格式是Maven、P2、OBR、Yum。3.X主要支持的是Docker、NuGet、npm、Bower、Pypi、Ruby Gems，当然也支持构建工具Maven 和Gradle。Nexus 3只支持Oracle jdk8，不支持其它版本的JDK，比如OpenJDK。更多内容可以查看Nexus下载">
+<meta property="og:image" content="http://wendyeq.me/2016/11/20/nexus-oss-3-in-docker/repository.png">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.279Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker 搭建Nexus OSS3私服">
+<meta name="twitter:description" content="Nexus 简介Nexus 是个仓库管理器，目前主要分2大版本：2.X 和 3.X。2.X 主要支持的格式是Maven、P2、OBR、Yum。3.X主要支持的是Docker、NuGet、npm、Bower、Pypi、Ruby Gems，当然也支持构建工具Maven 和Gradle。Nexus 3只支持Oracle jdk8，不支持其它版本的JDK，比如OpenJDK。更多内容可以查看Nexus下载">
+<meta name="twitter:image" content="http://wendyeq.me/2016/11/20/nexus-oss-3-in-docker/repository.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-15518726-9', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">人总是要有些理想和信仰</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/Go">Go</a></li>
+	        
+				<li><a href="/tags/docker">Docker</a></li>
+	        
+				<li><a href="/tags/mongodb">Mongodb</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">wendyeq</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">人总是要有些理想和信仰</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/Go">Go</a></li>
+		        
+					<li><a href="/tags/docker">Docker</a></li>
+		        
+					<li><a href="/tags/mongodb">Mongodb</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-nexus-oss-3-in-docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker 搭建Nexus OSS3私服
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Nexus-简介"><a href="#Nexus-简介" class="headerlink" title="Nexus 简介"></a>Nexus 简介</h2><p>Nexus 是个仓库管理器，目前主要分2大版本：2.X 和 3.X。2.X 主要支持的格式是Maven、P2、OBR、Yum。3.X主要支持的是Docker、NuGet、npm、Bower、Pypi、Ruby Gems，当然也支持构建工具Maven 和Gradle。Nexus 3只支持Oracle jdk8，不支持其它版本的JDK，比如OpenJDK。更多内容可以查看<a href="https://www.sonatype.com/download-oss-sonatype" target="_blank" rel="external">Nexus下载页面</a>。</p>
+<h2 id="Nexus-安装"><a href="#Nexus-安装" class="headerlink" title="Nexus 安装"></a>Nexus 安装</h2><p>本次安装的Nexus OSS的版本是3.1.0。<br>Nexus3 Docker安装脚本地址是<a href="https://github.com/sonatype/docker-nexus3" target="_blank" rel="external">docker-nexus3</a>。其实安装起来比里面的描述要简单一些。先把镜像拉取下来，然后直接run 就可以了。但是因为当时操作的时候，拉取镜像的机器与实际安装的机器不是同一台，所以要把镜像推送的registry 仓库，然后再运行。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div><div class="line">docker tag sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div><div class="line">docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div></pre></td></tr></table></figure></p>
+<p>创建存储文件目录，并修改目录拥有者，容器里面运行的uid 是 200.<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">mkdir</span> /<span class="class"><span class="keyword">data</span>/nexus &amp;&amp; chown -<span class="type">R</span> 200 /<span class="keyword">data</span>/nexus</span></div><div class="line"><span class="title">docker</span> run -d -p <span class="number">8081</span>:<span class="number">8081</span> -v /<span class="class"><span class="keyword">data</span>/nexus:/nexus-<span class="keyword">data</span> <span class="comment">--name nexus 172.18.2.40:5000/sonatype/nexus3:3.1.0</span></span></div></pre></td></tr></table></figure></p>
+<p>就是这么简单就安装好了，如果不能访问的话看看是不是iptable 没有开放8081端口。<br>通过<code>docker logs nexus</code> 可以查看启动日志。</p>
+<h2 id="Nexus-使用"><a href="#Nexus-使用" class="headerlink" title="Nexus 使用"></a>Nexus 使用</h2><p>安装好之后默认的用户名／密码是admin／admin123，需要自己修改密码。<br>默认的maven-central 使用的是<a href="https://repo1.maven.org/maven2/" target="_blank" rel="external">https://repo1.maven.org/maven2/</a> 地址，速度上没有UK 的快，所以修改为<a href="http://uk.maven.org/maven2/" target="_blank" rel="external">http://uk.maven.org/maven2/</a>。<br><img src="/2016/11/20/nexus-oss-3-in-docker/repository.png" alt="Repository" title="Repository"></p>
+<p>因为Gradle和Maven都有在用，Gradle是可以直接使用Maven的仓库的，所以下面以Gradle举例。修改build.gradle文件里面的repositories。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="section">repositories</span> &#123;</div><div class="line">    <span class="section">maven</span> &#123;</div><div class="line">        <span class="attribute">url</span> <span class="string">'http://172.18.2.40:8081/repository/maven-public/'</span></div><div class="line">    &#125;</div><div class="line">    jcenter()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其实国内还是有阿里云的Nexus这种比较快的仓库<a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/</a>，但是一些私包不能上传到上面，只能自己搭建一个私服。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/20/nexus-oss-3-in-docker/" class="archive-article-date">
+  	<time datetime="2016-11-20T10:43:19.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-20</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nexus/">nexus</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/11/22/docker-introduction/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Docker 入门简介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/17/docker-registry-v2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker 安装与Registry V2私有仓库搭建</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="nexus-oss-3-in-docker" data-title="Docker 搭建Nexus OSS3私服" data-url="http://wendyeq.me/2016/11/20/nexus-oss-3-in-docker/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wendyeq"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2012~2016 wendyeq
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
