@@ -1,205 +1,463 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://wendyeq.me">
-  <title>Docker 入门简介 | Wendyeq Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Docker优点在Docker 安装与Registry V2私有仓库搭建 中已经简单提过Docker。Docker 的优点很多：
 
-高效利用系统资源
-更快的启动速度
-一致的运行环境
-持续交付和部署
-方便的迁移
-轻松的维护和扩展
-采用我喜欢的Go语言进行开发
 
-Docker基础Docker 3大基础概念：镜像、容器、仓库。">
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Docker优点在Docker 安装与Registry V2私有仓库搭建 中已经简单提过Docker。Docker 的优点很多：  高效利用系统资源 更快的启动速度 一致的运行环境 持续交付和部署 方便的迁移 轻松的维护和扩展 采用我喜欢的Go语言进行开发  Docker基础Docker 3大基础概念：镜像、容器、仓库。">
+<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 入门简介">
 <meta property="og:url" content="http://wendyeq.me/2016/11/22/docker-introduction/index.html">
 <meta property="og:site_name" content="Wendyeq Blog">
-<meta property="og:description" content="Docker优点在Docker 安装与Registry V2私有仓库搭建 中已经简单提过Docker。Docker 的优点很多：
-
-高效利用系统资源
-更快的启动速度
-一致的运行环境
-持续交付和部署
-方便的迁移
-轻松的维护和扩展
-采用我喜欢的Go语言进行开发
-
-Docker基础Docker 3大基础概念：镜像、容器、仓库。">
-<meta property="og:updated_time" content="2016-11-23T07:36:12.288Z">
+<meta property="og:description" content="Docker优点在Docker 安装与Registry V2私有仓库搭建 中已经简单提过Docker。Docker 的优点很多：  高效利用系统资源 更快的启动速度 一致的运行环境 持续交付和部署 方便的迁移 轻松的维护和扩展 采用我喜欢的Go语言进行开发  Docker基础Docker 3大基础概念：镜像、容器、仓库。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 入门简介">
-<meta name="twitter:description" content="Docker优点在Docker 安装与Registry V2私有仓库搭建 中已经简单提过Docker。Docker 的优点很多：
+<meta name="twitter:description" content="Docker优点在Docker 安装与Registry V2私有仓库搭建 中已经简单提过Docker。Docker 的优点很多：  高效利用系统资源 更快的启动速度 一致的运行环境 持续交付和部署 方便的迁移 轻松的维护和扩展 采用我喜欢的Go语言进行开发  Docker基础Docker 3大基础概念：镜像、容器、仓库。">
 
-高效利用系统资源
-更快的启动速度
-一致的运行环境
-持续交付和部署
-方便的迁移
-轻松的维护和扩展
-采用我喜欢的Go语言进行开发
 
-Docker基础Docker 3大基础概念：镜像、容器、仓库。">
-  
-    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.ico">
-  
-  <link rel="stylesheet" href="/main.css">
-  
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-15518726-9', 'auto');
-ga('send', 'pageview');
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
 
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2016/11/22/docker-introduction/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
 </script>
-<!-- End Google Analytics -->
 
+  <title>Docker 入门简介 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
 
-<body>
-  <div id="container">
-    <div class="left-col">
-      <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img src="/avatar.jpg" class="js-avatar">
-			
-		</a>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
-		</hgroup>
+  
+  
+    
+  
 
-		
-		<p class="header-subtitle">人总是要有些理想和信仰</p>
-		
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
 
-		<nav class="header-menu">
-			<ul>
-			
-				<li><a href="/">主页</a></li>
-	        
-				<li><a href="/tags/Go">Go</a></li>
-	        
-				<li><a href="/tags/docker">Docker</a></li>
-	        
-				<li><a href="/tags/mongodb">Mongodb</a></li>
-	        
-			</ul>
-		</nav>
-		<nav class="header-smart-menu">
-	        
-    		
-    			
-    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
-    			
-    			
-            
-		</nav>
-		<nav class="header-nav">
-			<div class="social">
-				
-					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
-		        
-					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-		        
-			</div>
-		</nav>
-	</header>		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"><i class="icon-list"></i></div>
-  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				
-					<img src="/avatar.jpg" class="js-avatar">
-				
-			</div>
-			<hgroup>
-			  <h1 class="header-author">wendyeq</h1>
-			</hgroup>
-			
-			<p class="header-subtitle">人总是要有些理想和信仰</p>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/tags/Go">Go</a></li>
-		        
-					<li><a href="/tags/docker">Docker</a></li>
-		        
-					<li><a href="/tags/mongodb">Mongodb</a></li>
-		        
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
-			        
-						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-			        
-				</div>
-			</nav>
-		</header>				
-	</div>
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
 </nav>
 
-      <div class="body-wrap">
-        <article id="post-docker-introduction" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Docker 入门简介
-    </h1>
+
+
   
 
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2016/11/22/docker-introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Docker 入门简介
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-11-22 21:12:30" itemprop="dateCreated datePublished" datetime="2016-11-22T21:12:30+08:00">2016-11-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2016-11-23 15:36:12" itemprop="dateModified" datetime="2016-11-23T15:36:12+08:00">2016-11-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <h2 id="Docker优点"><a href="#Docker优点" class="headerlink" title="Docker优点"></a>Docker优点</h2><p>在<a href="/2016/11/17/docker-registry-v2/">Docker 安装与Registry V2私有仓库搭建</a> 中已经简单提过Docker。<br>Docker 的优点很多：</p>
 <ol>
@@ -213,278 +471,515 @@ ga('send', 'pageview');
 </ol>
 <h2 id="Docker基础"><a href="#Docker基础" class="headerlink" title="Docker基础"></a>Docker基础</h2><p>Docker 3大基础概念：镜像、容器、仓库。</p>
 <a id="more"></a>
-<h3 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h3><p>Docker镜像是一个特殊的文件系统，包括容器运行时的程序、库、资源和配置文件，不包含动态数据。Docker 采用<a href="https://en.wikipedia.org/wiki/UnionFS" target="_blank" rel="external">UnionFS</a> 构建镜像。镜像的构建是一层层的，每一层构建完就不会发生改变，也就是说镜像的内容在构建之后不会被改变。</p>
+<h3 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h3><p>Docker镜像是一个特殊的文件系统，包括容器运行时的程序、库、资源和配置文件，不包含动态数据。Docker 采用<a href="https://en.wikipedia.org/wiki/UnionFS" target="_blank" rel="noopener">UnionFS</a> 构建镜像。镜像的构建是一层层的，每一层构建完就不会发生改变，也就是说镜像的内容在构建之后不会被改变。</p>
 <p>对镜像的操作通常有以下几种：</p>
-<p><strong>获取镜像</strong><br><figure class="highlight elm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="title">docker</span> pull [选项] [<span class="type">Docker</span> <span class="type">Registry</span>地址]&lt;仓库名&gt;:&lt;标签&gt;</div><div class="line"><span class="title">docker</span> pull <span class="number">172.18</span><span class="number">.2</span><span class="number">.40</span>:<span class="number">5000</span>/sona<span class="keyword">type</span>/nexus3:3.1.0</div><div class="line"><span class="title">docker</span> pull sona<span class="keyword">type</span>/nexus3</div><div class="line"><span class="title">docker</span> pull registry</div></pre></td></tr></table></figure></p>
-<p><em>172.18.2.40:5000</em> 是Docker Registry地址，没有这个地址则默认是<a href="https://hub.docker.com" target="_blank" rel="external">hub.docker.com</a><br><em>sonatype/nexus3</em> 是仓库名，仓库名一般是“用户名/软件名”组成。若只有软件名，则默认用户名是library。<br><em>3.1.0</em> 是标签，也叫版本号，不指定标签则默认是latest，最好还是指定标签，更直观的知道用的是那个版本。</p>
-<p><strong>运行镜像</strong><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -d -p <span class="number">8080</span>:<span class="number">8081</span> -v <span class="regexp">/data/</span><span class="string">nexus:</span><span class="regexp">/nexus-data --name nexus 172.18.2.40:5000/</span>sonatype/<span class="string">nexus3:</span><span class="number">3.1</span><span class="number">.0</span></div></pre></td></tr></table></figure></p>
+<p><strong>获取镜像</strong><br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">docker</span> pull [选项] [<span class="type">Docker</span> <span class="type">Registry</span>地址]&lt;仓库名&gt;:&lt;标签&gt;</span><br><span class="line"><span class="title">docker</span> pull <span class="number">172.18</span><span class="number">.2</span><span class="number">.40</span>:<span class="number">5000</span>/sona<span class="keyword">type</span>/nexus3:3.1.0</span><br><span class="line"><span class="title">docker</span> pull sona<span class="keyword">type</span>/nexus3</span><br><span class="line"><span class="title">docker</span> pull registry</span><br></pre></td></tr></table></figure></p>
+<p><em>172.18.2.40:5000</em> 是Docker Registry地址，没有这个地址则默认是<a href="https://hub.docker.com" target="_blank" rel="noopener">hub.docker.com</a><br><em>sonatype/nexus3</em> 是仓库名，仓库名一般是“用户名/软件名”组成。若只有软件名，则默认用户名是library。<br><em>3.1.0</em> 是标签，也叫版本号，不指定标签则默认是latest，最好还是指定标签，更直观的知道用的是那个版本。</p>
+<p><strong>运行镜像</strong><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p <span class="number">8080</span>:<span class="number">8081</span> -v <span class="regexp">/data/</span><span class="string">nexus:</span><span class="regexp">/nexus-data --name nexus 172.18.2.40:5000/</span>sonatype/<span class="string">nexus3:</span><span class="number">3.1</span><span class="number">.0</span></span><br></pre></td></tr></table></figure></p>
 <p><em>-d</em> 指的是后台运行<br><em>-p 8080:8081</em> 指把容器8081端口映射到主机8080端口，格式为“主机端口:容器端口”<br><em>-v /data/nexus:/nexus-data</em> 把容器里的/nexus-data 目录，挂载到主机的/data/nexus目录。<br><em>–name nexus</em> 对容器命名<br><em>172.18.2.40:5000/sonatype/nexus3:3.1.0</em> 镜像名<br>运行镜像之后就变为容器啦。</p>
-<p><strong>列出镜像</strong><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">docker images</span></div></pre></td></tr></table></figure></p>
+<p><strong>列出镜像</strong><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker images</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>创建镜像</strong><br>创建镜像有2种方式，一种是commit，另一种是Dockerfile。</p>
 <ol>
 <li>下载已有镜像，添加内容，然后commit，<code>docker commit -m “message” 容器id 仓库:标签</code>。</li>
 <li>利用Dockerfile创建<code>docker build -t=“仓库:标签”</code>，一个镜像不能超过127层。</li>
 </ol>
-<p><strong>删除镜像</strong><br>没有被使用的镜像才可以被删除<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">docker</span> rmi 仓库:标签</div></pre></td></tr></table></figure></p>
-<p>删除没有标签的本地镜像<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker rmi $(docker images -<span class="selector-tag">q</span> -f <span class="string">"dangling=true”)</span></div></pre></td></tr></table></figure></p>
-<p><strong>导入镜像</strong><br><figure class="highlight elm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">cat</span> ubuntu<span class="number">-16.10</span>-x86_64-minimal.tar.gz | docker <span class="keyword">import</span> - ubuntu:16.10</div></pre></td></tr></table></figure></p>
-<p><strong>上传镜像</strong><br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></div></pre></td></tr></table></figure></p>
-<p><strong>保存和加载镜像</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker save -o xxx<span class="selector-class">.tar</span> 仓库:标签</div><div class="line">docker load —<span class="selector-tag">input</span> xxx.tar</div></pre></td></tr></table></figure></p>
+<p><strong>删除镜像</strong><br>没有被使用的镜像才可以被删除<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> rmi 仓库:标签</span><br></pre></td></tr></table></figure></p>
+<p>删除没有标签的本地镜像<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $(docker images -<span class="selector-tag">q</span> -f <span class="string">"dangling=true”)</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>导入镜像</strong><br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">cat</span> ubuntu<span class="number">-16.10</span>-x86_64-minimal.tar.gz | docker <span class="keyword">import</span> - ubuntu:16.10</span><br></pre></td></tr></table></figure></p>
+<p><strong>上传镜像</strong><br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/sonatype/nexus3:<span class="number">3.1</span><span class="meta">.0</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>保存和加载镜像</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker save -o xxx<span class="selector-class">.tar</span> 仓库:标签</span><br><span class="line">docker load —<span class="selector-tag">input</span> xxx.tar</span><br></pre></td></tr></table></figure></p>
 <h3 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h3><p>容器的实质是进程，进程运行在一个隔离的环境里。<br>容器运行是产生的数据如果没有映射出来的话，将会在容器消亡的时候消亡。<br>容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用数据卷或者绑定宿主目录。</p>
-<p><strong>创建并启动</strong><br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="keyword">run</span><span class="bash"></span></div></pre></td></tr></table></figure></p>
+<p><strong>创建并启动</strong><br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"></span></span><br></pre></td></tr></table></figure></p>
 <p>跟在镜像中说明的一样，从镜像新建并启动容器。</p>
-<p><strong>启动已停止的容器</strong><br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="literal">start</span> 容器名</div></pre></td></tr></table></figure></p>
-<p><strong>停止容器</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="built_in">stop</span> 容器名</div></pre></td></tr></table></figure></p>
-<p><strong>重启容器</strong><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="built_in">restart</span> 容器名</div></pre></td></tr></table></figure></p>
-<p><strong>打印容器启动日志</strong><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">docker</span> logs 容器名</div></pre></td></tr></table></figure></p>
-<p><strong>进入容器</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker <span class="built_in">attach</span> 容器名</div></pre></td></tr></table></figure></p>
-<p><strong>导出容器</strong><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">docker</span> <span class="keyword">export</span> 容器名  &gt; xxx.tar</div><div class="line"><span class="title">cat</span> xxx.tar | docker <span class="keyword">import</span> - xx/xxx:v1.0</div></pre></td></tr></table></figure></p>
+<p><strong>启动已停止的容器</strong><br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="literal">start</span> 容器名</span><br></pre></td></tr></table></figure></p>
+<p><strong>停止容器</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">stop</span> 容器名</span><br></pre></td></tr></table></figure></p>
+<p><strong>重启容器</strong><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">restart</span> 容器名</span><br></pre></td></tr></table></figure></p>
+<p><strong>打印容器启动日志</strong><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> logs 容器名</span><br></pre></td></tr></table></figure></p>
+<p><strong>进入容器</strong><br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">attach</span> 容器名</span><br></pre></td></tr></table></figure></p>
+<p><strong>导出容器</strong><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">docker</span> <span class="keyword">export</span> 容器名  &gt; xxx.tar</span><br><span class="line"><span class="title">cat</span> xxx.tar | docker <span class="keyword">import</span> - xx/xxx:v1.0</span><br></pre></td></tr></table></figure></p>
 <p>docker import 将丢弃所有的历史记录和元数据信息（即仅保存容器当时的快照状态），可以重新指定标签等元数据信息。<br>docker load 将保存完整记录，体积要大，不能指定标签等元数据信息。</p>
-<p><strong>删除容器</strong><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker <span class="keyword">rm</span> 容器名 <span class="comment">//删除停止状态的容器，删除运行状态的要加 -f 参数。</span></div><div class="line"></div><div class="line">docker <span class="keyword">rm</span> <span class="variable">$&#123;docker</span> ps -a -q&#125; <span class="comment">//删除所有停止状态的容器</span></div></pre></td></tr></table></figure></p>
-<h3 id="Docker仓库"><a href="#Docker仓库" class="headerlink" title="Docker仓库"></a>Docker仓库</h3><p>Registry包含多个仓库，每个仓库包含多个标签，每个标签对应一个镜像。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker tag wendyeq/tomcat8 <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></div><div class="line">docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></div><div class="line">docker pull <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></div></pre></td></tr></table></figure></p>
-<h2 id="MORE"><a href="#MORE" class="headerlink" title="MORE"></a>MORE</h2><p>更多的内容请使用神器<code>--help</code><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">docker <span class="comment">--help</span></div><div class="line">docker <span class="built_in">run</span> <span class="comment">--help</span></div><div class="line">docker start <span class="comment">--help</span></div><div class="line">...</div></pre></td></tr></table></figure></p>
-<p>或者查看<a href="https://docs.docker.com/engine/reference/commandline/cli/" target="_blank" rel="external">Docker命令行文档</a>。</p>
+<p><strong>删除容器</strong><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">rm</span> 容器名 <span class="comment">//删除停止状态的容器，删除运行状态的要加 -f 参数。</span></span><br><span class="line"></span><br><span class="line">docker <span class="keyword">rm</span> <span class="variable">$&#123;docker</span> ps -a -q&#125; <span class="comment">//删除所有停止状态的容器</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Docker仓库"><a href="#Docker仓库" class="headerlink" title="Docker仓库"></a>Docker仓库</h3><p>Registry包含多个仓库，每个仓库包含多个标签，每个标签对应一个镜像。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker tag wendyeq/tomcat8 <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></span><br><span class="line">docker <span class="keyword">push</span> <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></span><br><span class="line">docker pull <span class="number">172.18</span><span class="meta">.2</span><span class="meta">.40</span>:<span class="number">5000</span>/wendyeq/tomcat8:<span class="number">1.0</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="MORE"><a href="#MORE" class="headerlink" title="MORE"></a>MORE</h2><p>更多的内容请使用神器<code>--help</code><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="comment">--help</span></span><br><span class="line">docker <span class="built_in">run</span> <span class="comment">--help</span></span><br><span class="line">docker start <span class="comment">--help</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>或者查看<a href="https://docs.docker.com/engine/reference/commandline/cli/" target="_blank" rel="noopener">Docker命令行文档</a>。</p>
 
       
     </div>
-    <div class="article-info article-info-index">
+
+    
+
+    
+    
+    
+
+    
+
+    
       
-      <a href="/2016/11/22/docker-introduction/" class="archive-article-date">
-  	<time datetime="2016-11-22T13:12:30.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-22</time>
-</a>
+    
+    
+
+    
+
+    <footer class="post-footer">
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
-	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-  
-<nav id="article-nav">
-  
-  
-    <a href="/2016/11/20/nexus-oss-3-in-docker/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Docker 搭建Nexus OSS3私服</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-<div class="share_jia">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
-		<a class="jiathis_button_facebook"></a> 
-	    <a class="jiathis_button_twitter"></a>
-	    <a class="jiathis_button_plus"></a> 
-	    <a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="docker-introduction" data-title="Docker 入门简介" data-url="http://wendyeq.me/2016/11/22/docker-introduction/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"wendyeq"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
-
-
-      </div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2012~2016 wendyeq
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-      	</div>
-    </div>
-  </div>
-</footer>
-    </div>
-    <script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false,
-		root: "/",
-		innerArchive: true
-	}
-</script>
-
-<script src="/./main.js"></script>
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-    
-<div class="tools-col">
-  <ul class="btn-wrap">
-    
-      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
-    
-    
-      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
-    
-    
-    
-      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
-    
-  </ul>
-  <div class="tools-wrap">
-    
-    	<section class="tools-section tools-section-all chose">
-    	</section>
-    
-
-    
-    	<section class="tools-section tools-section-tag">
-    			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
-    			</div>
-    	</section>
-    
-
-    
-
-    
-    	<section class="tools-section tools-section-me">
-  	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
-  	  	
-    	</section>
-    
-  </div>
-  
-</div>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
         </div>
+      
 
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
+      
+      
+      
 
-            <div class="pswp__top-bar">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/20/nexus-oss-3-in-docker/" rel="next" title="Docker 搭建Nexus OSS3私服">
+                <i class="fa fa-chevron-left"></i> Docker 搭建Nexus OSS3私服
+              </a>
+            
+          </div>
 
-                <!--  Controls are self-explanatory. Order can be changed. -->
+          <span class="post-nav-divider"></span>
 
-                <div class="pswp__counter"></div>
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/24/npm-registry-in-nexus-oss-3/" rel="prev" title="Nexus OSS3创建npm 私服">
+                Nexus OSS3创建npm 私服 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
 
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+  </div>
 
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
 
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
                 </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
             </div>
+          
 
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
+          
 
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
+          
 
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
+          
 
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
+          
+          
+
+          
+            
+          
+          
 
         </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker优点"><span class="nav-number">1.</span> <span class="nav-text">Docker优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基础"><span class="nav-number">2.</span> <span class="nav-text">Docker基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker镜像"><span class="nav-number">2.1.</span> <span class="nav-text">Docker镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker容器"><span class="nav-number">2.2.</span> <span class="nav-text">Docker容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker仓库"><span class="nav-number">2.3.</span> <span class="nav-text">Docker仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MORE"><span class="nav-number">3.</span> <span class="nav-text">MORE</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
 
     </div>
+  </aside>
+  
 
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
 </div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
   </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>

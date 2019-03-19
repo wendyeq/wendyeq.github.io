@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="因为不知道怎么选MOOC课程的原因（名牌大学太多了，不知道选哪个学校的什么课程好），花了一个多星期把吴军的《大学之路–陪女儿在美国选大学》上下册读了一遍。吴军的书一如既往的通俗易懂，读起来很顺畅。不像其他的书籍，读起来非常难，特别是那些翻译过来的畅销书，我觉得这跟文化背景有点关系。 自从读过《如何阅读一本书》之后就知道一定要先读序、前言和目录，读完这些之后对整本书的逻辑脉络也就非常清晰。 开宗明">
+<meta name="keywords" content="周记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="终身学习">
+<meta property="og:url" content="http://wendyeq.me/2017/03/26/learning/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="因为不知道怎么选MOOC课程的原因（名牌大学太多了，不知道选哪个学校的什么课程好），花了一个多星期把吴军的《大学之路–陪女儿在美国选大学》上下册读了一遍。吴军的书一如既往的通俗易懂，读起来很顺畅。不像其他的书籍，读起来非常难，特别是那些翻译过来的畅销书，我觉得这跟文化背景有点关系。 自从读过《如何阅读一本书》之后就知道一定要先读序、前言和目录，读完这些之后对整本书的逻辑脉络也就非常清晰。 开宗明">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2017/03/26/learning/learning.jpg">
+<meta property="og:updated_time" content="2017-09-12T03:27:07.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="终身学习">
+<meta name="twitter:description" content="因为不知道怎么选MOOC课程的原因（名牌大学太多了，不知道选哪个学校的什么课程好），花了一个多星期把吴军的《大学之路–陪女儿在美国选大学》上下册读了一遍。吴军的书一如既往的通俗易懂，读起来很顺畅。不像其他的书籍，读起来非常难，特别是那些翻译过来的畅销书，我觉得这跟文化背景有点关系。 自从读过《如何阅读一本书》之后就知道一定要先读序、前言和目录，读完这些之后对整本书的逻辑脉络也就非常清晰。 开宗明">
+<meta name="twitter:image" content="http://wendyeq.me/2017/03/26/learning/learning.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2017/03/26/learning/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>终身学习 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2017/03/26/learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">终身学习
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-26 11:57:18" itemprop="dateCreated datePublished" datetime="2017-03-26T11:57:18+08:00">2017-03-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-09-12 11:27:07" itemprop="dateModified" datetime="2017-09-12T11:27:07+08:00">2017-09-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2017/03/26/learning/learning.jpg" title="learning">
+<p>因为不知道怎么选MOOC课程的原因（名牌大学太多了，不知道选哪个学校的什么课程好），花了一个多星期把吴军的《大学之路–陪女儿在美国选大学》上下册读了一遍。吴军的书一如既往的通俗易懂，读起来很顺畅。不像其他的书籍，读起来非常难，特别是那些翻译过来的畅销书，我觉得这跟文化背景有点关系。</p>
+<p>自从读过《如何阅读一本书》之后就知道一定要先读序、前言和目录，读完这些之后对整本书的逻辑脉络也就非常清晰。</p>
+<p>开宗明义，教育是一辈子的事。</p>
+<blockquote>
+<p>人生是场马拉松，拿到一所名牌大学的烫金毕业证书，不过是在马拉松赛跑中取了一个还不错的站位而已，人生–这所真正的大学–路途才刚刚开始。看过马拉松比赛的人都知道，在起跑的那一瞬间道路是很拥挤的，但是当1/4赛程过去之后，选手们彼此的距离就拉开了，在起跑时占得的那一点便宜到这时早就荡然无存了。很多中国的家长都在说不能让孩子输在起跑线上，想方设法让孩子在起跑线上尽可能地抢位置。但其实，成功的道路并不像想象得那么拥挤，在人生的马拉松道路上，绝大部分人跑不到一半就主动退下来了。到后来，剩下的少数人不是嫌竞争对手太多，而是发愁怎样找一个同伴陪自己一同跑下去。因此，教育是一辈子的事情，笑到最后的是一辈子接受教育的人。</p>
+</blockquote>
+<p>作为跑过两次半程马拉松的人来说，就是这种感觉。</p>
+<p>第一次跑半程马拉松是15年12月在广州跑的，因为上厕所的原因只能排到最后才开跑。虽然是起跑的位置比较靠后，但是在起跑线的位置还是非常拥挤，到了2公里外就很稀疏，在后面不断的往前去超越那些已经慢下来或者在走路的人，非常爽。<br>第二次是在16年11月的杭州，刚好是杭马30周年，特意从广州去杭州参加这次盛会。这次跟在广州不一样，这次去得早，跟在跑全马的后面，不算太拥挤。不过在西湖边的时候道路很窄，大家都挤在一起，当时还担心发生踩踏事件。也是在那里看到伊一，15年的时候大家的起点都一样，都是跑半马，现在人家已经跑全马，果然人与人之间是不能对比的。跑到最后几百米的时候，腿已开始抽筋，只能慢慢走到终点，还好安全完赛。不敢忘记跑步的目的是为了健康而不是逞能，毕竟代价太大了。同样学习的目的也不是纯粹为了赚钱，而是兴趣。</p>
+<p>吴军一直都对教育很重视，从他陪着女儿去选大学都能写出两本书来就可见一般。据说他离开腾讯回美国也是为了她女儿读书，他女儿上高中，他想要更多的时间陪陪她。可能也与当时腾讯搜索一直都是不怎么样，最后还跟搜狗合并了有关。</p>
+<p>在《大学之路》上我看到了这几点：</p>
+<ol>
+<li>通才教育与专才教育</li>
+<li>捐赠奉献的精神，校友之间的关系</li>
+<li>认可学校的办学理念才能真正学到东西</li>
+<li>美国私立大学的学费很贵</li>
+<li>私立大学的研究生相对于本科更容易进，本科教育不赚钱，研究生教育才赚钱</li>
+<li>美国的治安不太好？对好几个大学的治安都进行了详细的说明，可能是因为女儿的原因，作为父亲对安全这块非常看重，或者治安真的不怎么好。</li>
+</ol>
+<p>对于通才教育与专才教育，我自身比较深刻的一个理解是无论是通才教育还专才教育最终都必须要经历，这个过程不一定是在大学，而是在整个人生。<br>以我自身为例子，我的母校广东工业大学施行的是专才教育，按一个老师的说法，在这里学的是应用，而不是学做科研。如果不是在这里学会了编程那么能否就业都不好说，如果仅仅只会编程，那么之后的职业天花板将很难打破。选修课的时候那些工程学科一般都选不上的，文化艺术类的课是没几个人去选，最后选不上选修课的只能被分配到这些文化艺术课程上。印象最深的是《动画赏析》这门课，没几个人是主动选择修习这门课的，但是这门课改变了我都动画艺术的看法，以前一直都是认为，动画片都是小孩子看的，真是 too young too simple ，通常通过动画更能表达对人性的思考。在这门课上认识了皮克斯、宫崎骏、迪士尼等优秀的工作室和动画人。</p>
+<p>真正适合自己的才是好学校，而不是只看学校排名和专业是否热门。有个高中同学非常聪明，数理化都很厉害，在英语不及格的情况下都能考上华南理工大学，在我们那个小县城里面算是非常厉害的啦。很可惜他选了软件工程这个专业，因为很多课都是全英上课的，学起来非常吃力，逐渐就对学习失去兴趣。虽然起点比其他人高了，但是走的路更弯。</p>
+<p>编程是一辈子的事，但是随着工作经验的积累，项目规模的变大，仅仅会编程是远远不够。毕竟软件开发是个系统性的工程，是多人协作的结果。现在已经不是单打独斗能把事情做好，团队协作、沟通协同、项目管理等占的比重越来越大。</p>
+<p>所以在有所专长的情况下要开始完善自身的不足，文史艺术等要有所了解，要不然人生不就非常无趣。<br>技能是用于生存的，但是能生存下来之后，要想想怎么样才是生活？什么样的生活才是自己想要的。</p>
+<p>随着生存的问题解决之后，开始关注以下几方面的内容：<br>手冲咖啡，练习了几年，算是小有收获。<br>古典音乐，从TVB的《毕打自己人》的主题曲：G大调弦乐小夜曲，开始喜欢古典音乐，但是至今没有入门。<br>艺术，动画电影经常看，不看连续剧类型的动画。</p>
+<p>努力成为一个有趣的人，过自己想要的生活，加油！！！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/周记/" rel="tag"># 周记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/19/perseverance/" rel="next" title="第四周-有付出才有收获">
+                <i class="fa fa-chevron-left"></i> 第四周-有付出才有收获
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

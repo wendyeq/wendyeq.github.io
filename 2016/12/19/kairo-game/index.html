@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自Apple Store 第一次接触开罗这款游戏是在几年前，那时候还是用Android 玩的汉化版本。出差在酒店中，一玩就玩到凌晨3点钟，真疯狂!前几天在逛Apple Store 收费榜的时候，看到了游戏开发物语这款游戏进入了收费榜，勾起了之前的记忆，所以就花6块钱下载下来（下载地址）。在短时间内玩了两次结局，游戏时间20年为一次结局，第二次的时候我把游戏速度调快了一些。 游戏开发物语是一">
+<meta name="keywords" content="game,心得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏开发物语">
+<meta property="og:url" content="http://wendyeq.me/2016/12/19/kairo-game/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自Apple Store 第一次接触开罗这款游戏是在几年前，那时候还是用Android 玩的汉化版本。出差在酒店中，一玩就玩到凌晨3点钟，真疯狂!前几天在逛Apple Store 收费榜的时候，看到了游戏开发物语这款游戏进入了收费榜，勾起了之前的记忆，所以就花6块钱下载下来（下载地址）。在短时间内玩了两次结局，游戏时间20年为一次结局，第二次的时候我把游戏速度调快了一些。 游戏开发物语是一">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2016/12/19/kairo-game/game.jpeg">
+<meta property="og:updated_time" content="2017-01-03T02:38:26.604Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏开发物语">
+<meta name="twitter:description" content="题图来自Apple Store 第一次接触开罗这款游戏是在几年前，那时候还是用Android 玩的汉化版本。出差在酒店中，一玩就玩到凌晨3点钟，真疯狂!前几天在逛Apple Store 收费榜的时候，看到了游戏开发物语这款游戏进入了收费榜，勾起了之前的记忆，所以就花6块钱下载下来（下载地址）。在短时间内玩了两次结局，游戏时间20年为一次结局，第二次的时候我把游戏速度调快了一些。 游戏开发物语是一">
+<meta name="twitter:image" content="http://wendyeq.me/2016/12/19/kairo-game/game.jpeg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2016/12/19/kairo-game/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>游戏开发物语 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2016/12/19/kairo-game/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">游戏开发物语
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-12-19 19:37:32" itemprop="dateCreated datePublished" datetime="2016-12-19T19:37:32+08:00">2016-12-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-01-03 10:38:26" itemprop="dateModified" datetime="2017-01-03T10:38:26+08:00">2017-01-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">914</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2016/12/19/kairo-game/game.jpeg" title="game">
+<p>题图来自Apple Store</p>
+<p>第一次接触开罗这款游戏是在几年前，那时候还是用Android 玩的汉化版本。出差在酒店中，一玩就玩到凌晨3点钟，真疯狂!<br>前几天在逛Apple Store 收费榜的时候，看到了游戏开发物语这款游戏进入了收费榜，勾起了之前的记忆，所以就花6块钱下载下来（<a href="https://itunes.apple.com/cn/app/id396085661?mt=8" target="_blank" rel="noopener">下载地址</a>）。在短时间内玩了两次结局，游戏时间20年为一次结局，第二次的时候我把游戏速度调快了一些。</p>
+<p>游戏开发物语是一款节奏很快的模拟养成类游戏。玩家扮演游戏开发公司的社长运营一家游戏开发公司。作为游戏开发公司的社长需要人员管理、开发管理、广告宣传等。</p>
+<h3 id="人员管理"><a href="#人员管理" class="headerlink" title="人员管理"></a>人员管理</h3><p>在公司刚开始发展的时候，启动资金有限，只能通过熟人介绍这种花费少的方式去招人。当然也只能选一些价格便宜的人。但是对于选择什么样的人开罗公司设计了一个有意思的指标就是<strong>体力</strong>，每次选择体力高的人员就是最优的选择，体力高表示潜力大，当前的能力值高低不是选择的最主要标准。因为每次培训和日常的爆发都需要体力，体力越高的人能进行的培训的次数就越多。所以<strong>体力才是我们的核心竞争力</strong>。<br>在游戏的职业系统中有程序员、剧本作家、设计师、音响制作师、总监、制作人、硬件工程师、超级黑客，层层递进，可以通过转职教科书这种道具进行职业转换。其中硬件工程师要前面的所有职业都满5级才能转，而且硬件工程师是开发主机的必要条件。</p>
+<h3 id="开发管理"><a href="#开发管理" class="headerlink" title="开发管理"></a>开发管理</h3><p>刚开始不够钱独立开发游戏的时候，只能接一些外包来做，毕竟生存下来才是最主要的。当公司发展起来之后又会请一些外包回来做外包更擅长的东西，让整个游戏的期待值更高。<br>一直的目标都是存钱和培养硬件工程师，将来开发主机。主机的起点开始就很高，所以一出的就是顶配，拿下最大的市场份额。而且有时候游戏的销量会远大于主机的销量，说明了有些是买了几套的，一套用来玩，其他的用来收藏。<br>当公司发展起来后会带动题材，一些人气中低的题材的好游戏也可以卖的很好。<br>一个人连续做一样工作的时候质量会变差，所以那些工作要轮着来做，也就是同样类型的工作需要储备2个人。</p>
+<h3 id="广告宣传"><a href="#广告宣传" class="headerlink" title="广告宣传"></a>广告宣传</h3><p>要经常宣传才能有粉丝，如果一段时间不发新游戏则粉丝数回下降，特别是每次开发主机的时候。</p>
+<p>以上都是游戏。<br>PS: 这款游戏很容易上瘾，不推荐玩!</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/game/" rel="tag"># game</a>
+          
+            <a href="/tags/心得/" rel="tag"># 心得</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/14/intellij-idea-configuration-tomcat-server/" rel="next" title="intellij idea Web 项目配置tomcat">
+                <i class="fa fa-chevron-left"></i> intellij idea Web 项目配置tomcat
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/30/soft-skills/" rel="prev" title="《软技能：代码之外的生存指南》读书笔记">
+                《软技能：代码之外的生存指南》读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#人员管理"><span class="nav-number">1.</span> <span class="nav-text">人员管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发管理"><span class="nav-number">2.</span> <span class="nav-text">开发管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广告宣传"><span class="nav-number">3.</span> <span class="nav-text">广告宣传</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

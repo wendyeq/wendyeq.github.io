@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自网络 第一次读《软技能：代码之外的生存指南》的时候，有种惊为天人的感觉，觉得每句话都说到心坎里了。但是在第二次阅读整理笔记的时候却发现能整理为笔记的内容不多，整本书还是以实践为主。 里面的道理其实很早就知道，比如博客的重要性，2011年之前就知道了，但是能坚持下来吗？真的应了那句“知道那么多大道理,却仍然过不好一生。“ 生产力提升计划是这本书里面最喜欢的内容，无论做项目还是其他，定下一个">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《软技能：代码之外的生存指南》读书笔记">
+<meta property="og:url" content="http://wendyeq.me/2016/12/30/soft-skills/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自网络 第一次读《软技能：代码之外的生存指南》的时候，有种惊为天人的感觉，觉得每句话都说到心坎里了。但是在第二次阅读整理笔记的时候却发现能整理为笔记的内容不多，整本书还是以实践为主。 里面的道理其实很早就知道，比如博客的重要性，2011年之前就知道了，但是能坚持下来吗？真的应了那句“知道那么多大道理,却仍然过不好一生。“ 生产力提升计划是这本书里面最喜欢的内容，无论做项目还是其他，定下一个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2016/12/30/soft-skills/soft.jpg">
+<meta property="og:image" content="http://wendyeq.me/2016/12/30/soft-skills/shanbay.jpg">
+<meta property="og:image" content="http://wendyeq.me/2016/12/30/soft-skills/soft-note.png">
+<meta property="og:updated_time" content="2017-01-03T02:38:26.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《软技能：代码之外的生存指南》读书笔记">
+<meta name="twitter:description" content="题图来自网络 第一次读《软技能：代码之外的生存指南》的时候，有种惊为天人的感觉，觉得每句话都说到心坎里了。但是在第二次阅读整理笔记的时候却发现能整理为笔记的内容不多，整本书还是以实践为主。 里面的道理其实很早就知道，比如博客的重要性，2011年之前就知道了，但是能坚持下来吗？真的应了那句“知道那么多大道理,却仍然过不好一生。“ 生产力提升计划是这本书里面最喜欢的内容，无论做项目还是其他，定下一个">
+<meta name="twitter:image" content="http://wendyeq.me/2016/12/30/soft-skills/soft.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2016/12/30/soft-skills/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《软技能：代码之外的生存指南》读书笔记 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2016/12/30/soft-skills/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">《软技能：代码之外的生存指南》读书笔记
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-12-30 20:41:55" itemprop="dateCreated datePublished" datetime="2016-12-30T20:41:55+08:00">2016-12-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-01-03 10:38:26" itemprop="dateModified" datetime="2017-01-03T10:38:26+08:00">2017-01-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2016/12/30/soft-skills/soft.jpg" title="soft">
+<p>题图来自网络</p>
+<p>第一次读《软技能：代码之外的生存指南》的时候，有种惊为天人的感觉，觉得每句话都说到心坎里了。但是在第二次阅读整理笔记的时候却发现能整理为笔记的内容不多，整本书还是以实践为主。</p>
+<p>里面的道理其实很早就知道，比如博客的重要性，2011年之前就知道了，但是能坚持下来吗？真的应了那句“知道那么多大道理,却仍然过不好一生。“</p>
+<p>生产力提升计划是这本书里面最喜欢的内容，无论做项目还是其他，定下一个目标之后才有可能去分解任务从而达成目标。项目计划与任务分解对于一个项目的重要性，不用多说了。关键是目标怎么设定，这要问你的内心，你到底想成为怎样的人。</p>
+<p>对于期权不太认可作者的看法（仅指香港和中国市场上交易的期权，而不是公司分配的期权），期权很多时候有种猜大小的感觉。猜对了就赢钱，猜错了就输钱。期权带有天然的杠杆，猜错了最大的风险就是把权利金都输光。如果赌性的大的全部All in 那风险将会非常大。但是如果你说用期权策略进行套利，这就不是我的能力范畴。</p>
+<p>2017年的第一个计划就是每3天写一篇博文。<br>2017年重点关注edx 和山海经。<br>这几年坚持的比较好的也就扇贝。<br><img src="/2016/12/30/soft-skills/shanbay.jpg" title="shanbay"></p>
+<p>《软技能：代码之外的生存指南》读书笔记思维导图（逆时针阅读）：</p>
+<a id="more"></a>
+<img src="/2016/12/30/soft-skills/soft-note.png" title="软技能">
+<p>文字版：</p>
+<p>1 职业<br>  1.1 工作是属于公司的，而职业生涯却是属于你的<br>  1.2 如何像企业一样思考<br>  1.3 思考未来：你的目标是什么<br>    1.3.1 像做项目一样把一个大目标分解为若干小目标，大目标才有可能实现<br>  1.4 人际交往能力：远比你想象的重要<br>    1.4.1 每个人都希望自己很重要<br>    1.4.2 一旦你贬低他人，削弱他们的成就感，在某种程度上就如同切断他们的氧气补给，获得的回馈将完全是抓狂和绝望<br>    1.4.3 永远不要批评<br>    1.4.4 换位思考<br>    1.4.5 避免争吵<br>        1.4.5.1 在小事情上任何放弃立场或承认错误的机会对你而言可能没什么大不了，但对他人却可能举足轻重<br>  1.5 面试<br>    1.5.1 内推<br>    1.5.2 不准备换工作也去提前积累面试经验<br>  1.6 专业化<br>    1.6.1 在一个领域成为专家<br>  1.7 晋升<br>    1.7.1 承担责任<br>        1.7.1.1 有一个不受重视的项目，你能去负责它吗？<br>        1.7.1.2 你能帮助团队里的新人快速成长吗？<br>        1.7.1.3 你能负责文档制作流程，并保证及时更新这些文档吗？<br>        1.7.1.4 那项工作是没有人愿意去做，你愿意承担起来，并将其简化或自动化的？<br>    1.7.2 引人注目<br>        1.7.2.1 周报<br>        1.7.2.2 分享<br>    1.7.3 自学<br>    1.7.4 成为问题的解决者<br>    1.7.5 政治<br>  1.8 成为专业人士<br>    1.8.1 什么是专业人士<br>        1.8.1.1 遵守自己的原则<br>        1.8.1.2 专注于正确完成工作<br>        1.8.1.3 不惧承认自己错了，不会文过饰非<br>        1.8.1.4 持续稳定<br>        1.8.1.5 勇于承担责任<br>    1.8.2 养成良好习惯<br>    1.8.3 坚守正道<br>    1.8.4 最求品质，完善自我<br>  1.9 远程工作的生存策略<br>    1.9.1 时间管理<br>    1.9.2 自我激励<br>    1.9.3 孤独感<br>  1.10 请勿陷入对技术的狂热之中<br>    1.10.1 我们都是技术信徒<br>    1.10.2 天生一物必有用<br>    1.10.3 不拘一格<br>2 自我营销<br>  2.1 自我营销的方式<br>    2.1.1 博客<br>    2.1.2 播客<br>    2.1.3 视频<br>    2.1.4 投稿<br>    2.1.5 书籍<br>    2.1.6 代码营<br>    2.1.7 技术会议<br>  2.2 打造品牌<br>    2.2.1 明确要传达的品牌信息<br>    2.2.2 挑选细分市场<br>    2.2.3 创建品牌口号<br>    2.2.4 创建电梯内销售概要<br>    2.2.5 创建视觉符号<br>  2.3 打造博客<br>  2.4 演讲<br>  2.5 培训<br>  2.6 著书立说<br>3 学习<br>  3.1 自我教育<br>  3.2 十步学习法<br>    3.2.1 1、了解全局<br>    3.2.2 2、确定范围<br>    3.2.3 3、定义目标<br>    3.2.4 4、寻找资源<br>    3.2.5 5、创建学习计划<br>    3.2.6 6、筛选资源<br>    3.2.7 7、开始学习，浅尝则止<br>    3.2.8 8、动手操作，边玩边学<br>    3.2.9 9、全面掌握，学以致用<br>    3.2.10 10、乐为人师，融会贯通<br>  3.3 发现自己的短板，消除短板<br>4 生产力<br>  4.1 一切始于专注<br>  4.2 生产力提升计划<br>    4.2.1 季度计划<br>    4.2.2 月计划<br>    4.2.3 周计划<br>    4.2.4 日计划及执行<br>    4.2.5 与干扰做斗争<br>    4.2.6 休息和休假<br>  4.3 番茄工作法<br>  4.4 职业倦怠<br>    4.4.1 设定一个时间表并坚决执行<br>  4.5 戒掉电视<br>  4.6 形成惯例<br>    4.6.1 制作日程安排<br>  4.7 找出坏习惯，改掉<br>  4.8 养成新习惯<br>  4.9 分解任务<br>  4.10 努力工作的价值<br>  4.11 任何行动都比不采取行动好<br>5 理财<br>  5.1 怎么支配薪水<br>    5.1.1 拒绝短期思维<br>    5.1.2 资产与负债<br>  5.2 期权<br>  5.3 房地产投资<br>  5.4 退休计划<br>  5.5 财务自由<br>6 健身<br>  6.1 挑选目标<br>  6.2 设置里程碑<br>  6.3 测量进度<br>  6.4 站立办公<br>7 精神<br>  7.1 自我形象<br>  7.2 学会拥抱失败、期待失败、接受失败、并准备直面失败</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/19/kairo-game/" rel="next" title="游戏开发物语">
+                <i class="fa fa-chevron-left"></i> 游戏开发物语
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/01/LFS101/" rel="prev" title="LFS101x Introduction to Linux">
+                LFS101x Introduction to Linux <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

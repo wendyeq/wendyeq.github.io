@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自vim.org 简单介绍tar、gzip、bzip2、xz、zip、dd、nano、gedit、vi\vim、emacs的用法。 tar 用法tar: 是一个打包命令而不是压缩命令，把一堆的文件或目录打成一个.tar扩展名的文件（扩展名其实是随便取都可以的，但是习惯用这个），用于备份或传输。通过参数的方式可以使用gzip、bzip2对打包的文件进行压缩。 常见用法：-c: 创建打包文件-">
+<meta name="keywords" content="linux,lfs101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lfs101-command-line-02">
+<meta property="og:url" content="http://wendyeq.me/2017/01/07/lfs101-command-line-02/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自vim.org 简单介绍tar、gzip、bzip2、xz、zip、dd、nano、gedit、vi\vim、emacs的用法。 tar 用法tar: 是一个打包命令而不是压缩命令，把一堆的文件或目录打成一个.tar扩展名的文件（扩展名其实是随便取都可以的，但是习惯用这个），用于备份或传输。通过参数的方式可以使用gzip、bzip2对打包的文件进行压缩。 常见用法：-c: 创建打包文件-">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2017/01/07/lfs101-command-line-02/vim.jpg">
+<meta property="og:image" content="http://wendyeq.me/2017/01/07/lfs101-command-line-02/nano.jpg">
+<meta property="og:updated_time" content="2017-09-12T03:27:06.812Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lfs101-command-line-02">
+<meta name="twitter:description" content="题图来自vim.org 简单介绍tar、gzip、bzip2、xz、zip、dd、nano、gedit、vi\vim、emacs的用法。 tar 用法tar: 是一个打包命令而不是压缩命令，把一堆的文件或目录打成一个.tar扩展名的文件（扩展名其实是随便取都可以的，但是习惯用这个），用于备份或传输。通过参数的方式可以使用gzip、bzip2对打包的文件进行压缩。 常见用法：-c: 创建打包文件-">
+<meta name="twitter:image" content="http://wendyeq.me/2017/01/07/lfs101-command-line-02/vim.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2017/01/07/lfs101-command-line-02/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>lfs101-command-line-02 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2017/01/07/lfs101-command-line-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">lfs101-command-line-02
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-07 22:20:05" itemprop="dateCreated datePublished" datetime="2017-01-07T22:20:05+08:00">2017-01-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-09-12 11:27:06" itemprop="dateModified" datetime="2017-09-12T11:27:06+08:00">2017-09-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">3.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">6 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2017/01/07/lfs101-command-line-02/vim.jpg" title="vim">
+<p>题图来自<a href="http://www.vim.org/" target="_blank" rel="noopener">vim.org</a></p>
+<p>简单介绍tar、gzip、bzip2、xz、zip、dd、nano、gedit、vi\vim、emacs的用法。</p>
+<h3 id="tar-用法"><a href="#tar-用法" class="headerlink" title="tar 用法"></a>tar 用法</h3><p><code>tar</code>: 是一个打包命令而不是压缩命令，把一堆的文件或目录打成一个<code>.tar</code>扩展名的文件（扩展名其实是随便取都可以的，但是习惯用这个），用于备份或传输。通过参数的方式可以使用gzip、bzip2对打包的文件进行压缩。</p>
+<p>常见用法：<br><code>-c</code>: 创建打包文件<br><code>-v</code>: 显示打包过程<br><code>-f</code>: 指定打包文件<br><code>-z</code>: 用gzip处理打包文件<br><code>-j</code>: 用bzip2处理打包文件<br><code>-J</code>: 用xz处理打包文件<br><code>-t</code>: 查看打包文件<br><code>-x</code>: 解压打包文件，不需要指定压缩类型，tar会自动判断<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf goagent.tar goagent  <span class="comment"># 对goanget 目录进行打包，打包后的文件是goagent.tar</span></span><br><span class="line">tar -zcvf goagent.tar.gz goagent  <span class="comment"># 对goanget 目录进行打包并用gzip进行压缩，打包后的文件是goagent.tar.gz</span></span><br><span class="line">tar -jcvf goagent.tar.bz2 goagent  <span class="comment"># 对goanget 目录进行打包并用bzip2进行压缩，打包后的文件是goagent.tar.bz2</span></span><br><span class="line">tar -jtvf goagent.tar.bz2  <span class="comment"># 查看goagent.tar.bz2打包文件里面的内容</span></span><br><span class="line">tar -xvf goagent.tar.bz2  <span class="comment"># 解压goagent.tar.bz2文件</span></span><br><span class="line"></span><br><span class="line">wendyeq temp $ ls -al</span><br><span class="line">total 35608</span><br><span class="line">drwxr-xr-x  <span class="number"> 6 </span>wendyeq  staff     <span class="number"> 204 </span><span class="number"> 1 </span><span class="number"> 7 </span>23:01 .</span><br><span class="line">drwxr-xr-x <span class="number"> 13 </span>wendyeq  staff     <span class="number"> 442 </span><span class="number"> 1 </span><span class="number"> 7 </span>22:59 ..</span><br><span class="line">drwxr-xr-x@<span class="number"> 10 </span>wendyeq  staff     <span class="number"> 340 </span>12<span class="number"> 26 </span>23:36 goagent</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>wendyeq  staff <span class="number"> 7818752 </span><span class="number"> 1 </span><span class="number"> 7 </span>22:59 goagent.tar</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>wendyeq  staff <span class="number"> 5241309 </span><span class="number"> 1 </span><span class="number"> 7 </span>23:01 goagent.tar.bz2</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>wendyeq  staff <span class="number"> 5168639 </span><span class="number"> 1 </span><span class="number"> 7 </span>23:00 goagent.tar.gz</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="gzip-用法"><a href="#gzip-用法" class="headerlink" title="gzip 用法"></a>gzip 用法</h3><p><code>gzip</code>: gzip 是使用广泛的压缩程序，常用<code>.gz</code>扩展名。gzip 对文件进行压缩，不能对目录进行压缩，所以一般与<code>tar</code>一起使用。</p>
+<p>常见用法：<br><code>-v</code>: 显示压缩过程<br><code>-l</code>: 列出压缩文件的相关信息<br><code>-d</code>: 解压文件</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wendyeq temp <span class="variable">$ </span>gzip -v goagent.tar  <span class="comment"># 压缩goagent.tar 文件</span></span><br><span class="line"><span class="symbol">goagent.tar:</span>       <span class="number">33.9</span>% -- replaced <span class="keyword">with</span> goagent.tar.gz</span><br><span class="line">wendyeq temp <span class="variable">$ </span>gzip -l goagent.tar.gz  <span class="comment"># 列出goagent.tar 的相关信息</span></span><br><span class="line">  compressed uncompressed  ratio uncompressed_name</span><br><span class="line">     <span class="number">5168651</span>      <span class="number">7823360</span>  <span class="number">33.9</span>% goagent.tar</span><br><span class="line">wendyeq temp <span class="variable">$ </span>gzip -d goagent.tar.gz  <span class="comment"># 解压goagent.tar.gz 文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="bzip2-用法"><a href="#bzip2-用法" class="headerlink" title="bzip2 用法"></a>bzip2 用法</h3><p><code>bzip2</code>: 一种<code>.bz2</code>扩展名的压缩方式。</p>
+<p>常见用法：<br><code>-v</code>: 显示压缩过程<br><code>-k</code>: 压缩后保留原文件，默认是删除原文件的。<br><code>-d</code>: 解压文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">bzip2</span> <span class="selector-tag">-v</span> <span class="selector-tag">goagent</span><span class="selector-class">.tar</span>  # 压缩<span class="selector-tag">goagent</span><span class="selector-class">.tar</span> 文件，并删除<span class="selector-tag">goagent</span><span class="selector-class">.tar</span></span><br><span class="line"><span class="selector-tag">bzip2</span> <span class="selector-tag">-kv</span> <span class="selector-tag">goagent</span><span class="selector-class">.tar</span>  # 压缩<span class="selector-tag">goagent</span><span class="selector-class">.tar</span> 文件，不删除<span class="selector-tag">goagent</span><span class="selector-class">.tar</span></span><br><span class="line"><span class="selector-tag">bzip2</span> <span class="selector-tag">-dv</span> <span class="selector-tag">goagent</span><span class="selector-class">.tar</span><span class="selector-class">.bz2</span>  # 解压<span class="selector-tag">goagent</span><span class="selector-class">.tar</span><span class="selector-class">.bz2</span> 文件</span><br></pre></td></tr></table></figure>
+<h3 id="xz-用法"><a href="#xz-用法" class="headerlink" title="xz 用法"></a>xz 用法</h3><p><code>xz</code>: 一种<code>.xz</code>扩展名的压缩方式。压缩率比gzip、bzip2都高，所以压缩的时候速度比较慢。</p>
+<p>常见用法：<br><code>-v</code>: 显示压缩过程<br><code>-k</code>: 压缩后保留原文件，默认是删除原文件的。<br><code>-d</code>: 解压文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">xz</span> <span class="selector-tag">-v</span> <span class="selector-tag">goagent</span><span class="selector-class">.tar</span>  # 压缩<span class="selector-tag">goagent</span><span class="selector-class">.tar</span> 文件，并删除<span class="selector-tag">goagent</span><span class="selector-class">.tar</span></span><br><span class="line"><span class="selector-tag">xz</span> <span class="selector-tag">-kv</span> <span class="selector-tag">goagent</span><span class="selector-class">.tar</span>  # 压缩<span class="selector-tag">goagent</span><span class="selector-class">.tar</span> 文件，不删除<span class="selector-tag">goagent</span><span class="selector-class">.tar</span></span><br><span class="line"><span class="selector-tag">xz</span> <span class="selector-tag">-dv</span> <span class="selector-tag">goagent</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span>  # 解压<span class="selector-tag">goagent</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span> 文件</span><br></pre></td></tr></table></figure>
+<h3 id="zip-用法"><a href="#zip-用法" class="headerlink" title="zip 用法"></a>zip 用法</h3><p><code>zip</code>: 一种<code>.zip</code>扩展名的压缩方式。用的比较广泛，windows 也经常用这个格式。不带自解压参数，用<code>unzip</code>进行解压。</p>
+<p>常见用法：<br><code>-q</code>: 不显示压缩过程<br><code>-r</code>: 递归处理，将指定目录下的所有文件和子目录一并压缩</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">zip</span> <span class="selector-tag">-qr</span> <span class="selector-tag">goagent</span><span class="selector-class">.zip</span> <span class="selector-tag">goagent</span>  # 打包压缩<span class="selector-tag">goagent</span>目录里的所有内容，没有`<span class="selector-tag">-r</span>`参数不能对目录进行操作。</span><br><span class="line"><span class="selector-tag">unzip</span> <span class="selector-tag">goagent</span><span class="selector-class">.zip</span>  # 解压<span class="selector-tag">goagent</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span> 文件</span><br></pre></td></tr></table></figure>
+<h3 id="dd-用法"><a href="#dd-用法" class="headerlink" title="dd 用法"></a>dd 用法</h3><p><code>dd</code>: 可用于高效精确地复制整个磁盘分区（把ISO文件刻录到U盘），也可以用于测试硬盘或内存的读写速度。</p>
+<p>常见用法：<br><code>if=filename</code>: 输入的文件，if 是input file 的简写<br><code>of=filename</code>: 输出的文件，of 是output file 的简写<br><code>bs=bytes</code>: 块的大小，可以用1M、1k这种格式<br><code>count=count</code>: 重复的次数</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dd <span class="attribute">if</span>=xxx.iso <span class="attribute">of</span>=/dev/sdb <span class="attribute">bs</span>=1M  # 刻录ISO文件到U盘，`/dev/sdb`是U盘文件</span><br><span class="line">dd <span class="attribute">if</span>=/dev/sdc <span class="attribute">of</span>=/dev/sdd  # 将磁盘`/dev/sdc`整个备份到`/dev/sdd`</span><br><span class="line">dd <span class="attribute">if</span>=/dev/zero <span class="attribute">bs</span>=1M <span class="attribute">count</span>=1000 <span class="attribute">of</span>=testfile # 生成1Gb的文件，用于测试硬盘写入速度</span><br><span class="line">dd <span class="attribute">if</span>=testfile <span class="attribute">bs</span>=1M | dd <span class="attribute">of</span>=/dev/null # 读取1Gb的文件，用于测试硬盘读取速度</span><br></pre></td></tr></table></figure>
+<h3 id="nano-用法"><a href="#nano-用法" class="headerlink" title="nano 用法"></a>nano 用法</h3><p><code>nano</code>: 终端里的一个编辑器，很多发现版本都用他做默认的编辑器。使用起来简单直观，底部有具体的命令用法。<br><img src="/2017/01/07/lfs101-command-line-02/nano.jpg" title="nano"></p>
+<p>常见用法：<br><code>CTRL-G</code>: 显示帮助<br><code>CTRL-O</code>: 保存文件<br><code>CTRL-X</code>: 退出编辑器<br><code>CTRL-R</code>: 读取另外一个文件<br><code>CTRL-C</code>: 取消上一条命令</p>
+<h3 id="gedit-用法"><a href="#gedit-用法" class="headerlink" title="gedit 用法"></a>gedit 用法</h3><p><code>gedit</code>: 跟windows的notepad 差不多，不能在终端运行，必须在图形界面才能运行。</p>
+<h3 id="vi-vim-用法"><a href="#vi-vim-用法" class="headerlink" title="vi\vim 用法"></a>vi\vim 用法</h3><p><code>vi\vim</code>: 很多发行版本默认是包括了<code>vi</code>的，但不一定有<code>vim</code>，可能需要自己手工安装。vim 完全兼容vi的所有指令，vim的语法加亮和易用性都比vi好。特别是语法加亮功能很实用。</p>
+<p>vi\vim 支持编辑模式和命令模式。从编辑模式切换到命令模式按<code>Esc</code>键，从命令模式切换到编辑模式一般用<code>i</code>键，还有其它键也可以。</p>
+<p>运行命令<code>vimtutor</code>学习具体的操作方法。</p>
+<p>常见用法：<br><code>i</code>：在当前字符前插入文本<br><code>dd</code>：删除光标行正行内容<br><code>ndd</code>：删除当前行及其后n-1行<br><code>/字符串</code>：查找操作，从当前光标所在位置开始向文件尾部查找指定字符串的内容，查找的字符串会被加亮显示<br><code>:wq</code>：在命令模式下，执行保存退出操作<br><code>:w</code>：在命令模式下，执行保存操作<br><code>:w！</code>：在命令模式下，执行强制保存操作<br><code>:q</code>：在命令模式下，执行退出vi操作<br><code>:q！</code>：在命令模式下，执行强制退出vi操作，这个经常会用到<br><code>:set number</code>：在命令模式下，用于在最左端显示行号<br><code>:set nonumber</code>：在命令模式下，用于在最左端不显示行号<br><code>:行号</code>：光标跳转到指定行的行首<br><code>SHIFT-G</code>：跳转到最后一行</p>
+<h3 id="emacs-用法"><a href="#emacs-用法" class="headerlink" title="emacs 用法"></a>emacs 用法</h3><p><code>emacs</code>: 是一个很强大的文件编辑器，可惜很多系统没有自带这个软件，需要自己手工安装。</p>
+<p>常见用法：<br><code>C-x C-c</code>: 退出Emacs<br><code>C-x C-f</code>: 打开一个文件，如果文件不存在，则创建一个文件<br><code>C-x C-s</code>: 保存当前buffer<br><code>C-x C-w</code>: 文件另存为</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/lfs101/" rel="tag"># lfs101</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/04/lfs101-command-line-01/" rel="next" title="lfs101-command-line-01">
+                <i class="fa fa-chevron-left"></i> lfs101-command-line-01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/08/first/" rel="prev" title="第一周 - 勿忘初心">
+                第一周 - 勿忘初心 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#tar-用法"><span class="nav-number">1.</span> <span class="nav-text">tar 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gzip-用法"><span class="nav-number">2.</span> <span class="nav-text">gzip 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bzip2-用法"><span class="nav-number">3.</span> <span class="nav-text">bzip2 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xz-用法"><span class="nav-number">4.</span> <span class="nav-text">xz 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-用法"><span class="nav-number">5.</span> <span class="nav-text">zip 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dd-用法"><span class="nav-number">6.</span> <span class="nav-text">dd 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nano-用法"><span class="nav-number">7.</span> <span class="nav-text">nano 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gedit-用法"><span class="nav-number">8.</span> <span class="nav-text">gedit 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi-vim-用法"><span class="nav-number">9.</span> <span class="nav-text">vi\vim 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#emacs-用法"><span class="nav-number">10.</span> <span class="nav-text">emacs 用法</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

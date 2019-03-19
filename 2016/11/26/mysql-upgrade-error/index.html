@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自网络 今天把测试系统的MySQL镜像版本5.6.34替换为5.7.16，也就是把MySQL 5.6.34 升级到5.7.16。升级过程：  把MySQL 5.6.34的容器停了，docker stop mysql。 启动新的MySQL:5.7.16，密码没改，数据库文件用-v 指向与5.6.34的同一路径。 启动完发现数据库可以连接，但是select 数据的时候有问题，查看启动日志发现后">
+<meta name="keywords" content="数据库,docker,mysql,db">
+<meta property="og:type" content="article">
+<meta property="og:title" content="升级MySQL 报错">
+<meta property="og:url" content="http://wendyeq.me/2016/11/26/mysql-upgrade-error/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自网络 今天把测试系统的MySQL镜像版本5.6.34替换为5.7.16，也就是把MySQL 5.6.34 升级到5.7.16。升级过程：  把MySQL 5.6.34的容器停了，docker stop mysql。 启动新的MySQL:5.7.16，密码没改，数据库文件用-v 指向与5.6.34的同一路径。 启动完发现数据库可以连接，但是select 数据的时候有问题，查看启动日志发现后">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2016/11/26/mysql-upgrade-error/mysql.jpg">
+<meta property="og:updated_time" content="2017-01-03T02:38:26.451Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="升级MySQL 报错">
+<meta name="twitter:description" content="题图来自网络 今天把测试系统的MySQL镜像版本5.6.34替换为5.7.16，也就是把MySQL 5.6.34 升级到5.7.16。升级过程：  把MySQL 5.6.34的容器停了，docker stop mysql。 启动新的MySQL:5.7.16，密码没改，数据库文件用-v 指向与5.6.34的同一路径。 启动完发现数据库可以连接，但是select 数据的时候有问题，查看启动日志发现后">
+<meta name="twitter:image" content="http://wendyeq.me/2016/11/26/mysql-upgrade-error/mysql.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2016/11/26/mysql-upgrade-error/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>升级MySQL 报错 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2016/11/26/mysql-upgrade-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">升级MySQL 报错
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-11-26 23:31:30" itemprop="dateCreated datePublished" datetime="2016-11-26T23:31:30+08:00">2016-11-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-01-03 10:38:26" itemprop="dateModified" datetime="2017-01-03T10:38:26+08:00">2017-01-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">16 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2016/11/26/mysql-upgrade-error/mysql.jpg" title="mysql">
+<p>题图来自网络</p>
+<p>今天把测试系统的MySQL镜像版本5.6.34替换为5.7.16，也就是把MySQL 5.6.34 升级到5.7.16。<br>升级过程：</p>
+<ol>
+<li>把MySQL 5.6.34的容器停了，<code>docker stop mysql</code>。</li>
+<li>启动新的MySQL:5.7.16，密码没改，数据库文件用-v 指向与5.6.34的同一路径。</li>
+<li>启动完发现数据库可以连接，但是select 数据的时候有问题，查看启动日志发现后文中的错误。错误的原因是升级MySQL，默认数据库的表结构发生变化。</li>
+<li>进入容器 <code>docker exec -it mysql bash</code></li>
+<li>在容器内执行 <code>/usr/bin/mysql_upgrade -u root -p</code>，修复完毕。</li>
+</ol>
+<blockquote>
+<p>2016-11-25T06:35:16.576568Z 0 [ERROR] Incorrect definition of table performance_schema.events_waits_current: expected column ‘NESTING_EVENT_TYPE’ at position 15 to have type enum(‘TRANSACTION’,’STATEMENT’,’STAGE’,’WAIT’, found type enum(‘STATEMENT’,’STAGE’,’WAIT’).<br>2016-11-25T06:35:16.576651Z 0 [ERROR] Incorrect definition of table performance_schema.events_waits_history: expected column ‘NESTING_EVENT_TYPE’ at position 15 to have type enum(‘TRANSACTION’,’STATEMENT’,’STAGE’,’WAIT’, found type enum(‘STATEMENT’,’STAGE’,’WAIT’).<br>2016-11-25T06:35:16.576728Z 0 [ERROR] Incorrect definition of table performance_schema.events_waits_history_long: expected column ‘NESTING_EVENT_TYPE’ at position 15 to have type enum(‘TRANSACTION’,’STATEMENT’,’STAGE’,’WAIT’, found type enum(‘STATEMENT’,’STAGE’,’WAIT’).<br>2016-11-25T06:35:16.577004Z 0 [ERROR] Incorrect definition of table performance_schema.events_waits_summary_by_user_by_event_name: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.577078Z 0 [ERROR] Incorrect definition of table performance_schema.events_waits_summary_by_account_by_event_name: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.577614Z 0 [ERROR] Column count of performance_schema.setup_actors is wrong. Expected 5, found 3. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.577776Z 0 [ERROR] Incorrect definition of table performance_schema.setup_objects: expected column ‘OBJECT_TYPE’ at position 0 to have type enum(‘EVENT’,’FUNCTION’,’PROCEDURE’,’TABLE’,’TRIGGER’, found type enum(‘TABLE’).<br>2016-11-25T06:35:16.578178Z 0 [ERROR] Column count of performance_schema.table_lock_waits_summary_by_table is wrong. Expected 68, found 73. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.578244Z 0 [ERROR] Column count of performance_schema.threads is wrong. Expected 17, found 14. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.578309Z 0 [ERROR] Column count of performance_schema.events_stages_current is wrong. Expected 12, found 10. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.578369Z 0 [ERROR] Column count of performance_schema.events_stages_history is wrong. Expected 12, found 10. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.578433Z 0 [ERROR] Column count of performance_schema.events_stages_history_long is wrong. Expected 12, found 10. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.578567Z 0 [ERROR] Incorrect definition of table performance_schema.events_stages_summary_by_account_by_event_name: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.578638Z 0 [ERROR] Incorrect definition of table performance_schema.events_stages_summary_by_user_by_event_name: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.578860Z 0 [ERROR] Column count of performance_schema.events_statements_current is wrong. Expected 41, found 40. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.578956Z 0 [ERROR] Column count of performance_schema.events_statements_history is wrong. Expected 41, found 40. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.579051Z 0 [ERROR] Column count of performance_schema.events_statements_history_long is wrong. Expected 41, found 40. Created with MySQL 50634, now running 50716. Please use mysql_upgrade to fix this error.<br>2016-11-25T06:35:16.579193Z 0 [ERROR] Incorrect definition of table performance_schema.events_statements_summary_by_account_by_event_name: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.579268Z 0 [ERROR] Incorrect definition of table performance_schema.events_statements_summary_by_user_by_event_name: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.579501Z 0 [ERROR] Native table ‘performance_schema’.’events_statements_summary_by_program’ has the wrong structure<br>2016-11-25T06:35:16.579559Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_current’ has the wrong structure<br>2016-11-25T06:35:16.579589Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_history’ has the wrong structure<br>2016-11-25T06:35:16.579614Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_history_long’ has the wrong structure<br>2016-11-25T06:35:16.579641Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_summary_by_thread_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.579662Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_summary_by_account_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.579688Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_summary_by_user_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.579711Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_summary_by_host_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.579736Z 0 [ERROR] Native table ‘performance_schema’.’events_transactions_summary_global_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.579803Z 0 [ERROR] Incorrect definition of table performance_schema.users: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.579885Z 0 [ERROR] Incorrect definition of table performance_schema.accounts: expected column ‘USER’ at position 0 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.580251Z 0 [ERROR] Native table ‘performance_schema’.’memory_summary_global_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.580286Z 0 [ERROR] Native table ‘performance_schema’.’memory_summary_by_account_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.580311Z 0 [ERROR] Native table ‘performance_schema’.’memory_summary_by_host_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.580338Z 0 [ERROR] Native table ‘performance_schema’.’memory_summary_by_thread_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.580364Z 0 [ERROR] Native table ‘performance_schema’.’memory_summary_by_user_by_event_name’ has the wrong structure<br>2016-11-25T06:35:16.580389Z 0 [ERROR] Native table ‘performance_schema’.’table_handles’ has the wrong structure<br>2016-11-25T06:35:16.580410Z 0 [ERROR] Native table ‘performance_schema’.’metadata_locks’ has the wrong structure<br>2016-11-25T06:35:16.580435Z 0 [ERROR] Native table ‘performance_schema’.’replication_connection_configuration’ has the wrong structure<br>2016-11-25T06:35:16.580459Z 0 [ERROR] Native table ‘performance_schema’.’replication_group_members’ has the wrong structure<br>2016-11-25T06:35:16.580483Z 0 [ERROR] Native table ‘performance_schema’.’replication_connection_status’ has the wrong structure<br>2016-11-25T06:35:16.580507Z 0 [ERROR] Native table ‘performance_schema’.’replication_applier_configuration’ has the wrong structure<br>2016-11-25T06:35:16.580548Z 0 [ERROR] Native table ‘performance_schema’.’replication_applier_status’ has the wrong structure<br>2016-11-25T06:35:16.580577Z 0 [ERROR] Native table ‘performance_schema’.’replication_applier_status_by_coordinator’ has the wrong structure<br>2016-11-25T06:35:16.580602Z 0 [ERROR] Native table ‘performance_schema’.’replication_applier_status_by_worker’ has the wrong structure<br>2016-11-25T06:35:16.580628Z 0 [ERROR] Native table ‘performance_schema’.’replication_group_member_stats’ has the wrong structure<br>2016-11-25T06:35:16.580649Z 0 [ERROR] Native table ‘performance_schema’.’prepared_statements_instances’ has the wrong structure<br>2016-11-25T06:35:16.580674Z 0 [ERROR] Native table ‘performance_schema’.’user_variables_by_thread’ has the wrong structure<br>2016-11-25T06:35:16.580698Z 0 [ERROR] Native table ‘performance_schema’.’status_by_account’ has the wrong structure<br>2016-11-25T06:35:16.580721Z 0 [ERROR] Native table ‘performance_schema’.’status_by_host’ has the wrong structure<br>2016-11-25T06:35:16.580745Z 0 [ERROR] Native table ‘performance_schema’.’status_by_thread’ has the wrong structure<br>2016-11-25T06:35:16.580768Z 0 [ERROR] Native table ‘performance_schema’.’status_by_user’ has the wrong structure<br>2016-11-25T06:35:16.580801Z 0 [ERROR] Native table ‘performance_schema’.’global_status’ has the wrong structure<br>2016-11-25T06:35:16.580825Z 0 [ERROR] Native table ‘performance_schema’.’session_status’ has the wrong structure<br>2016-11-25T06:35:16.580848Z 0 [ERROR] Native table ‘performance_schema’.’variables_by_thread’ has the wrong structure<br>2016-11-25T06:35:16.580867Z 0 [ERROR] Native table ‘performance_schema’.’global_variables’ has the wrong structure<br>2016-11-25T06:35:16.580907Z 0 [ERROR] Native table ‘performance_schema’.’session_variables’ has the wrong structure<br>2016-11-25T06:35:16.581008Z 0 [ERROR] Incorrect definition of table mysql.db: expected column ‘User’ at position 2 to have type char(32), found type char(16).<br>2016-11-25T06:35:16.581032Z 0 [ERROR] mysql.user has no <code>Event_priv</code> column at position 28<br>2016-11-25T06:35:16.581177Z 0 [ERROR] Event Scheduler: An error occurred when initializing system tables. Disabling the Event Scheduler.</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/db/" rel="tag"># db</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/26/docker-multiple-insecure-registry/" rel="next" title="Docker 添加多个非SSL镜像源">
+                <i class="fa fa-chevron-left"></i> Docker 添加多个非SSL镜像源
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/27/ai/" rel="prev" title="《智能时代：大数据与智能革命重新定义未来》读书笔记">
+                《智能时代：大数据与智能革命重新定义未来》读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

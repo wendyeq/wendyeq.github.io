@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自网络 吴军写的书已经看过好几本，《浪潮之巅》、《数学之美》、《文明之光》都已经看完。《浪潮之巅》的创始人基因论印象深刻，吴军颇有预言家的潜质，比如雅虎卖身给Verizon。《数学之美》、《文明之光》是从广州图书馆借来看的，花费的时间成本不比买书便宜，但是为什么不直接买书呢？由于是租房，每次买大件的东西都会考虑一下搬家的事情，而且本人是Kindle 用户，现在买书都优先考虑买电子版，方便携">
+<meta name="keywords" content="读书笔记,ai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《智能时代：大数据与智能革命重新定义未来》读书笔记">
+<meta property="og:url" content="http://wendyeq.me/2016/11/27/ai/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自网络 吴军写的书已经看过好几本，《浪潮之巅》、《数学之美》、《文明之光》都已经看完。《浪潮之巅》的创始人基因论印象深刻，吴军颇有预言家的潜质，比如雅虎卖身给Verizon。《数学之美》、《文明之光》是从广州图书馆借来看的，花费的时间成本不比买书便宜，但是为什么不直接买书呢？由于是租房，每次买大件的东西都会考虑一下搬家的事情，而且本人是Kindle 用户，现在买书都优先考虑买电子版，方便携">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2016/11/27/ai/ai.jpg">
+<meta property="og:image" content="http://wendyeq.me/2016/11/27/ai/ai-note.png">
+<meta property="og:updated_time" content="2017-01-03T02:38:26.472Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《智能时代：大数据与智能革命重新定义未来》读书笔记">
+<meta name="twitter:description" content="题图来自网络 吴军写的书已经看过好几本，《浪潮之巅》、《数学之美》、《文明之光》都已经看完。《浪潮之巅》的创始人基因论印象深刻，吴军颇有预言家的潜质，比如雅虎卖身给Verizon。《数学之美》、《文明之光》是从广州图书馆借来看的，花费的时间成本不比买书便宜，但是为什么不直接买书呢？由于是租房，每次买大件的东西都会考虑一下搬家的事情，而且本人是Kindle 用户，现在买书都优先考虑买电子版，方便携">
+<meta name="twitter:image" content="http://wendyeq.me/2016/11/27/ai/ai.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2016/11/27/ai/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《智能时代：大数据与智能革命重新定义未来》读书笔记 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2016/11/27/ai/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">《智能时代：大数据与智能革命重新定义未来》读书笔记
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-11-27 22:55:56" itemprop="dateCreated datePublished" datetime="2016-11-27T22:55:56+08:00">2016-11-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-01-03 10:38:26" itemprop="dateModified" datetime="2017-01-03T10:38:26+08:00">2017-01-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2016/11/27/ai/ai.jpg" title="ai">
+<p>题图来自网络</p>
+<p>吴军写的书已经看过好几本，《浪潮之巅》、《数学之美》、《文明之光》都已经看完。《浪潮之巅》的创始人基因论印象深刻，吴军颇有预言家的潜质，比如雅虎卖身给Verizon。《数学之美》、《文明之光》是从广州图书馆借来看的，花费的时间成本不比买书便宜，但是为什么不直接买书呢？由于是租房，每次买大件的东西都会考虑一下搬家的事情，而且本人是Kindle 用户，现在买书都优先考虑买电子版，方便携带，随时随地阅读，但是吴军的书都不出电子版😒😒😒<br>《智能时代》是趁着双十一前，京东图书打折的时候买的，刚开始还不知道出了这本书。</p>
+<p>这其实是本科普书，不过上架建议居然是经济读物😯。书的内容写的很浅显，读起来通顺流畅，保持了他一贯的写作风格。其实他的书除了《数学之美》比较深奥，其他几本都比较容易读懂。书里面关于发展历史的一些内容和观点在前面几本书都有体现。</p>
+<p>在《数学之美》中已经发现他对香农和信息论的评价很高，在《智能时代》强化了这一观点。可怜我一个信息工程的，无论是在学校时代还是工作几年后，对信息论的理解和认识与他还是相差甚远。</p>
+<p>书里面的一句话很喜欢“隐私就像自由，只有当人们失去它的时候，才知道它的可贵”。其实大家对隐私的保护还是很脆弱，便利与隐私通常更倾向于便利。大公司一直诱惑你，要你提供隐私来做用户画像，方便精准推送。印象很深刻的是：有一年在过年前支付宝更新了一个版本，必须上传头像才能继续使用支付宝，其实我一直认为这是个bug来的，但是等了好久都没有修复，最后我就把支付宝卸载了，过了一年多之后才再次使用，这次不上传头像也可以使用。其实我这么倔强是有两个原因的，第一个是我不想一家公司轻易能拿到我的所有信息做用户画像，做数据分析。比较理想的情况是支付宝有部分信息，微信有部分信息，然后他们加起来的数据才具备完备性，当然这只是一厢情愿而已。第二个原因是支付宝不是购物的必要条件，我一直把支付宝定位为支付工具（当然他一直不甘于只做支付工具），所以我可能不是他的目标用户。</p>
+<p>其实我是个矛盾体，不太喜欢精准推送，我更喜欢主动挖掘。有一天我突然发现，我已经training到豆瓣私人电台播放的歌90%都是我喜欢的，然后我就不用豆瓣FM。</p>
+<p>《智能时代：大数据与智能革命重新定义未来》读书笔记思维导图（逆时针阅读）：</p>
+<a id="more"></a>
+<img src="/2016/11/27/ai/ai-note.png" title="智能时代">
+<p>文字版：<br>1 数据，人类建造文明的基石<br>  1.1 信息是关于世界、人和事的描述，数据的作用是承载信息，不是所有的数据都承载了有意义的信息<br>  1.2 数据-&gt;信息-&gt;知识，对数据和信息进行处理后就可以获得知识<br>  1.3 得到和使用数据的能力，是衡量文明发展水平的标准之一<br>  1.4 获取数据&gt;&gt;分析数据&gt;&gt;建立模型&gt;&gt;预测未知<br>  1.5 数据与想要获得的信息之间的联系通常是间接的，相关性是让数据发挥作用的魔棒<br>  1.6 数据驱动方法：只要数据量足够，就可以用若干个简单的模型取代一个复杂的模型<br>  1.7 相关性、统计学、数学模型<br>2 大数据和机器智能<br>  2.1 图灵测试<br>    2.1.1 让一台机器和一个人坐在幕后，让一个裁判同时与幕后的人和机器进行交流，如果这个裁判无法判断自己交流的对象是人还是机器，就说明这台机器有了和人同等的智能<br>  2.2 人工智能<br>    2.2.1 泛指机器智能，也就是任何可以让计算机通过图灵测试的方法<br>    2.2.2 20世纪五六十年代特定的研究机器智能的方法，机器要像人一样思考才能获得智能<br>  2.3 贾里尼克：人的大脑是一个信息源，从思考到找到合适的语句，再通过发音说出来，是一个编码的过程，讲过媒介传播到听众的耳朵里，是经过了一个长长的信道传播的问题，最后听话人把它听懂，是一个解码的过程<br>  2.4 大数据：体量大、多维度、完备性<br>  2.5 思维方式的改变：变智能问题为数据问题<br>3 思维的革命<br>  3.1 在无法确定因果关系时，数据为我们提供了解决问题的新方法，数据中所包含的信息可以帮助我们消除不确定性，而数据之间的相关性在某种程度上可以取代原来的因果关系，帮助我们得到我们想知道的答案，这就是大数据思维的核心<br>  3.2 工业革命，机械思维的结果<br>    3.2.1 确定性和因果关系<br>  3.3 世界的不确定性：影响世界的变量非常多，不确定性是宇宙的一个特性<br>  3.4 熵，一种新的世界观<br>    3.4.1 用熵来描述一个信息系统的不确定性，信息量的度量就等于是不确定性的多少<br>    3.4.2 香农第一定律：对于信源发出的所有信息设计一种编码，那么编码的平均长度一定大于该信源的信息熵，但同时香农还指出，一定存在一种编码方式，使得编码的平均长度无限接近于它的信息熵<br>    3.4.3 香农第二定律：信息的传播速率不可能超过信道的容量<br>    3.4.4 最大熵原理：当我们要对未知的事件寻找一个概率模型时，这个模型应当满足我们所有已经看到的数据，但是对未知的情况不要做任何主观假设。<br>  3.5 大数据的科学基础是信息论，它的本质就是利用信息消除不确定性<br>  3.6 从因果关系到强关系<br>    3.6.1 根据大量数据的统计结果，可以找到一些我们不知道原因的相关性<br>  3.7 在新的时代一定需要新的方法论，也一定会产生新的方法论<br>4 大数据与商业<br>  4.1 大数据找规律<br>    4.1.1 用电与毒品种植<br>    4.1.2 营业面积与纳税<br>  4.2 相关性、时效性和个性化的重要<br>  4.3 大数据在商业活动中从细节到整体再从整体到细节双向流动<br>  4.4 用大数据训练模型优化穷举法<br>  4.5 新技术+原有产业=新产业<br>  4.6 技术革命导致商业模式的变化，尤其是新的商业模式的诞生<br>  4.7 生产越来越过剩，需求拉动经济增长的模式变得不可逆转<br>  4.8 商业模式的变化既有继承性，又有创新性<br>5 大数据和智能革命的计算挑战<br>  5.1 数据的产生、存储、传输和处理<br>  5.2 GFS、MapReduce、Hadoop、Dremel<br>  5.3 数据挖掘，机器智能的关键<br>  5.4 保护隐私<br>    5.4.1 从收集信息的一开始就对数据进行一些预处理<br>    5.4.2 双向监视，当使用这看计算机时，计算机也在盯着使用者看<br>6 未来智能化产业<br>  6.1 未来的农业<br>  6.2 未来的体育<br>    6.2.1 金州勇士<br>  6.3 未来的制造业<br>  6.4 未来的医疗<br>    6.4.1 降低医疗成本<br>    6.4.2 解决医疗资源短缺问题<br>    6.4.3 制药业的革命<br>  6.5 未来的律师业<br>  6.6 未来的记者和编辑<br>7 智能革命和未来社会<br>  7.1 在历次技术革命中，一个人、一家企业，甚至一个国家，可以选择的道路只有两条：要么加入浪潮，成为前2%的人，要么观望徘徊，被淘汰<br>  7.2 智能化社会，智能交通，智慧城市<br>  7.3 生活的更加方便，同时社会资源的利用率极大地提高<br>  7.4 区块链<br>  7.5 无隐私的社会<br>    7.5.1 隐私就像自由，只有当人们失去它的时候，才知道它的可贵<br>  7.6 当全社会各行各业的从业人员因为机器智能而减少时，全世界几十亿劳动力怎么办？<br>  7.7 越来越多的事情人类将做不过机器<br>  7.8 这是最好的时代，也是最坏的时代</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+            <a href="/tags/ai/" rel="tag"># ai</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/26/mysql-upgrade-error/" rel="next" title="升级MySQL 报错">
+                <i class="fa fa-chevron-left"></i> 升级MySQL 报错
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/03/use-ant-build-java-web-project/" rel="prev" title="用Ant 构建Java Web 项目">
+                用Ant 构建Java Web 项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

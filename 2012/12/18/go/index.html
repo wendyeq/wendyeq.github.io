@@ -1,493 +1,1001 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://wendyeq.me">
-  <title>Go语法笔记 | Wendyeq Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="之前阅读A Tour of Go的时候做了些笔记，现在把她整理好发出来。
-1. 第一个程序12345import &quot;fmt&quot;func main() &amp;#123;    fmt.Println(&quot;Hello World!&quot;)&amp;#125;
-程序运行需要在main包下面，并且从main()函数开始运行package main
-导入包可以是分开来写12import &quot;fmt&quot;import &quot;math&quot;
-也">
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="之前阅读A Tour of Go的时候做了些笔记，现在把她整理好发出来。 1. 第一个程序12345import &quot;fmt&quot;func main() &amp;#123;    fmt.Println(&quot;Hello World!&quot;)&amp;#125; 程序运行需要在main包下面，并且从main()函数开始运行package main 导入包可以是分开来写12import &quot;fmt&quot;import &quot;math&quot; 也">
+<meta name="keywords" content="Go,golang,笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go语法笔记">
 <meta property="og:url" content="http://wendyeq.me/2012/12/18/go/index.html">
 <meta property="og:site_name" content="Wendyeq Blog">
-<meta property="og:description" content="之前阅读A Tour of Go的时候做了些笔记，现在把她整理好发出来。
-1. 第一个程序12345import &quot;fmt&quot;func main() &amp;#123;    fmt.Println(&quot;Hello World!&quot;)&amp;#125;
-程序运行需要在main包下面，并且从main()函数开始运行package main
-导入包可以是分开来写12import &quot;fmt&quot;import &quot;math&quot;
-也">
-<meta property="og:updated_time" content="2016-11-23T07:36:12.133Z">
+<meta property="og:description" content="之前阅读A Tour of Go的时候做了些笔记，现在把她整理好发出来。 1. 第一个程序12345import &quot;fmt&quot;func main() &amp;#123;    fmt.Println(&quot;Hello World!&quot;)&amp;#125; 程序运行需要在main包下面，并且从main()函数开始运行package main 导入包可以是分开来写12import &quot;fmt&quot;import &quot;math&quot; 也">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-11-23T07:36:12.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go语法笔记">
-<meta name="twitter:description" content="之前阅读A Tour of Go的时候做了些笔记，现在把她整理好发出来。
-1. 第一个程序12345import &quot;fmt&quot;func main() &amp;#123;    fmt.Println(&quot;Hello World!&quot;)&amp;#125;
-程序运行需要在main包下面，并且从main()函数开始运行package main
-导入包可以是分开来写12import &quot;fmt&quot;import &quot;math&quot;
-也">
-  
-    <link rel="alternative" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.ico">
-  
-  <link rel="stylesheet" href="/main.css">
-  
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<meta name="twitter:description" content="之前阅读A Tour of Go的时候做了些笔记，现在把她整理好发出来。 1. 第一个程序12345import &quot;fmt&quot;func main() &amp;#123;    fmt.Println(&quot;Hello World!&quot;)&amp;#125; 程序运行需要在main包下面，并且从main()函数开始运行package main 导入包可以是分开来写12import &quot;fmt&quot;import &quot;math&quot; 也">
 
-ga('create', 'UA-15518726-9', 'auto');
-ga('send', 'pageview');
 
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2012/12/18/go/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
 </script>
-<!-- End Google Analytics -->
 
+  <title>Go语法笔记 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
 
-<body>
-  <div id="container">
-    <div class="left-col">
-      <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img src="/avatar.jpg" class="js-avatar">
-			
-		</a>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">wendyeq</a></h1>
-		</hgroup>
+  
+  
+    
+  
 
-		
-		<p class="header-subtitle">人总是要有些理想和信仰</p>
-		
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
 
-		<nav class="header-menu">
-			<ul>
-			
-				<li><a href="/">主页</a></li>
-	        
-				<li><a href="/tags/Go">Go</a></li>
-	        
-				<li><a href="/tags/docker">Docker</a></li>
-	        
-				<li><a href="/tags/mongodb">Mongodb</a></li>
-	        
-			</ul>
-		</nav>
-		<nav class="header-smart-menu">
-	        
-    		
-    			
-    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
-    			
-    			
-            
-		</nav>
-		<nav class="header-nav">
-			<div class="social">
-				
-					<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
-		        
-					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-		        
-			</div>
-		</nav>
-	</header>		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"><i class="icon-list"></i></div>
-  		<h1 class="header-author js-mobile-header hide">wendyeq</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				
-					<img src="/avatar.jpg" class="js-avatar">
-				
-			</div>
-			<hgroup>
-			  <h1 class="header-author">wendyeq</h1>
-			</hgroup>
-			
-			<p class="header-subtitle">人总是要有些理想和信仰</p>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/tags/Go">Go</a></li>
-		        
-					<li><a href="/tags/docker">Docker</a></li>
-		        
-					<li><a href="/tags/mongodb">Mongodb</a></li>
-		        
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-						<a class="github" target="_blank" href="https://github.com/wendyeq" title="github">github</a>
-			        
-						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-			        
-				</div>
-			</nav>
-		</header>				
-	</div>
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
 </nav>
 
-      <div class="body-wrap">
-        <article id="post-go" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Go语法笔记
-    </h1>
+
+
   
 
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2012/12/18/go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Go语法笔记
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2012-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2012-12-18T00:00:00+08:00">2012-12-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2016-11-23 15:36:12" itemprop="dateModified" datetime="2016-11-23T15:36:12+08:00">2016-11-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>之前阅读<a href="http://tour.golang.org" target="_blank" rel="external">A Tour of Go</a>的时候做了些笔记，现在把她整理好发出来。</p>
-<h3 id="1-第一个程序"><a href="#1-第一个程序" class="headerlink" title="1. 第一个程序"></a>1. 第一个程序</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    fmt.Println(<span class="string">"Hello World!"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+        <p>之前阅读<a href="http://tour.golang.org" target="_blank" rel="noopener">A Tour of Go</a>的时候做了些笔记，现在把她整理好发出来。</p>
+<h3 id="1-第一个程序"><a href="#1-第一个程序" class="headerlink" title="1. 第一个程序"></a>1. 第一个程序</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"Hello World!"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>程序运行需要在main包下面，并且从main()函数开始运行<code>package main</code></p>
-<p>导入包可以是分开来写<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"><span class="keyword">import</span> <span class="string">"math"</span></div></pre></td></tr></table></figure></p>
-<p>也可以是写在一起<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">    <span class="string">"math"</span></div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>导入包可以是分开来写<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">"math"</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以是写在一起<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"math"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
 <p>程序默认是按行来分割，如果不按行分割的话要用分号隔开<code>import (&quot;fmt&quot; ; &quot;math&quot;)</code></p>
-<p>导入的包可以重命名，但是一般不建议这么做。在同时需要导入最终包名相同的包如<code>html/template</code>和<code>text/template</code>的时候倒是可以这样做。<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> htmlTemplate "html/template</div><div class="line"><span class="keyword">import</span> "text/template"</div></pre></td></tr></table></figure></p>
+<p>导入的包可以重命名，但是一般不建议这么做。在同时需要导入最终包名相同的包如<code>html/template</code>和<code>text/template</code>的时候倒是可以这样做。<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> htmlTemplate "html/template</span><br><span class="line"><span class="keyword">import</span> "text/template"</span><br></pre></td></tr></table></figure></p>
 <p>也可以忽略掉导入的包,一般是用于第三方库中的依赖，但是自己写代码时用不到的包<code>import _ &quot;fmt&quot;</code><br><a id="more"></a>    </p>
-<h3 id="2-函数的定义"><a href="#2-函数的定义" class="headerlink" title="2. 函数的定义"></a>2. 函数的定义</h3><p>func 是定义函数的关键字，返回值类型写在后面。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(x <span class="keyword">int</span>, y <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> x + y</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>参数类型相同的话，可以把多个变量名写在前面，类型写在后面。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(x, y <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> x+y</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>函数可以有多个返回值，error通常是最后一个返回值。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(x, y, z <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">string</span>, <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> z, x, y</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>返回值里面有变量名的话，函数体里面不用再次声明。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">split</span><span class="params">(sum <span class="keyword">int</span>)</span> <span class="params">(x, y <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">    x = sum * <span class="number">4</span>/<span class="number">9</span></div><div class="line">    y = sum - x</div><div class="line">    <span class="keyword">return</span></div><div class="line">    <span class="comment">//return x, y 这样写也可以</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>内部函数<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">func</span> <span class="selector-tag">main</span>() &#123;</div><div class="line">    <span class="attribute">hypot </span>:= <span class="built_in">func</span>(x, y float64) float64 &#123;</div><div class="line">        return math.<span class="built_in">Sqrt</span>(x*x + y*y) </div><div class="line">    &#125;</div><div class="line">    <span class="selector-tag">fmt</span><span class="selector-class">.Println</span>(<span class="selector-tag">hypot</span>(3, 4))</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="3-变量"><a href="#3-变量" class="headerlink" title="3.变量"></a>3.变量</h3><p>Go没有使用public、private之类的关键字定义变量的可访问性，Go是通过变量名的第一个字母是否大写这种代码风格区别的，第一个字母是大写的话就相当于public,小写的话就是private。<code>var</code>定义的是全局变量或局部变量。<code>:=</code>声明与初始化局部变量，只能放在函数体里面。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">var</span> c, python, java bool</div><div class="line"><span class="selector-tag">var</span> c, python, java = true, false, <span class="string">"no!"</span></div><div class="line"><span class="selector-tag">a</span>, <span class="selector-tag">b</span>, c := swap(<span class="string">"hello"</span>, <span class="string">"world"</span>, <span class="string">"!"</span>)</div></pre></td></tr></table></figure></p>
-<p>const定义常量<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">const Pi = <span class="number">3.14</span></div><div class="line">const (</div><div class="line">    Big = <span class="number">1</span>&lt;&lt;<span class="number">100</span></div><div class="line">    Small = Big&gt;&gt;<span class="number">99</span></div><div class="line">)</div></pre></td></tr></table></figure></p>
-<p>声明一个key是string, value是int类型的map<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> m <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></div></pre></td></tr></table></figure></p>
-<h3 id="4-for-循环"><a href="#4-for-循环" class="headerlink" title="4. for 循环"></a>4. for 循环</h3><p>比起其他语言，Go的for循环少了两个括号,但大括号是必须的。<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sum :=<span class="number">0</span></div><div class="line"><span class="keyword">for</span> <span class="built_in">i</span> := <span class="number">0</span>; <span class="built_in">i</span> &lt;<span class="number">10</span>; <span class="built_in">i</span>++ &#123;</div><div class="line">    sum += i</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>缺省步长的形式,类似其他语言的while语句，Go语句是没有<code>while</code>关键字的，即没有while语句。<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> ; <span class="keyword">sum</span> &lt; <span class="number">1000</span>; &#123;</div><div class="line">    <span class="keyword">sum</span> += <span class="keyword">sum</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//两个分号可以不写</span></div><div class="line"><span class="keyword">for</span> <span class="keyword">sum</span> &lt;<span class="number">1000</span> &#123;</div><div class="line">    <span class="keyword">sum</span> += <span class="keyword">sum</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>死循环<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> ; ; &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//或者也把分号省略掉</div><div class="line"><span class="keyword">for</span> &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="5-if判断语句"><a href="#5-if判断语句" class="headerlink" title="5. if判断语句"></a>5. if判断语句</h3><p>与for类似if后面也是没有括号的，大括号是必须的。<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> x &lt; <span class="number">0</span> &#123;</div><div class="line">    <span class="keyword">fmt</span>.Println(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>多个判断条件，可以使用<code>&amp;&amp;</code>或者<code>||</code><br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> x &gt;<span class="number">0</span> &amp;&amp; x &lt; <span class="number">100</span> &#123;</div><div class="line">    <span class="keyword">fmt</span>.Println(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>if</code>、 <code>else if</code> 、<code>else</code>的形式<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> v := math.Pow(x, n) ; v &lt; lim &#123;</div><div class="line">    <span class="keyword">return</span> v</div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> v &gt; lim &#123;</div><div class="line">    <span class="keyword">return</span> lim</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span></div><div class="line">&#125;</div><div class="line"><span class="comment">//变量 v 的作用范围到这里就结束了，</span></div><div class="line"><span class="comment">//就算不return后面的语句如果直接使用v如：</span></div><div class="line"><span class="comment">//fmt.Println(v)会报 “undefinded： v” 的错误</span></div></pre></td></tr></table></figure></p>
-<h3 id="6-基本的数据类型"><a href="#6-基本的数据类型" class="headerlink" title="6. 基本的数据类型"></a>6. 基本的数据类型</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span></div><div class="line"><span class="keyword">string</span></div><div class="line"><span class="keyword">int</span> <span class="keyword">int8</span> <span class="keyword">int16</span> <span class="keyword">int32</span> <span class="keyword">int64</span></div><div class="line"><span class="keyword">uint</span> unit8 unit16 <span class="keyword">uint64</span> <span class="keyword">uintptr</span></div><div class="line"><span class="keyword">byte</span> <span class="comment">// uint8的别名</span></div><div class="line"><span class="keyword">float32</span> <span class="keyword">float64</span></div><div class="line"><span class="keyword">complex64</span> <span class="keyword">complex128</span></div></pre></td></tr></table></figure>
-<p>声明变量并初始化<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> (</div><div class="line">    ToBe <span class="keyword">bool</span> = <span class="literal">false</span></div><div class="line">    MaxInt <span class="keyword">uint64</span> = <span class="number">1</span>&lt;&lt;<span class="number">64</span> - <span class="number">1</span></div><div class="line">    z <span class="keyword">complex128</span> = cmplx.Sqrt(<span class="number">-5</span>+<span class="number">12i</span>)</div><div class="line">)</div></pre></td></tr></table></figure></p>
-<p>可以用这种方法定义枚举<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> (</div><div class="line">    <span class="built_in">red</span> = iota  <span class="comment">// red == 0</span></div><div class="line">    <span class="built_in">blue</span>        <span class="comment">// blue == 1</span></div><div class="line">    <span class="built_in">green</span>       <span class="comment">// green == 2</span></div><div class="line">)</div></pre></td></tr></table></figure></p>
-<h3 id="7-结构体"><a href="#7-结构体" class="headerlink" title="7. 结构体"></a>7. 结构体</h3><p>使用<code>type</code>关键字定义结构体，Vertex是结构体的名称<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="title">Vertex</span></span> <span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">    X <span class="keyword">int</span></div><div class="line">    Y <span class="keyword">int</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2-函数的定义"><a href="#2-函数的定义" class="headerlink" title="2. 函数的定义"></a>2. 函数的定义</h3><p>func 是定义函数的关键字，返回值类型写在后面。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(x <span class="keyword">int</span>, y <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参数类型相同的话，可以把多个变量名写在前面，类型写在后面。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(x, y <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>函数可以有多个返回值，error通常是最后一个返回值。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(x, y, z <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">string</span>, <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> z, x, y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>返回值里面有变量名的话，函数体里面不用再次声明。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">split</span><span class="params">(sum <span class="keyword">int</span>)</span> <span class="params">(x, y <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    x = sum * <span class="number">4</span>/<span class="number">9</span></span><br><span class="line">    y = sum - x</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">    <span class="comment">//return x, y 这样写也可以</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>内部函数<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">func</span> <span class="selector-tag">main</span>() &#123;</span><br><span class="line">    <span class="attribute">hypot </span>:= <span class="built_in">func</span>(x, y float64) float64 &#123;</span><br><span class="line">        return math.<span class="built_in">Sqrt</span>(x*x + y*y) </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">fmt</span><span class="selector-class">.Println</span>(<span class="selector-tag">hypot</span>(3, 4))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-变量"><a href="#3-变量" class="headerlink" title="3.变量"></a>3.变量</h3><p>Go没有使用public、private之类的关键字定义变量的可访问性，Go是通过变量名的第一个字母是否大写这种代码风格区别的，第一个字母是大写的话就相当于public,小写的话就是private。<code>var</code>定义的是全局变量或局部变量。<code>:=</code>声明与初始化局部变量，只能放在函数体里面。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">var</span> c, python, java bool</span><br><span class="line"><span class="selector-tag">var</span> c, python, java = true, false, <span class="string">"no!"</span></span><br><span class="line"><span class="selector-tag">a</span>, <span class="selector-tag">b</span>, c := swap(<span class="string">"hello"</span>, <span class="string">"world"</span>, <span class="string">"!"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>const定义常量<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const Pi = <span class="number">3.14</span></span><br><span class="line">const (</span><br><span class="line">    Big = <span class="number">1</span>&lt;&lt;<span class="number">100</span></span><br><span class="line">    Small = Big&gt;&gt;<span class="number">99</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>声明一个key是string, value是int类型的map<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="4-for-循环"><a href="#4-for-循环" class="headerlink" title="4. for 循环"></a>4. for 循环</h3><p>比起其他语言，Go的for循环少了两个括号,但大括号是必须的。<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sum :=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> := <span class="number">0</span>; <span class="built_in">i</span> &lt;<span class="number">10</span>; <span class="built_in">i</span>++ &#123;</span><br><span class="line">    sum += <span class="built_in">i</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>缺省步长的形式,类似其他语言的while语句，Go语句是没有<code>while</code>关键字的，即没有while语句。<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ; <span class="keyword">sum</span> &lt; <span class="number">1000</span>; &#123;</span><br><span class="line">    <span class="keyword">sum</span> += <span class="keyword">sum</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//两个分号可以不写</span></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">sum</span> &lt;<span class="number">1000</span> &#123;</span><br><span class="line">    <span class="keyword">sum</span> += <span class="keyword">sum</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>死循环<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ; ; &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//或者也把分号省略掉</span></span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-if判断语句"><a href="#5-if判断语句" class="headerlink" title="5. if判断语句"></a>5. if判断语句</h3><p>与for类似if后面也是没有括号的，大括号是必须的。<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> x &lt; <span class="number">0</span> &#123;</span><br><span class="line">    <span class="keyword">fmt</span>.Println(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>多个判断条件，可以使用<code>&amp;&amp;</code>或者<code>||</code><br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if <span class="keyword">x</span> &gt;<span class="number">0</span> &amp;&amp; <span class="keyword">x</span> &lt; <span class="number">100</span> &#123;</span><br><span class="line">    fmt.Println(<span class="keyword">x</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>if</code>、 <code>else if</code> 、<code>else</code>的形式<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> v := math.Pow(x, n) ; v &lt; lim &#123;</span><br><span class="line">    <span class="keyword">return</span> v</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> v &gt; lim &#123;</span><br><span class="line">    <span class="keyword">return</span> lim</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//变量 v 的作用范围到这里就结束了，</span></span><br><span class="line"><span class="comment">//就算不return后面的语句如果直接使用v如：</span></span><br><span class="line"><span class="comment">//fmt.Println(v)会报 “undefinded： v” 的错误</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="6-基本的数据类型"><a href="#6-基本的数据类型" class="headerlink" title="6. 基本的数据类型"></a>6. 基本的数据类型</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span></span><br><span class="line"><span class="keyword">string</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">int8</span> <span class="keyword">int16</span> <span class="keyword">int32</span> <span class="keyword">int64</span></span><br><span class="line"><span class="keyword">uint</span> unit8 unit16 <span class="keyword">uint64</span> <span class="keyword">uintptr</span></span><br><span class="line"><span class="keyword">byte</span> <span class="comment">// uint8的别名</span></span><br><span class="line"><span class="keyword">float32</span> <span class="keyword">float64</span></span><br><span class="line"><span class="keyword">complex64</span> <span class="keyword">complex128</span></span><br></pre></td></tr></table></figure>
+<p>声明变量并初始化<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    ToBe <span class="keyword">bool</span> = <span class="literal">false</span></span><br><span class="line">    MaxInt <span class="keyword">uint64</span> = <span class="number">1</span>&lt;&lt;<span class="number">64</span> - <span class="number">1</span></span><br><span class="line">    z <span class="keyword">complex128</span> = cmplx.Sqrt(<span class="number">-5</span>+<span class="number">12i</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>可以用这种方法定义枚举<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    <span class="built_in">red</span> = iota  <span class="comment">// red == 0</span></span><br><span class="line">    <span class="built_in">blue</span>        <span class="comment">// blue == 1</span></span><br><span class="line">    <span class="built_in">green</span>       <span class="comment">// green == 2</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h3 id="7-结构体"><a href="#7-结构体" class="headerlink" title="7. 结构体"></a>7. 结构体</h3><p>使用<code>type</code>关键字定义结构体，Vertex是结构体的名称<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="type">Vertex</span> struct &#123;</span><br><span class="line">    <span class="type">X</span> int</span><br><span class="line">    <span class="type">Y</span> int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="初始化结构体"><a href="#初始化结构体" class="headerlink" title="初始化结构体"></a>初始化结构体</h4><ul>
 <li><p>v都是值对象，不是指针</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="string">v :</span>= Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</div><div class="line"><span class="string">v :</span>= Vertex&#123;<span class="string">X:</span> <span class="number">1</span>&#125; <span class="comment">//Y没有赋值，默认是0</span></div><div class="line"><span class="string">v :</span>= Vertex&#123;&#125;</div><div class="line">v.X = <span class="number">4</span></div><div class="line">fmt.Println(v.X)</div></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v := Vertex&#123;1, 2&#125;</span><br><span class="line">v := Vertex&#123;X: 1&#125; //Y没有赋值，默认是0</span><br><span class="line">v := Vertex&#123;&#125;</span><br><span class="line">v.X = 4</span><br><span class="line">fmt.Println(v.X)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>t是指针，Go是有指针的，但是没有指针运算</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> t *Vertex = <span class="built_in">new</span>(Vertex)</div><div class="line">t := <span class="built_in">new</span>(Vertex) </div><div class="line">t := &amp;Vertex&#123;&#125; <span class="comment">//t的类型是*Vertex</span></div></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> t *Vertex = <span class="built_in">new</span>(Vertex)</span><br><span class="line">t := <span class="built_in">new</span>(Vertex) </span><br><span class="line">t := &amp;Vertex&#123;&#125; <span class="comment">//t的类型是*Vertex</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="8-指针"><a href="#8-指针" class="headerlink" title="8. 指针"></a>8. 指针</h3><p>与C语言类似，Go是有指针的，但是没有指针运算<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">type Vertex struct &#123;</div><div class="line">    X, Y int</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">p</span> := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125; <span class="comment">//p是值对象</span></div><div class="line"><span class="selector-tag">q</span> := &amp;<span class="selector-tag">p</span> <span class="comment">//&amp;取地址, q是指针</span></div><div class="line"><span class="selector-tag">q</span><span class="selector-class">.X</span> = <span class="number">1000</span></div><div class="line">fmt.Println(p)</div><div class="line">fmt.Println(*p) <span class="comment">//* 取值</span></div></pre></td></tr></table></figure></p>
+<h3 id="8-指针"><a href="#8-指针" class="headerlink" title="8. 指针"></a>8. 指针</h3><p>与C语言类似，Go是有指针的，但是没有指针运算<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type Vertex struct &#123;</span><br><span class="line">    X, Y int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span> := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125; <span class="comment">//p是值对象</span></span><br><span class="line"><span class="selector-tag">q</span> := &amp;<span class="selector-tag">p</span> <span class="comment">//&amp;取地址, q是指针</span></span><br><span class="line"><span class="selector-tag">q</span><span class="selector-class">.X</span> = <span class="number">1000</span></span><br><span class="line">fmt.Println(p)</span><br><span class="line">fmt.Println(*p) <span class="comment">//* 取值</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="9-map"><a href="#9-map" class="headerlink" title="9. map"></a>9. map</h3><pre><code>type Vertex struct { x, y int}
 //m是变量名，string是key的类型，Vertex是value的类型
 var m map[string]Vertex
-</code></pre><p>初始化map是用make而不是new<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]Vertex)</div><div class="line">m = <span class="keyword">map</span>[<span class="keyword">string</span>]Vertex&#123;<span class="string">"Bell Labs"</span> : Vertex&#123;<span class="number">40.12</span>, <span class="number">-34.56</span>&#125;,</div><div class="line">    <span class="string">"Go"</span> : Vertex&#123;<span class="number">37.43</span>, <span class="number">-123.45</span>&#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>赋值<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">m[<span class="string">"GZ"</span>] = Vertex&#123;<span class="number">23.56</span>, <span class="number">56.23</span>&#125;</div></pre></td></tr></table></figure></p>
-<p>删除，使用系统内置的delete方法<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">delete</span><span class="params">(m, <span class="string">"GZ"</span>)</span></span></div></pre></td></tr></table></figure></p>
-<p>测试key是否存在,ok是true表示存在，是false表示不存在。<br><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">elem, ok = m[<span class="string">"GZ"</span>]</div></pre></td></tr></table></figure></p>
+</code></pre><p>初始化map是用make而不是new<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]Vertex)</span><br><span class="line">m = <span class="keyword">map</span>[<span class="keyword">string</span>]Vertex&#123;<span class="string">"Bell Labs"</span> : Vertex&#123;<span class="number">40.12</span>, <span class="number">-34.56</span>&#125;,</span><br><span class="line">    <span class="string">"Go"</span> : Vertex&#123;<span class="number">37.43</span>, <span class="number">-123.45</span>&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>赋值<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[<span class="string">"GZ"</span>] = Vertex&#123;<span class="number">23.56</span>, <span class="number">56.23</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>删除，使用系统内置的delete方法<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">delete</span><span class="params">(m, <span class="string">"GZ"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>测试key是否存在,ok是true表示存在，是false表示不存在。<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">elem,</span> ok = m[<span class="string">"GZ"</span>]</span><br></pre></td></tr></table></figure></p>
 <h3 id="10-Array-amp-Slice"><a href="#10-Array-amp-Slice" class="headerlink" title="10. Array &amp; Slice"></a>10. Array &amp; Slice</h3><p>Array是指包含同一类型的数据集合，数组中的元素必须是同一类型的，数组的长度要确定（无论是显式声明或者编译时计算确定），数组的长度定义好之后就不能修改了。<br>数组的声明：</p>
 <pre><code>[1024]byte //长度为1024的数组
 [10] *int64 //长度为10的指针数组
 [3][4]int //二维数组
-</code></pre><p>数组的长度可以用<code>len()</code>函数获取，len(array)。<br>数组的遍历<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for i, v<span class="keyword"> :</span>= range<span class="built_in"> array </span>&#123;</div><div class="line">    fmt.Println(<span class="string">"Array element["</span>, i, <span class="string">"]="</span>, v)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>数组是值类型的，当数组作为参数传递的时候是值传递。也就是在函数体中修改了传进来的数组参数，在函数体外不生效。要想在函数体外生效的话就用slice, slice就像是指向数组的指针。事实上slice的结构包括一个指向数组的指针、元素个数len、分配空间大小cap。<br>slice的创建,只是定义slice但是不初始化的话,slice是nil。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">p := []<span class="keyword">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</div><div class="line"><span class="keyword">var</span> z []<span class="keyword">int</span> <span class="comment">//z == nil</span></div></pre></td></tr></table></figure></p>
-<p>可以根据slice创建新的slice，创建形式是s[low:hight],元素包括low，不包hight,且low是从0开始计数。<br> <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">p</span> := []int&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</div><div class="line">fmt.Println(<span class="string">"p[1:4] =="</span>, <span class="selector-tag">p</span>[<span class="number">1</span>:<span class="number">4</span>]) <span class="comment">//output: p[1:4] == [3 5 7]</span></div><div class="line">fmt.Println(<span class="string">"p[:3] =="</span>, <span class="selector-tag">p</span>[:<span class="number">3</span>]) <span class="comment">//output: p[:3] == [2 3 5]</span></div><div class="line">fmt.Println(<span class="string">"p[4:] =="</span>, <span class="selector-tag">p</span>[<span class="number">4</span>:]) <span class="comment">//output: p[4:] == [11 13]</span></div><div class="line">fmt.Println(<span class="string">"p[4:] =="</span>, <span class="selector-tag">p</span>[<span class="number">4</span>:<span class="number">4</span>]) <span class="comment">//output: p[4:4] == []</span></div></pre></td></tr></table></figure></p>
-<p>也可以使用make()创建,make()创建的slice元素的初始值是0<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">p := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">5</span>) <span class="comment">//len(a)=5</span></div><div class="line">fmt.Println(<span class="string">"p == "</span>,p) <span class="comment">//output: p ==  [0 0 0 0 0]</span></div><div class="line">p := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="number">5</span>) <span class="comment">// len(p)=0, cap(p)=5</span></div></pre></td></tr></table></figure></p>
-<p>Slice的增减元素，删除元素的话可以使用s[low:hight]创建新的slice，添加元素的话可以使用append()。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">p</span> := []int&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</div><div class="line"><span class="selector-tag">p</span> = append(<span class="selector-tag">p</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line">pp := []int&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">9</span>&#125;</div><div class="line"><span class="selector-tag">p</span> = append(<span class="selector-tag">p</span>, pp...)</div></pre></td></tr></table></figure></p>
+</code></pre><p>数组的长度可以用<code>len()</code>函数获取，len(array)。<br>数组的遍历<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i, v<span class="keyword"> :</span>= range<span class="built_in"> array </span>&#123;</span><br><span class="line">    fmt.Println(<span class="string">"Array element["</span>, i, <span class="string">"]="</span>, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>数组是值类型的，当数组作为参数传递的时候是值传递。也就是在函数体中修改了传进来的数组参数，在函数体外不生效。要想在函数体外生效的话就用slice, slice就像是指向数组的指针。事实上slice的结构包括一个指向数组的指针、元素个数len、分配空间大小cap。<br>slice的创建,只是定义slice但是不初始化的话,slice是nil。<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p := []<span class="keyword">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line"><span class="keyword">var</span> z []<span class="keyword">int</span> <span class="comment">//z == nil</span></span><br></pre></td></tr></table></figure></p>
+<p>可以根据slice创建新的slice，创建形式是s[low:hight],元素包括low，不包hight,且low是从0开始计数。<br> <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> := []int&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">fmt.Println(<span class="string">"p[1:4] =="</span>, <span class="selector-tag">p</span>[<span class="number">1</span>:<span class="number">4</span>]) <span class="comment">//output: p[1:4] == [3 5 7]</span></span><br><span class="line">fmt.Println(<span class="string">"p[:3] =="</span>, <span class="selector-tag">p</span>[:<span class="number">3</span>]) <span class="comment">//output: p[:3] == [2 3 5]</span></span><br><span class="line">fmt.Println(<span class="string">"p[4:] =="</span>, <span class="selector-tag">p</span>[<span class="number">4</span>:]) <span class="comment">//output: p[4:] == [11 13]</span></span><br><span class="line">fmt.Println(<span class="string">"p[4:] =="</span>, <span class="selector-tag">p</span>[<span class="number">4</span>:<span class="number">4</span>]) <span class="comment">//output: p[4:4] == []</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以使用make()创建,make()创建的slice元素的初始值是0<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">5</span>) <span class="comment">//len(a)=5</span></span><br><span class="line">fmt.Println(<span class="string">"p == "</span>,p) <span class="comment">//output: p ==  [0 0 0 0 0]</span></span><br><span class="line">p := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="number">5</span>) <span class="comment">// len(p)=0, cap(p)=5</span></span><br></pre></td></tr></table></figure></p>
+<p>Slice的增减元素，删除元素的话可以使用s[low:hight]创建新的slice，添加元素的话可以使用append()。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> := []int&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line"><span class="selector-tag">p</span> = append(<span class="selector-tag">p</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">pp := []int&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">9</span>&#125;</span><br><span class="line"><span class="selector-tag">p</span> = append(<span class="selector-tag">p</span>, pp...)</span><br></pre></td></tr></table></figure></p>
 <p>append()是个不定参数，可以将1个或多个元素添加到slice，但是如果要将一个slice添加到另一个slice,作为第二个参数的slice后面必须添加”…”这样的3个点。如<code>p = append(p, pp...)</code>，否则会报错。</p>
-<h3 id="11-switch"><a href="#11-switch" class="headerlink" title="11. switch"></a>11. switch</h3><p>switch是根据传入的条件不同，会按顺序选择执行不同的语句，如果没有条件满足就是执行default中的语句。<br>下面的例子是根据运行环境的不同打印出当前运行的是什么操作系统：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> os := runtime.GOOS; os &#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">"darwin"</span>:</div><div class="line">        fmt.Println(<span class="string">"OS X."</span>)</div><div class="line">    <span class="keyword">case</span> <span class="string">"linux"</span>:</div><div class="line">        fmt.Println(<span class="string">"Linux."</span>)</div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        fmt.Printf(<span class="string">"%s."</span>, os)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>switch也可以没有判断条件，这样的话就等效与if…else…<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">t := time.Now()</div><div class="line"><span class="keyword">switch</span> &#123;</div><div class="line">    <span class="keyword">case</span> t.Hour() &lt; <span class="number">12</span>:</div><div class="line">        fmt.Println(<span class="string">"Good morning!"</span>)</div><div class="line">    <span class="keyword">case</span> t.Hour() &lt; 25:</div><div class="line">        fmt.Println(<span class="string">"Good afternoon."</span>)</div><div class="line">        fallthrough</div><div class="line">    <span class="keyword">case</span> t.Hour() &lt; 25:</div><div class="line">        fmt.Println(<span class="string">"Good afternoon."</span>)</div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        fmt.Println(<span class="string">"Good evening."</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="11-switch"><a href="#11-switch" class="headerlink" title="11. switch"></a>11. switch</h3><p>switch是根据传入的条件不同，会按顺序选择执行不同的语句，如果没有条件满足就是执行default中的语句。<br>下面的例子是根据运行环境的不同打印出当前运行的是什么操作系统：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> os := <span class="keyword">runtime</span>.GOOS; os &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"darwin"</span>:</span><br><span class="line">        fmt.<span class="keyword">Println</span>(<span class="string">"OS X."</span>)</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"linux"</span>:</span><br><span class="line">        fmt.<span class="keyword">Println</span>(<span class="string">"Linux."</span>)</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        fmt.Printf(<span class="string">"%s."</span>, os)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>switch也可以没有判断条件，这样的话就等效与if…else…<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">t := time.Now()</span><br><span class="line"><span class="keyword">switch</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> t.Hour() &lt; <span class="number">12</span>:</span><br><span class="line">        fmt.<span class="keyword">Println</span>(<span class="string">"Good morning!"</span>)</span><br><span class="line">    <span class="keyword">case</span> t.Hour() &lt; <span class="number">25</span>:</span><br><span class="line">        fmt.<span class="keyword">Println</span>(<span class="string">"Good afternoon."</span>)</span><br><span class="line">        fallthrough</span><br><span class="line">    <span class="keyword">case</span> t.Hour() &lt; <span class="number">25</span>:</span><br><span class="line">        fmt.<span class="keyword">Println</span>(<span class="string">"Good afternoon."</span>)</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        fmt.<span class="keyword">Println</span>(<span class="string">"Good evening."</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>switch默认是选择到需要执行的语句之后，后面的语句是不会再进行判断执行的。但是可以使用<code>fallthrough</code>强制判断后面的语句是否需要执行。比如上面的例子会强制输出两次”Good afternoon.”。</p>
 
       
     </div>
-    <div class="article-info article-info-index">
+
+    
+
+    
+    
+    
+
+    
+
+    
       
-      <a href="/2012/12/18/go/" class="archive-article-date">
-  	<time datetime="2012-12-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2012-12-18</time>
-</a>
+    
+    
+
+    
+
+    <footer class="post-footer">
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Go/">Go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
-	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2012/12/31/summary-of-2012/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          2012年总结
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2012/12/15/go-and-gae-env/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Go与GAE开发环境配置</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-<div class="share_jia">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
-		<a class="jiathis_button_facebook"></a> 
-	    <a class="jiathis_button_twitter"></a>
-	    <a class="jiathis_button_plus"></a> 
-	    <a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="go" data-title="Go语法笔记" data-url="http://wendyeq.me/2012/12/18/go/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"wendyeq"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
-
-
-      </div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2012~2016 wendyeq
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-      	</div>
-    </div>
-  </div>
-</footer>
-    </div>
-    <script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false,
-		root: "/",
-		innerArchive: true
-	}
-</script>
-
-<script src="/./main.js"></script>
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-    
-<div class="tools-col">
-  <ul class="btn-wrap">
-    
-      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
-    
-    
-      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
-    
-    
-    
-      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
-    
-  </ul>
-  <div class="tools-wrap">
-    
-    	<section class="tools-section tools-section-all chose">
-    	</section>
-    
-
-    
-    	<section class="tools-section tools-section-tag">
-    			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/App-Store/" style="font-size: 10px;">App Store</a> <a href="/tags/GAE/" style="font-size: 10px;">GAE</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Go/" style="font-size: 12.5px;">Go</a> <a href="/tags/IOS/" style="font-size: 10px;">IOS</a> <a href="/tags/NoSQL/" style="font-size: 17.5px;">NoSQL</a> <a href="/tags/Sublime-Text/" style="font-size: 10px;">Sublime-Text</a> <a href="/tags/Sudoku/" style="font-size: 10px;">Sudoku</a> <a href="/tags/Swift/" style="font-size: 12.5px;">Swift</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 12.5px;">golang</a> <a href="/tags/kindle/" style="font-size: 12.5px;">kindle</a> <a href="/tags/mongodb/" style="font-size: 20px;">mongodb</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/registry/" style="font-size: 10px;">registry</a> <a href="/tags/一起数独/" style="font-size: 10px;">一起数独</a> <a href="/tags/总结/" style="font-size: 12.5px;">总结</a> <a href="/tags/手表/" style="font-size: 10px;">手表</a> <a href="/tags/数据库/" style="font-size: 17.5px;">数据库</a> <a href="/tags/海淘/" style="font-size: 12.5px;">海淘</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a>
-    			</div>
-    	</section>
-    
-
-    
-
-    
-    	<section class="tools-section tools-section-me">
-  	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">人总是要有些理想和信仰</div>
-  	  	
-    	</section>
-    
-  </div>
-  
-</div>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
+        <div class="post-tags">
+          
+            <a href="/tags/Go/" rel="tag"># Go</a>
+          
+            <a href="/tags/golang/" rel="tag"># golang</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
         </div>
+      
 
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
+      
+      
+      
 
-            <div class="pswp__top-bar">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/12/15/go-and-gae-env/" rel="next" title="Go与GAE开发环境配置">
+                <i class="fa fa-chevron-left"></i> Go与GAE开发环境配置
+              </a>
+            
+          </div>
 
-                <!--  Controls are self-explanatory. Order can be changed. -->
+          <span class="post-nav-divider"></span>
 
-                <div class="pswp__counter"></div>
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/12/31/summary-of-2012/" rel="prev" title="2012年总结">
+                2012年总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
 
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+  </div>
 
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
 
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
                 </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
             </div>
+          
 
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
+          
 
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
+          
 
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
+          
 
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
+          
+          
+
+          
+            
+          
+          
 
         </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-第一个程序"><span class="nav-number">1.</span> <span class="nav-text">1. 第一个程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-函数的定义"><span class="nav-number">2.</span> <span class="nav-text">2. 函数的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-变量"><span class="nav-number">3.</span> <span class="nav-text">3.变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-for-循环"><span class="nav-number">4.</span> <span class="nav-text">4. for 循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-if判断语句"><span class="nav-number">5.</span> <span class="nav-text">5. if判断语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-基本的数据类型"><span class="nav-number">6.</span> <span class="nav-text">6. 基本的数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-结构体"><span class="nav-number">7.</span> <span class="nav-text">7. 结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化结构体"><span class="nav-number">7.1.</span> <span class="nav-text">初始化结构体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-指针"><span class="nav-number">8.</span> <span class="nav-text">8. 指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-map"><span class="nav-number">9.</span> <span class="nav-text">9. map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Array-amp-Slice"><span class="nav-number">10.</span> <span class="nav-text">10. Array &amp; Slice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-switch"><span class="nav-number">11.</span> <span class="nav-text">11. switch</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
 
     </div>
+  </aside>
+  
 
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
 </div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
   </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自网络 简单介绍df、du、ln、touch、cd、pwd、cp、mv、mkdir、rm的用法。 df 用法df: 列出磁盘分区的磁盘使用情况，一般是对整个系统的使用情况如果有多个磁盘，要留意有没有磁盘分区满了，而不仅仅是留意/ 常见用法：df -h: 用人类易读的容量格式显示系统磁盘的使用情况df -h /var：用人类易读的容量格式显示系统磁盘/var挂载点的使用情况 12345678">
+<meta name="keywords" content="linux,lfs101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lfs101-command-line-01">
+<meta property="og:url" content="http://wendyeq.me/2017/01/04/lfs101-command-line-01/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自网络 简单介绍df、du、ln、touch、cd、pwd、cp、mv、mkdir、rm的用法。 df 用法df: 列出磁盘分区的磁盘使用情况，一般是对整个系统的使用情况如果有多个磁盘，要留意有没有磁盘分区满了，而不仅仅是留意/ 常见用法：df -h: 用人类易读的容量格式显示系统磁盘的使用情况df -h /var：用人类易读的容量格式显示系统磁盘/var挂载点的使用情况 12345678">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2017/01/04/lfs101-command-line-01/commandLine.jpg">
+<meta property="og:updated_time" content="2017-09-12T03:27:06.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lfs101-command-line-01">
+<meta name="twitter:description" content="题图来自网络 简单介绍df、du、ln、touch、cd、pwd、cp、mv、mkdir、rm的用法。 df 用法df: 列出磁盘分区的磁盘使用情况，一般是对整个系统的使用情况如果有多个磁盘，要留意有没有磁盘分区满了，而不仅仅是留意/ 常见用法：df -h: 用人类易读的容量格式显示系统磁盘的使用情况df -h /var：用人类易读的容量格式显示系统磁盘/var挂载点的使用情况 12345678">
+<meta name="twitter:image" content="http://wendyeq.me/2017/01/04/lfs101-command-line-01/commandLine.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2017/01/04/lfs101-command-line-01/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>lfs101-command-line-01 | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2017/01/04/lfs101-command-line-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">lfs101-command-line-01
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-04 00:10:31" itemprop="dateCreated datePublished" datetime="2017-01-04T00:10:31+08:00">2017-01-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-09-12 11:27:06" itemprop="dateModified" datetime="2017-09-12T11:27:06+08:00">2017-09-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">13 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2017/01/04/lfs101-command-line-01/commandLine.jpg" title="CommandLine">
+<p>题图来自网络</p>
+<p>简单介绍df、du、ln、touch、cd、pwd、cp、mv、mkdir、rm的用法。</p>
+<h3 id="df-用法"><a href="#df-用法" class="headerlink" title="df 用法"></a>df 用法</h3><p><code>df</code>: 列出磁盘分区的磁盘使用情况，一般是对整个系统的使用情况<br>如果有多个磁盘，要留意有没有磁盘分区满了，而不仅仅是留意<code>/</code></p>
+<p>常见用法：<br><code>df -h</code>: 用人类易读的容量格式显示系统磁盘的使用情况<br><code>df -h /var</code>：用人类易读的容量格式显示系统磁盘<code>/var</code>挂载点的使用情况</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@Test<span class="number">-1020</span> ~]# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/sda2        <span class="number">42</span>G  <span class="number">5.5</span>G   <span class="number">36</span>G  <span class="number">14</span>% /</span><br><span class="line">devtmpfs        <span class="number">993</span>M     <span class="number">0</span>  <span class="number">993</span>M   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs          <span class="number">1001</span>M  <span class="number">160</span>K <span class="number">1001</span>M   <span class="number">1</span>% /dev/shm</span><br><span class="line">tmpfs          <span class="number">1001</span>M  <span class="number">105</span>M  <span class="number">897</span>M  <span class="number">11</span>% /run</span><br><span class="line">tmpfs          <span class="number">1001</span>M     <span class="number">0</span> <span class="number">1001</span>M   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/sda1       <span class="number">969</span>M  <span class="number">150</span>M  <span class="number">754</span>M  <span class="number">17</span>% /boot</span><br><span class="line">tmpfs           <span class="number">201</span>M     <span class="number">0</span>  <span class="number">201</span>M   <span class="number">0</span>% /run/user/<span class="number">0</span></span><br><span class="line">tmpfs           <span class="number">201</span>M     <span class="number">0</span>  <span class="number">201</span>M   <span class="number">0</span>% /run/user/<span class="number">42</span></span><br><span class="line">[root@Test<span class="number">-1020</span> ~]# df -h /var</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/sda2        <span class="number">42</span>G  <span class="number">5.5</span>G   <span class="number">36</span>G  <span class="number">14</span>% /</span><br></pre></td></tr></table></figure>
+<h3 id="du-用法"><a href="#du-用法" class="headerlink" title="du 用法"></a>du 用法</h3><p><code>du</code>: 列出文件系统的磁盘使用量，一般是对某个目录或文件的使用情况</p>
+<p>常见用法：<br><code>du -h</code>: 用人类易读的容量格式显示当前目录的磁盘使用情况（不显示明细），<code>-h</code>表示人类可读<br><code>du -ah</code>: 用人类易读的容量格式显示当前目录的磁盘使用情况（显示明细，包括文件和子目录），<code>-a</code>表示所有文件和目录<br><code>du -hs ./*</code>: 用人类易读的容量格式显示当前目录的磁盘使用情况（显示明细，包括文件和子目录，不包括孙目录），<code>-s</code>列出总量<br><code>du -hs /*</code>: 用人类易读的容量格式显示根目录的磁盘使用情况（显示明细，包括文件和子目录，不包括孙目录）</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@Test-1020 Downloads]<span class="comment"># du -h</span></span><br><span class="line">81M     .</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># du -ah</span></span><br><span class="line">81M     <span class="string">./go1.7.4.linux-amd64.tar.gz</span></span><br><span class="line">4.0K    <span class="string">./initial-setup-ks.cfg</span></span><br><span class="line">81M     .</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># du -hs ./*</span></span><br><span class="line">81M     <span class="string">./go1.7.4.linux-amd64.tar.gz</span></span><br><span class="line">4.0K    <span class="string">./initial-setup-ks.cfg</span></span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># du -hs /*</span></span><br><span class="line">0       <span class="string">/bin</span></span><br><span class="line">147M    <span class="string">/boot</span></span><br><span class="line">160K    <span class="string">/dev</span></span><br><span class="line">38M     <span class="string">/etc</span></span><br><span class="line">4.3M    <span class="string">/home</span></span><br><span class="line">0       <span class="string">/lib</span></span><br><span class="line">0       <span class="string">/lib64</span></span><br><span class="line">0       <span class="string">/media</span></span><br><span class="line">0       <span class="string">/mnt</span></span><br><span class="line">0       <span class="string">/opt</span></span><br><span class="line">du: cannot access ‘<span class="string">/proc/25193/task/25193/fd/4</span>’: No such file or directory</span><br><span class="line">du: cannot access ‘<span class="string">/proc/25193/task/25193/fdinfo/4</span>’: No such file or directory</span><br><span class="line">du: cannot access ‘<span class="string">/proc/25193/fd/4</span>’: No such file or directory</span><br><span class="line">du: cannot access ‘<span class="string">/proc/25193/fdinfo/4</span>’: No such file or directory</span><br><span class="line">0       <span class="string">/proc</span></span><br><span class="line">114M    <span class="string">/root</span></span><br><span class="line">105M    <span class="string">/run</span></span><br><span class="line">0       <span class="string">/sbin</span></span><br><span class="line">0       <span class="string">/srv</span></span><br><span class="line">0       <span class="string">/sys</span></span><br><span class="line">12K     <span class="string">/tmp</span></span><br><span class="line">4.1G    <span class="string">/usr</span></span><br><span class="line">825M    <span class="string">/var</span></span><br></pre></td></tr></table></figure>
+<h3 id="ln-用法"><a href="#ln-用法" class="headerlink" title="ln 用法"></a>ln 用法</h3><p><code>ln</code>: 用于在文件或文件夹之间创建链接，与window的快捷方式有点类似。链接分硬链接和符号链接，硬链接不能用于文件夹也不能跨文件系统，只能用于目录，它会创建同一份文件进行同步，需要占用磁盘空间。符号链接不占用磁盘空间，可用于文件夹和文件。默认创建的是硬链接，创建符号链接需要加参数<code>-s</code>。</p>
+<p>常见用法：<br><code>ln 源文件 链接名</code>: 创建一个硬链接名，内容与源文件一致<br><code>ln -s 源文件 链接名</code>: 创建一个符号链接名指向源文件</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82064</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 62 </span>1月  <span class="number"> 3 </span>14:53 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ln a.txt b.txt</span></span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82068</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 74 </span>1月  <span class="number"> 3 </span>14:53 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 b.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ln -s a.txt c.txt</span></span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82068</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 86 </span>1月  <span class="number"> 3 </span>14:54 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 b.txt</span><br><span class="line">lrwxrwxrwx  <span class="number"> 1 </span>root root       <span class="number"> 5 </span>1月  <span class="number"> 3 </span>14:54 c.txt -&gt; a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br></pre></td></tr></table></figure>
+<h3 id="cd-amp-pwd用法"><a href="#cd-amp-pwd用法" class="headerlink" title="cd &amp; pwd用法"></a>cd &amp; pwd用法</h3><p><code>cd</code>: 是指change directory，即切换目录。<br><code>pwd</code>: 是指当前路径。</p>
+<p>常见用法<br><code>cd 路径名</code>: 切换到路径名所在目录。<br><code>cd -</code>: 切换到上一个cd 路径所在目录。即起到回退的作用。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@Test</span><span class="number">-1020</span> Downloads]<span class="meta"># pwd</span></span><br><span class="line">/root/Downloads</span><br><span class="line">[root<span class="symbol">@Test</span><span class="number">-1020</span> Downloads]<span class="meta"># cd /</span></span><br><span class="line">[root<span class="symbol">@Test</span><span class="number">-1020</span> /]<span class="meta"># pwd</span></span><br><span class="line">/</span><br><span class="line">[root<span class="symbol">@Test</span><span class="number">-1020</span> /]<span class="meta"># cd -</span></span><br><span class="line">/root/Downloads</span><br><span class="line">[root<span class="symbol">@Test</span><span class="number">-1020</span> Downloads]<span class="meta"># pwd</span></span><br><span class="line">/root/Downloads</span><br><span class="line">[root<span class="symbol">@Test</span><span class="number">-1020</span> Downloads]<span class="meta">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="touch-用法"><a href="#touch-用法" class="headerlink" title="touch 用法"></a>touch 用法</h3><p><code>touch</code>: 有两个作用，第一个是将已存在文件的时间更新为系统当前的时间，第二个是文件不存在则创建一个空文件。</p>
+<p>常见用法：<br><code>touch filename</code>: 更新filename的时间或创建文件名是filename的空文件。</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82068</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 86 </span>1月  <span class="number"> 3 </span>14:54 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>14:41 b.txt</span><br><span class="line">lrwxrwxrwx  <span class="number"> 1 </span>root root       <span class="number"> 5 </span>1月  <span class="number"> 3 </span>14:54 c.txt -&gt; a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># touch a.txt</span></span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82068</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 86 </span>1月  <span class="number"> 3 </span>14:54 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 b.txt</span><br><span class="line">lrwxrwxrwx  <span class="number"> 1 </span>root root       <span class="number"> 5 </span>1月  <span class="number"> 3 </span>14:54 c.txt -&gt; a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># touch d.txt</span></span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82068</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 98 </span>1月  <span class="number"> 3 </span>15:07 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 b.txt</span><br><span class="line">lrwxrwxrwx  <span class="number"> 1 </span>root root       <span class="number"> 5 </span>1月  <span class="number"> 3 </span>14:54 c.txt -&gt; a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root       <span class="number"> 0 </span>1月  <span class="number"> 3 </span>15:07 d.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br></pre></td></tr></table></figure>
+<h3 id="cp-用法"><a href="#cp-用法" class="headerlink" title="cp 用法"></a>cp 用法</h3><p><code>cp</code>: 将一个或多个文件/目录复制到指定的文件/目录。</p>
+<p>常见用法：<br><code>cp 源文件 目标文件</code>: 将源文件复制一份到目标文件。<br><code>cp -r 源文件夹 目标文件夹</code>: 将源文件夹下的文件和子目录都复制一份到目标文件夹，需要确认。<br><code>cp -rf 源文件夹 目标文件夹</code>: 将源文件夹下的文件和子目录都复制一份到目标文件夹，不需要确认。</p>
+<h3 id="mv-用法"><a href="#mv-用法" class="headerlink" title="mv 用法"></a>mv 用法</h3><p><code>mv</code>: 将文件或目录重命名，或者将文件/目录从一个地方移动到另一个地方。</p>
+<p>常见用法：<br><code>mv 原文件名 目标文件名</code>: 将原文件名修改为目标文件名，目录也一样。</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82068</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 98 </span>1月  <span class="number"> 3 </span>15:07 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 b.txt</span><br><span class="line">lrwxrwxrwx  <span class="number"> 1 </span>root root       <span class="number"> 5 </span>1月  <span class="number"> 3 </span>14:54 c.txt -&gt; a.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root       <span class="number"> 0 </span>1月  <span class="number"> 3 </span>15:07 d.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 temp</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al temp</span></span><br><span class="line">total 82056</span><br><span class="line">drwxr-xr-x <span class="number"> 3 </span>root root      <span class="number"> 51 </span>1月  <span class="number"> 3 </span>11:51 .</span><br><span class="line">drwxr-xr-x.<span class="number"> 3 </span>root root      <span class="number"> 98 </span>1月  <span class="number"> 3 </span>15:07 ..</span><br><span class="line">drwxr-xr-x <span class="number"> 2 </span>root root      <span class="number"> 39 </span>1月  <span class="number"> 3 </span>11:51 amd64</span><br><span class="line">-rw-r--r-- <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>1月  <span class="number"> 3 </span>11:50 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># mv a.txt b.txt c.txt temp</span></span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al</span></span><br><span class="line">total 82060</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root      <span class="number"> 62 </span>1月  <span class="number"> 3 </span>15:22 .</span><br><span class="line">dr-xr-x---.<span class="number"> 22 </span>root root    <span class="number"> 4096 </span>1月  <span class="number"> 3 </span>14:50 ..</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root       <span class="number"> 0 </span>1月  <span class="number"> 3 </span>15:07 d.txt</span><br><span class="line">-rw-r--r--  <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>12月 <span class="number"> 2 </span>05:54 go1.7.4.linux-amd64.tar.gz</span><br><span class="line">drwxr-xr-x  <span class="number"> 3 </span>root root      <span class="number"> 87 </span>1月  <span class="number"> 3 </span>15:22 temp</span><br><span class="line">[root@Test-1020 Downloads]<span class="comment"># ls -al temp</span></span><br><span class="line">total 82064</span><br><span class="line">drwxr-xr-x <span class="number"> 3 </span>root root      <span class="number"> 87 </span>1月  <span class="number"> 3 </span>15:22 .</span><br><span class="line">drwxr-xr-x.<span class="number"> 3 </span>root root      <span class="number"> 62 </span>1月  <span class="number"> 3 </span>15:22 ..</span><br><span class="line">drwxr-xr-x <span class="number"> 2 </span>root root      <span class="number"> 39 </span>1月  <span class="number"> 3 </span>11:51 amd64</span><br><span class="line">-rw-r--r-- <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 a.txt</span><br><span class="line">-rw-r--r-- <span class="number"> 2 </span>root root      <span class="number"> 15 </span>1月  <span class="number"> 3 </span>15:07 b.txt</span><br><span class="line">lrwxrwxrwx <span class="number"> 1 </span>root root       <span class="number"> 5 </span>1月  <span class="number"> 3 </span>14:54 c.txt -&gt; a.txt</span><br><span class="line">-rw-r--r-- <span class="number"> 1 </span>root root<span class="number"> 84021919 </span>1月  <span class="number"> 3 </span>11:50 go1.7.4.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="mkdir-用法"><a href="#mkdir-用法" class="headerlink" title="mkdir 用法"></a>mkdir 用法</h3><p><code>mkdir</code>: 创建文件夹。</p>
+<p>常见用法：<br><code>mkdir dirname</code>: 在当前路径创建dirname的文件夹。<br><code>mkdir -p /var/log/temp/tempdir</code>: 在<code>/var/log/temp/</code>中创建tempdir文件夹，如果中间的文件夹不存在也一并创建。</p>
+<h3 id="rm-用法"><a href="#rm-用法" class="headerlink" title="rm 用法"></a>rm 用法</h3><p><code>rm</code>: 可以删除一个文件/目录，或者删除多个文件或目录。文件一经删除就不能恢复。</p>
+<p>常见用法：<br><code>rm filename</code>: 删除filename文件，不加参数是不能删除目录的。<br><code>rm -r dirname</code>: 删除dirname目录，<code>-r</code>是递归的意思，这种删除方式需要一个个文件确认。<br><code>rm -rf dirname</code>: 强制删除dirname目录，不需要用户确认。用这种方式需要谨慎<strong>一旦删除就找不回</strong></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/lfs101/" rel="tag"># lfs101</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/01/LFS101/" rel="next" title="LFS101x Introduction to Linux">
+                <i class="fa fa-chevron-left"></i> LFS101x Introduction to Linux
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/07/lfs101-command-line-02/" rel="prev" title="lfs101-command-line-02">
+                lfs101-command-line-02 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#df-用法"><span class="nav-number">1.</span> <span class="nav-text">df 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#du-用法"><span class="nav-number">2.</span> <span class="nav-text">du 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ln-用法"><span class="nav-number">3.</span> <span class="nav-text">ln 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd-amp-pwd用法"><span class="nav-number">4.</span> <span class="nav-text">cd &amp; pwd用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch-用法"><span class="nav-number">5.</span> <span class="nav-text">touch 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp-用法"><span class="nav-number">6.</span> <span class="nav-text">cp 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv-用法"><span class="nav-number">7.</span> <span class="nav-text">mv 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir-用法"><span class="nav-number">8.</span> <span class="nav-text">mkdir 用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm-用法"><span class="nav-number">9.</span> <span class="nav-text">rm 用法</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

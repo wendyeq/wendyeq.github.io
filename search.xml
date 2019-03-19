@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[Nexus OSS3创建npm 私服]]></title>
+      <url>http://wendyeq.me/2016/11/24/npm-registry-in-nexus-oss-3/</url>
+      <content type="html"><![CDATA[<img src="/2016/11/24/npm-registry-in-nexus-oss-3/npm.jpeg" alt="npm" title="npm">
+<p>题图来自<a href="https://www.npmjs.com" target="_blank" rel="external">npmjs.com</a></p>
+<h2 id="npm-简介"><a href="#npm-简介" class="headerlink" title="npm 简介"></a>npm 简介</h2><p><a href="https://www.npmjs.com" target="_blank" rel="external">npm</a> 是 <a href="https://nodejs.org" target="_blank" rel="external">nodejs</a> 的包管理工具。有包管理工具的语言和系统才会更容易使用和流行。比如<a href="https://www.ubuntu.com/" target="_blank" rel="external">Ubuntu</a> 的apt-get，<a href="https://getfedora.org/" target="_blank" rel="external">Fedora</a> 的yum，<a href="https://golang.org/" target="_blank" rel="external">Go</a> 语言的go get。</p>
+<ol>
+<li>用户可以通过npm 命令从npm服务器下载第三方包和程序到本地。</li>
+<li>用户可以将自己编写的包或程序上传到npm服务器供别人下载使用。</li>
+</ol>
+<p><a href="https://hexo.io" target="_blank" rel="external">Hexo</a> 博客程序就是通过npm 安装的。</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-<span class="keyword">cli</span> -g</div></pre></td></tr></table></figure>
+<p>由于国内的网络环境比较有特色，很多时候通过npm的官方服务器下载很慢或者下载失败，所以经常看到有人在找npm 镜像，当然也有人搭建npm 镜像。比较出名且速度快的是<a href="http://npm.taobao.org/" target="_blank" rel="external">淘宝npm 镜像</a>，号称10分钟同步一次。<br>在前几天已经用<a href="/2016/11/20/nexus-oss-3-in-docker/">Docker 搭建Nexus OSS3私服</a>，而且Nexus3是支持npm的，所以就简单的利用Nexus3创建npm 私服。<br><a id="more"></a></p>
+<h2 id="创建npm-私服"><a href="#创建npm-私服" class="headerlink" title="创建npm 私服"></a>创建npm 私服</h2><p>打开Nexus，在Nexus 的设置中点击Repositories，然后点击Create repositry按钮。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/step1.jpg" alt="step1" title="step1"></p>
+<p>在Repositry 中可以创建三种类型的仓库，分别是group、hosted和proxy。<br>group 指的是仓库组，可以包括hosted 和proxy的仓库。<br>hosted 是指自己的私有仓库，可以上传私有代码到上面。<br>proxy 就是代理镜像仓库。<br>一般情况下无论是Maven、pypi 还是npm，这3种类型的仓库都会分别建一个，然后用的时候指向group 仓库。<br>创建的顺序是先hosted 或proxy ，最后才是group，因为group要包括hosted 和proxy。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/step2.jpg" alt="step2" title="step2"></p>
+<h3 id="创建hosted"><a href="#创建hosted" class="headerlink" title="创建hosted"></a>创建hosted</h3><p>hosted仓库只需要填上仓库名即可，其它的默认。因为只有一个Blob Stores 所以不需要选择，也可以按类型每一类都建一个Blob Store。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/step3.jpg" alt="step3" title="step3"></p>
+<h3 id="创建proxy"><a href="#创建proxy" class="headerlink" title="创建proxy"></a>创建proxy</h3><p>proxy仓库不仅需要填名字而且需要填上代理服务器地址，这里填淘宝的npm地址<code>https://registry.npm.taobao.org</code>。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/step4.jpg" alt="step4" title="step4"></p>
+<h3 id="创建group"><a href="#创建group" class="headerlink" title="创建group"></a>创建group</h3><p>填上仓库名，把刚刚创建的两个仓库移到右边的框即可。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/step5.png" alt="step5" title="step5"></p>
+<h2 id="npm-私服使用"><a href="#npm-私服使用" class="headerlink" title="npm 私服使用"></a>npm 私服使用</h2><p>经过以上的几个步骤npm 私服就创建完毕啦，私服使用起来也很简单，跟使用镜像一样。<br>在用户的主目录下的.vimrc文件中添加<code>registry = http://172.18.2.40:8081/repository/w-npm-group/</code>。Windows的用户主目录是C:\Users\用户名，比如我的就是C:\Users\wendyeq，MacOS和Linux直接在终端执行<code>cd ~</code>即可，没有这个文件的话就新建一个。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/npmrc.png" alt="npmrc" title="npmrc"></p>
+<p><code>http://172.18.2.40:8081/repository/w-npm-group/</code>就是刚刚创建group的URL，换为<code>https://registry.npm.taobao.org</code> 就是直接使用淘宝镜像啦。<br><img src="/2016/11/24/npm-registry-in-nexus-oss-3/w-npm-group.png" alt="w-npm-group" title="w-npm-group"></p>
+<p>最后用<code>npm -loglevel info install mysql</code>测试验证包是否从npm私服下载。<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">npm</span> -loglevel info install mysql</div><div class="line"><span class="built_in">npm</span> info <span class="literal">it</span> worked <span class="keyword">if</span> <span class="literal">it</span> ends <span class="keyword">with</span> ok</div><div class="line"><span class="built_in">npm</span> info using <span class="built_in">npm</span>@<span class="number">3.10</span>.<span class="number">9</span></div><div class="line"><span class="built_in">npm</span> info using node@v7.<span class="number">1.0</span></div><div class="line"><span class="built_in">npm</span> http request GET http:<span class="regexp">//172.18.2.40:8081/repository/w-npm-group/mysql</span></div><div class="line">npm http 200 http://<span class="number">172.18</span>.<span class="number">2.40</span>:<span class="number">8081</span>/repository/w-<span class="built_in">npm</span>-group/mysql</div></pre></td></tr></table></figure></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Docker 入门简介]]></title>
       <url>http://wendyeq.me/2016/11/22/docker-introduction/</url>
       <content type="html"><![CDATA[<h2 id="Docker优点"><a href="#Docker优点" class="headerlink" title="Docker优点"></a>Docker优点</h2><p>在<a href="/2016/11/17/docker-registry-v2/">Docker 安装与Registry V2私有仓库搭建</a> 中已经简单提过Docker。<br>Docker 的优点很多：</p>

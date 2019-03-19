@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题图来自课程 终于完成第一个edx 课程Introduction to Linux 🤓，没有做认证，Final Exam: (29/30) 97%。 说起来从接触Linux 到现在也有很多年了。第一次用Linux 应该是在08年，先是用虚拟机安装Ubuntu，后来就转为双系统，弄桌面玩特效搞开发之类的。但是无论是Ubuntu 还是后来的Fedora，对于桌面系统来说有个比较致命的缺点，就是显卡">
+<meta name="keywords" content="linux,edx,mooc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LFS101x Introduction to Linux">
+<meta property="og:url" content="http://wendyeq.me/2017/01/01/LFS101/index.html">
+<meta property="og:site_name" content="Wendyeq Blog">
+<meta property="og:description" content="题图来自课程 终于完成第一个edx 课程Introduction to Linux 🤓，没有做认证，Final Exam: (29/30) 97%。 说起来从接触Linux 到现在也有很多年了。第一次用Linux 应该是在08年，先是用虚拟机安装Ubuntu，后来就转为双系统，弄桌面玩特效搞开发之类的。但是无论是Ubuntu 还是后来的Fedora，对于桌面系统来说有个比较致命的缺点，就是显卡">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wendyeq.me/2017/01/01/LFS101/linux.jpg">
+<meta property="og:updated_time" content="2017-01-03T02:38:26.640Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LFS101x Introduction to Linux">
+<meta name="twitter:description" content="题图来自课程 终于完成第一个edx 课程Introduction to Linux 🤓，没有做认证，Final Exam: (29/30) 97%。 说起来从接触Linux 到现在也有很多年了。第一次用Linux 应该是在08年，先是用虚拟机安装Ubuntu，后来就转为双系统，弄桌面玩特效搞开发之类的。但是无论是Ubuntu 还是后来的Fedora，对于桌面系统来说有个比较致命的缺点，就是显卡">
+<meta name="twitter:image" content="http://wendyeq.me/2017/01/01/LFS101/linux.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Wendyeq Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://wendyeq.me/2017/01/01/LFS101/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>LFS101x Introduction to Linux | Wendyeq Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wendyeq Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">人总是要有些理想和信仰</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">41</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">35</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://wendyeq.me/2017/01/01/LFS101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wendyeq">
+      <meta itemprop="description" content="记录Wendyeq的一些事一些情">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wendyeq Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">LFS101x Introduction to Linux
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-01 00:15:39" itemprop="dateCreated datePublished" datetime="2017-01-01T00:15:39+08:00">2017-01-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-01-03 10:38:26" itemprop="dateModified" datetime="2017-01-03T10:38:26+08:00">2017-01-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2017/01/01/LFS101/linux.jpg" title="Linux">
+<p>题图来自课程</p>
+<p>终于完成第一个<a href="https://www.edx.org/" target="_blank" rel="noopener">edx</a> 课程<a href="https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-0" target="_blank" rel="noopener">Introduction to Linux</a> 🤓，没有做认证，Final Exam: (29/30) 97%。</p>
+<p>说起来从接触Linux 到现在也有很多年了。第一次用Linux 应该是在08年，先是用虚拟机安装Ubuntu，后来就转为双系统，弄桌面玩特效搞开发之类的。但是无论是Ubuntu 还是后来的Fedora，对于桌面系统来说有个比较致命的缺点，就是显卡驱动不给力，无论是Nvidia 还是 ATI（后来被AMD 收了）。</p>
+<p>为什么从Ubuntu 转到Fedora 呢？当时玩Ubuntu 的人确实比Fedora 多得多，而且中文社区也做的非常好。投入Fedora 的怀抱主要是基于3点：</p>
+<ol>
+<li>Ubuntu 的默认主题配色不符合我的审美观，而Fedora 我感觉更舒服一点（在升级到Gnome 3之前）。</li>
+<li>Fedora 比Ubuntu 更激进，通常Fedora 用的内核或包都会比Ubuntu 新一点点。</li>
+<li>Fedora 相当于Red Hat 的社区版，当时的正式服务器市场Red Hat 的市场份额比较大，选Fedora 更容易切换到正式工作中（当时就是这么天真）。</li>
+</ol>
+<p>后来工作了，主要是用Windows 或Mac 做开发，真正用Linux 的机会不多，也就部署的时候用用，或者是在要科学上网的时候用一下。不过Mac 很多时候跟Linux 差不多，很多命令都是通用的。</p>
+<p>那么为什么用了这么多年的Linux 还会选择一个Introductory 级别的关于Linux 的edx 课程呢？</p>
+<ol>
+<li>面对一个新平台，你不确定你是否适合这个平台，或者说这个平台是否适合你，那么用最短时间去试错显然是利益最大化的选择。</li>
+<li>人人都需要激励，那么从一个熟悉的领域入手，先尝点甜头也未尝不可，毕竟8周的课程（40到60个小时），我只用了1周的时间。</li>
+<li>虽然很多技能很熟悉，但是你不敢说全面。因为目前的学习模式都是只学习80%最可能用到的，剩下的20%很少去了解。虽然那80%已经足以应付日常的工作，但是我们面临的难题大部分来自于20%。所以就算不深入学习那20%，但是也要了解那20%到底有什么内容，能解决什么问题，等真正遇到对于的问题知道在哪里能找到解决方法。而不是漫无目的的Google。</li>
+<li>最近用Docker 比较多，工作需要。</li>
+</ol>
+<p>设计理念、系统结构、安装和界面就不写了，vi与emacs也不争论，喜欢那个用那个。只写常用的命令作为备忘，有些将会单独写文章来记录比如 BASH。</p>
+<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ol>
+<li>桌面环境比较喜欢LXDE 和XFCE，至于Gnome 3就呵呵咯。服务器用多了觉得有个Terminal 就够了，桌面影响不大。</li>
+<li>必须要学会并牢记的命令是<code>man</code> 、<code>-h</code> 或者<code>--help</code>。Linux的哲学是小而美，所以会有很多的小程序和命令。每个程序和命令的用法参数都记住显然是不可能的，所以必须要学会怎么查帮助和用法。比如：<code>man -h</code>和<code>man --help</code>都是查看<code>man</code>这个命令是怎么用的。</li>
+</ol>
+<ul>
+<li><code>shutdown</code>，关机命令。</li>
+<li><code>reboot</code>，重启命令。</li>
+<li><code>su</code>，切换用户。</li>
+<li><code>sudo</code>，用root执行。</li>
+</ul>
+<!--
+### 命令行
++ `ln`
++ `cd`
++ `find`
++ `touch`
++ `nice`
++ `ps`
++ `top`
++ `at`
++ `cron`
+
+### 文件操作
++ `cp`
++ `rsync`
++ `tar`
++ `gzip`
++ `bzip2`
++ `xz`
++ `zip`
++ `dd`
+
+### 编辑器
++ `nano`
++ `gedit`
++ `vi`, `vim`
++ `emacs`
+
+### 用户环境
++ `chmod`
++ `chown`
++ `chgrp`
+
+### 文本操作
++ `cat`
++ `echo`
++ `sed`
++ `awk`
++ `sort`
++ `uniq`
++ `paste`
++ `join`
++ `split`
++ `grep`
++ `tr`
++ `tee`
++ `wc`
++ `cut`
++ `less`
++ `head`
++ `tail`
++ `strings`
++ `z`
+
+### 网络
++ `ip`
++ `ifconfig`
++ `ping`
++ `wget`
++ `curl`
++ `ftp`
++ `sftp`
++ `ssh`
+
+### 打印
++ `lp`,`lpr`
++ `lpoptions`
++ `enscript`
++ `pdftk`
++ `pdfinfo`
++ `flpsed`
++ `pdfmod`
+-->
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/edx/" rel="tag"># edx</a>
+          
+            <a href="/tags/mooc/" rel="tag"># mooc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/soft-skills/" rel="next" title="《软技能：代码之外的生存指南》读书笔记">
+                <i class="fa fa-chevron-left"></i> 《软技能：代码之外的生存指南》读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/04/lfs101-command-line-01/" rel="prev" title="lfs101-command-line-01">
+                lfs101-command-line-01 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wendyeq">
+            
+              <p class="site-author-name" itemprop="name">wendyeq</p>
+              <div class="site-description motion-element" itemprop="description">记录Wendyeq的一些事一些情</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2012 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wendyeq</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">119k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:19</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
